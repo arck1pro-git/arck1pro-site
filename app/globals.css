@@ -1,26 +1,832 @@
 @import "tailwindcss";
 
+/* =========================================================
+   CARLA SANS — fonte local
+   ========================================================= */
+@font-face {
+  font-family: "Carla Sans";
+  src: url("/fonts/carlasans/carlasanslight-BF68bfa40288ba0.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Carla Sans";
+  src: url("/fonts/carlasans/carlasansregular-BF68bfa40294322.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Carla Sans";
+  src: url("/fonts/carlasans/carlasanssemibold-BF68bfa4027b1d1.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Carla Sans";
+  src: url("/fonts/carlasans/carlasansbold-BF68bfa40208569.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =========================================================
+   ARCK1PRO Design System — Tokens & Utility Classes
+   Fontes carregadas via next/font/google (layout.tsx)
+   ========================================================= */
+
+/* =========================================================
+   TOKENS GLOBAIS
+   ========================================================= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand core */
+  --brand-navy:        #001031;
+  --brand-navy-700:    #0a1c45;
+  --brand-navy-500:    #1c305f;
+  --brand-gold:        #c28f50;
+  --brand-gold-soft:   #d6a974;
+  --brand-gold-light:  #fae394;
+  --brand-cream:       #ecebe7;
+  --brand-stone:       #d8d6cf;
+
+  /* Gradientes */
+  --gold-grad:   linear-gradient(180deg, #b07d3e 0%, #c28f50 25%, #e0b56e 55%, #fae394 100%);
+  --gold-grad-h: linear-gradient(90deg,  #b07d3e 0%, #c28f50 35%, #e0b56e 70%, #fae394 100%);
+
+  /* Tipografia */
+  --font-sans:    "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", ui-sans-serif, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
+  --font-carla:   "Carla Sans", ui-sans-serif, sans-serif;
+
+  /* Escala tipográfica */
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-15: 15px;
+  --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-20: 20px;
+  --fs-24: 24px;
+  --fs-32: 32px;
+  --fs-40: 40px;
+  --fs-56: 56px;
+  --fs-72: 72px;
+  --fs-96: 96px;
+
+  /* Espaçamento — base 4px */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-8:  32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+  --s-24: 96px;
+  --s-32: 128px;
+
+  /* Border-radius */
+  --r-0:    0px;
+  --r-1:    2px;
+  --r-2:    4px;
+  --r-3:    8px;
+  --r-pill: 999px;
+
+  /* Bordas */
+  --hairline: 0.5px;
+  --line-1:   1px;
+  --line-2:   2px;
+
+  /* Sombras */
+  --shadow-sm:   0 1px 2px rgba(0,16,49,.04), 0 1px 1px rgba(0,16,49,.03);
+  --shadow-md:   0 8px 24px -8px rgba(0,16,49,.10), 0 2px 6px rgba(0,16,49,.04);
+  --shadow-lg:   0 24px 48px -16px rgba(0,16,49,.18), 0 4px 12px rgba(0,16,49,.06);
+  --shadow-gold: 0 12px 32px -10px rgba(194,143,80,.45);
+
+  /* Motion */
+  --ease-out:    cubic-bezier(.2,.8,.2,1);
+  --ease-in-out: cubic-bezier(.65,0,.35,1);
+  --dur-1: 160ms;
+  --dur-2: 240ms;
+  --dur-3: 420ms;
+  --dur-4: 800ms;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ---- Tema claro (padrão) ---- */
+:root,
+:root[data-theme="light"] {
+  --bg:           #f6f5f1;
+  --bg-elev:      #ffffff;
+  --bg-soft:      #ecebe7;
+  --bg-inverse:   #001031;
+  --surface:      #ffffff;
+  --surface-2:    #faf9f5;
+  --surface-3:    #ecebe7;
+  --line:         rgba(0,16,49,.10);
+  --line-strong:  rgba(0,16,49,.22);
+  --text:         #001031;
+  --text-2:       #1c305f;
+  --text-muted:   #54607a;
+  --text-faint:   #8c95a8;
+  --text-inverse: #f6f5f1;
+  --accent:       #c28f50;
+  --accent-text:  #001031;
+  --focus:        #c28f50;
+  --grid-line:    rgba(0,16,49,.06);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ---- Tema escuro ---- */
+:root[data-theme="dark"] {
+  --bg:           #000814;
+  --bg-elev:      #001031;
+  --bg-soft:      #061a3d;
+  --bg-inverse:   #ecebe7;
+  --surface:      #061a3d;
+  --surface-2:    #0a1c45;
+  --surface-3:    #122657;
+  --line:         rgba(236,235,231,.12);
+  --line-strong:  rgba(236,235,231,.28);
+  --text:         #f6f5f1;
+  --text-2:       #d8d6cf;
+  --text-muted:   #9aa3b8;
+  --text-faint:   #6b7591;
+  --text-inverse: #001031;
+  --accent:       #e0b56e;
+  --accent-text:  #001031;
+  --focus:        #fae394;
+  --grid-line:    rgba(236,235,231,.05);
+}
+
+/* =========================================================
+   LENIS SMOOTH SCROLL
+   ========================================================= */
+html.lenis,
+html.lenis body { height: auto; }
+
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* =========================================================
+   RESET BÁSICO
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-15);
+  font-weight: 400;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.005em;
+  transition: background var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+}
+
+/* =========================================================
+   UTILITÁRIOS DE COR — Background
+   ========================================================= */
+.bg-navy         { background-color: var(--brand-navy); }
+.bg-navy-700     { background-color: var(--brand-navy-700); }
+.bg-navy-500     { background-color: var(--brand-navy-500); }
+.bg-gold         { background-color: var(--brand-gold); }
+.bg-gold-soft    { background-color: var(--brand-gold-soft); }
+.bg-gold-light   { background-color: var(--brand-gold-light); }
+.bg-cream        { background-color: var(--brand-cream); }
+.bg-stone        { background-color: var(--brand-stone); }
+.bg-surface      { background-color: var(--surface); }
+.bg-surface-2    { background-color: var(--surface-2); }
+.bg-surface-3    { background-color: var(--surface-3); }
+.bg-inverse      { background-color: var(--bg-inverse); }
+
+/* Background gradiente */
+.bg-gold-grad    { background: var(--gold-grad); }
+.bg-gold-grad-h  { background: var(--gold-grad-h); }
+
+/* =========================================================
+   UTILITÁRIOS DE COR — Text
+   ========================================================= */
+.text-navy       { color: var(--brand-navy); }
+.text-navy-700   { color: var(--brand-navy-700); }
+.text-navy-500   { color: var(--brand-navy-500); }
+.text-gold       { color: var(--brand-gold); }
+.text-gold-soft  { color: var(--brand-gold-soft); }
+.text-gold-light { color: var(--brand-gold-light); }
+.text-cream      { color: var(--brand-cream); }
+.text-stone      { color: var(--brand-stone); }
+.text-muted      { color: var(--text-muted); }
+.text-faint      { color: var(--text-faint); }
+.text-inverse    { color: var(--text-inverse); }
+.text-accent     { color: var(--accent); }
+
+/* Texto com gradiente */
+@keyframes text-shine {
+  0%   { background-position: 100% center; }
+  65%  { background-position: 100% center; animation-timing-function: ease-in-out; }
+  100% { background-position: 0%   center; }
+}
+
+
+
+.text-gold-hero {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    #c28f50 35%,
+    #fae394 45%,
+    #ffffff 49%,
+    #ffffff 51%,
+    #fae394 55%,
+    #c28f50 65%
+  );
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: text-shine 5s linear infinite;
+}
+.text-gold-grad {
+  background: var(--gold-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gold-grad-h {
+  background: var(--gold-grad-h);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =========================================================
+   UTILITÁRIOS DE TIPOGRAFIA
+   ========================================================= */
+.font-sans    { font-family: var(--font-sans); }
+.font-display { font-family: var(--font-display); }
+.font-mono    { font-family: var(--font-mono); }
+.font-carla   { font-family: var(--font-carla); }
+
+.fs-12 { font-size: var(--fs-12); }
+.fs-13 { font-size: var(--fs-13); }
+.fs-14 { font-size: var(--fs-14); }
+.fs-15 { font-size: var(--fs-15); }
+.fs-16 { font-size: var(--fs-16); }
+.fs-18 { font-size: var(--fs-18); }
+.fs-20 { font-size: var(--fs-20); }
+.fs-24 { font-size: var(--fs-24); }
+.fs-32 { font-size: var(--fs-32); }
+.fs-40 { font-size: var(--fs-40); }
+.fs-56 { font-size: var(--fs-56); }
+.fs-72 { font-size: var(--fs-72); }
+.fs-96 { font-size: var(--fs-96); }
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+.btn {
+  --bg: var(--text);
+  --col: var(--text-inverse);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-13);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--col);
+  /* fill azul da esquerda via background-position — texto sempre acima */
+  background-image: linear-gradient(to right, var(--brand-navy) 50.01%, var(--bg) 50.01%);
+  background-size: 201% 100%;
+  background-position: 100% center;
+  transition:
+    background-position 1s var(--ease-out),
+    color               var(--dur-2) var(--ease-out),
+    box-shadow          var(--dur-2) var(--ease-out);
+  overflow: hidden;
+}
+
+.btn .arrow { display: inline-block; }
+
+/* Hover universal */
+.btn:hover {
+  background-position: 0% center;
+  color: var(--brand-gold);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.65);
+}
+
+/* Variante: Primary */
+.btn--primary { --bg: var(--brand-navy); --col: var(--brand-cream); }
+:root[data-theme="dark"] .btn--primary { --bg: var(--brand-cream); --col: var(--brand-navy); }
+
+/* Variante: Gold — camada de slide sobre o gradiente dourado */
+.btn--gold {
+  background-image:
+    linear-gradient(to right, var(--brand-navy) 50.01%, transparent 50.01%),
+    var(--gold-grad-h);
+  background-size: 201% 100%, 100% 100%;
+  background-position: 100% center, center;
+  color: var(--brand-navy);
+}
+.btn--gold:hover { background-position: 0% center, center; }
+
+/* Variante: Ghost */
+.btn--ghost {
+  background-color: var(--surface);
+  background-image: linear-gradient(to right, var(--brand-navy) 50.01%, transparent 50.01%);
+  background-size: 201% 100%;
+  background-position: 100% center;
+  color: var(--text);
+  border: var(--line-1) solid var(--line-strong);
+}
+
+/* Variante: Ghost invertido (fundo escuro) */
+.btn--ghost-inv {
+  background-image: linear-gradient(to right, var(--brand-navy) 50.01%, transparent 50.01%);
+  background-size: 201% 100%;
+  background-position: 100% center;
+  color: var(--brand-cream);
+  border: var(--line-1) solid rgba(236, 235, 231, 0.35);
+}
+
+/* Variante: Link — sem fill */
+.btn--link {
+  background: transparent;
+  background-image: none;
+  padding: 0 0 4px;
+  color: var(--text);
+  border: 0;
+  border-bottom: 1px solid var(--accent);
+  border-radius: 0;
+  letter-spacing: 0.1em;
+  overflow: visible;
+}
+.btn--link:hover { color: var(--brand-gold); border-color: var(--brand-gold); box-shadow: none; }
+
+/* Tamanhos */
+.btn--sm { padding: 7px 13px; font-size: 11px; }
+.btn--lg { padding: 13px 22px; font-size: var(--fs-14); }
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #000 0%, #000 42%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0.2) 100%);
+  pointer-events: none;
+}
+
+/* =========================================================
+   HOVER UTILITIES (Server Component safe)
+   ========================================================= */
+.nav-link:hover       { color: var(--brand-cream) !important; }
+.footer-link:hover    { color: var(--brand-cream) !important; }
+
+.contato-card {
+  transition: border-color var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+}
+.contato-card:hover { border-color: var(--brand-gold) !important; transform: translateY(-2px); }
+
+/* Dá "corpo" aos cards: sombra suave para destacá-los da superfície clara */
+.lift {
+  box-shadow: 0 1px 2px rgba(0, 16, 49, 0.05), 0 18px 40px -20px rgba(0, 16, 49, 0.22);
+}
+
+/* Pulso dourado do botão flutuante de WhatsApp */
+@keyframes wa-pulse {
+  0%   { transform: scale(1);    opacity: 0.7; }
+  70%  { transform: scale(1.45); opacity: 0; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+.wa-float::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-pill);
+  border: 2px solid var(--brand-gold);
+  animation: wa-pulse 2s var(--ease-out) infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.blog-card__img {
+  transition: transform 0.5s var(--ease-out);
+  will-change: transform;
+}
+.blog-card:hover .blog-card__img { transform: scale(1.06); }
+
+.portfolio-overlay { opacity: 0; transition: opacity var(--dur-2) var(--ease-out); }
+.portfolio-card:hover .portfolio-overlay { opacity: 1; }
+
+.portfolio-card { transition: transform 0.4s var(--ease-out); }
+.portfolio-card:hover { transform: scale(1.04); }
+
+.icp-option {
+  transition: border-color var(--dur-2) var(--ease-out), background var(--dur-2) var(--ease-out);
+}
+.icp-option:hover {
+  border-color: var(--brand-gold) !important;
+  background: rgba(194, 143, 80, 0.06) !important;
+}
+
+/* =========================================================
+   LAYOUT UTILITIES
+   ========================================================= */
+.section {
+  padding: var(--s-20) var(--s-6);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Camada de imagem do topo das rotas internas (hero.png de fundo) */
+.route-hero-bg {
+  height: 75svh;
+}
+@media (max-width: 1023px) {
+  /* no mobile a imagem cobre a tela toda; o que sobra (25svh) fica atrás da section */
+  .route-hero-bg {
+    height: 100svh;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (max-width: 640px) {
+  .section { padding: var(--s-12) var(--s-4); }
+}
+
+/* =========================================================
+   FLOAT — pillar cards
+   ========================================================= */
+@keyframes float-card {
+  0%, 100% { transform: translateY(0px)   rotate(0deg); }
+  33%       { transform: translateY(-22px) rotate(1deg); }
+  66%       { transform: translateY(-10px) rotate(-0.8deg); }
+}
+
+/* =========================================================
+   CAROUSEL / MARQUEE
+   ========================================================= */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-wrap {
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 55s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* =========================================================
+   ARTICLE BODY — rich text from Airticles HTML
+   ========================================================= */
+.article-body h1,
+.article-body h2,
+.article-body h3,
+.article-body h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--brand-navy);
+  line-height: 1.2;
+  margin: var(--s-10) 0 var(--s-4);
+}
+.article-body h1 { font-size: var(--fs-40); }
+.article-body h2 { font-size: var(--fs-32); }
+.article-body h3 { font-size: var(--fs-24); }
+.article-body h4 { font-size: var(--fs-20); }
+
+.article-body p  { margin: 0 0 var(--s-6); }
+
+.article-body a {
+  color: var(--brand-gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: var(--s-6);
+  margin: 0 0 var(--s-6);
+}
+.article-body li { margin-bottom: var(--s-2); }
+
+.article-body blockquote {
+  border-left: 3px solid var(--brand-gold);
+  padding: var(--s-4) var(--s-6);
+  margin: var(--s-8) 0;
+  background: var(--surface-2);
+  border-radius: 0 8px 8px 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.article-body img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: var(--s-6) 0;
+}
+
+.article-body code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-13);
+  background: var(--surface-3);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.article-body pre {
+  background: var(--brand-navy);
+  color: var(--brand-cream);
+  padding: var(--s-6);
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--fs-13);
+  margin: var(--s-6) 0;
+}
+.article-body pre code {
+  background: transparent;
+  padding: 0;
+}
+
+/* Nada de texto/URL longo ultrapassando a borda do artigo */
+.article-body {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Tabelas: nunca passam da largura da tela — encaixam no container e rolam se forem largas demais */
+.article-body table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: var(--s-6) 0;
+  @apply text-xs;
+  -webkit-overflow-scrolling: touch;
+}
+.article-body th,
+.article-body td {
+  border: var(--line-1) solid rgba(0, 16, 49, 0.12);
+  padding: var(--s-2) var(--s-3);
+  text-align: left;
+  vertical-align: top;
+}
+.article-body th {
+  background: var(--surface-2);
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--brand-navy);
+}
+
+/* =========================================================
+   PORTFOLIO — Cards de credenciais (masonry)
+   ========================================================= */
+.cred-masonry {
+  columns: 3;
+  column-gap: var(--s-4);
+}
+@media (max-width: 900px) { .cred-masonry { columns: 2; } }
+@media (max-width: 580px) { .cred-masonry { columns: 1; } }
+
+/* Grid 3 colunas — card de destaque na 1ª coluna, demais ao lado */
+.cred-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-4);
+  align-items: start;
+}
+.cred-grid .cred-card { margin-bottom: 0; }
+.cred-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+@media (max-width: 900px) {
+  .cred-grid { grid-template-columns: repeat(2, 1fr); }
+  .cred-grid > .cred-feature { grid-column: 1 / -1; grid-row: auto; }
+}
+@media (max-width: 580px) {
+  .cred-grid { grid-template-columns: 1fr; }
+  .cred-grid > .cred-feature { grid-column: auto; }
+}
+
+.cred-card {
+  break-inside: avoid;
+  background: var(--brand-navy);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  margin-bottom: var(--s-4);
+  padding: var(--s-6);
+  position: relative;
+  overflow: hidden;
+  transition: background var(--dur-2) var(--ease-out),
+              transform var(--dur-2) var(--ease-out),
+              box-shadow var(--dur-2) var(--ease-out),
+              border-color var(--dur-2) var(--ease-out);
+  animation: credFadeUp var(--dur-3) var(--ease-out) backwards;
+}
+.cred-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(194, 143, 80, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cred-card > * { position: relative; z-index: 1; }
+.cred-card:hover {
+  background: var(--brand-navy-700);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(194, 143, 80, 0.15);
+}
+
+.cred-card--gold {
+  background: var(--gold-grad-h);
+  border-color: transparent;
+}
+.cred-card--gold::before {
+  background: radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.14) 0%, transparent 60%);
+}
+.cred-card--gold:hover {
+  background: var(--gold-grad-h);
+  box-shadow: var(--shadow-gold);
+}
+
+.cred-card--outline {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.10);
+}
+.cred-card--outline:hover {
+  border-color: var(--brand-gold);
+  background: rgba(194, 143, 80, 0.05);
+}
+
+.cred-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(194, 143, 80, 0.15);
+  color: var(--brand-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--s-4);
+}
+
+.cred-stat {
+  font-family: var(--font-display);
+  font-size: var(--fs-56);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--brand-gold);
+}
+.cred-stat--white { color: #fff; }
+
+.cred-tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--fs-12);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand-gold);
+  background: rgba(194, 143, 80, 0.12);
+  border-radius: 6px;
+  padding: 3px 10px;
+  margin-bottom: var(--s-3);
+}
+
+.cred-label {
+  font-family: var(--font-display);
+  font-size: var(--fs-14);
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: var(--s-2);
+}
+
+.cred-card:nth-child(1) { animation-delay: .05s; }
+.cred-card:nth-child(2) { animation-delay: .10s; }
+.cred-card:nth-child(3) { animation-delay: .15s; }
+.cred-card:nth-child(4) { animation-delay: .20s; }
+.cred-card:nth-child(5) { animation-delay: .25s; }
+.cred-card:nth-child(6) { animation-delay: .30s; }
+
+@keyframes credFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Brilho de borda que percorre cards em sequência (Porto Belo · megaprojetos) */
+.pb-glow {
+  border: var(--line-1) solid rgba(0, 16, 49, 0.1);
+  animation: pbCardGlow var(--pb-glow-cycle, 21s) ease-in-out infinite;
+  animation-delay: var(--pb-glow-delay, 0s);
+}
+@keyframes pbCardGlow {
+  0% {
+    border-color: var(--brand-gold);
+    box-shadow: 0 0 26px rgba(194, 143, 80, 0.55), inset 0 0 0 1px var(--brand-gold);
+  }
+  11% {
+    border-color: var(--brand-gold);
+    box-shadow: 0 0 26px rgba(194, 143, 80, 0.55), inset 0 0 0 1px var(--brand-gold);
+  }
+  18%, 100% {
+    border-color: rgba(0, 16, 49, 0.1);
+    box-shadow: 0 0 0 rgba(194, 143, 80, 0), inset 0 0 0 0 rgba(194, 143, 80, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pb-glow { animation: none; }
+}
+
+/* Simulador ARI — no mobile, entrada e resultado num único card branco, em no máximo uma tela */
+@media (max-width: 1023px) {
+  .ari-sim {
+    gap: var(--s-5) !important;
+    background: #ffffff;
+    border: var(--line-1) solid rgba(0, 16, 49, 0.1);
+    border-radius: 32px;
+    box-shadow: 0 1px 2px rgba(0, 16, 49, 0.05), 0 18px 40px -20px rgba(0, 16, 49, 0.22);
+    padding: var(--s-6) !important;
+    /* textos antes cinza claro passam a azul (navy) no mobile */
+    --sim-eyebrow: var(--brand-navy);
+    --sim-muted: var(--brand-navy-500);
+  }
+  /* os dois blocos deixam de ser cards próprios e se fundem no card branco */
+  .ari-sim > div {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    gap: var(--s-5) !important;
+  }
+  /* resultado adota o tema claro sobre o fundo branco; rótulos antes cinza viram azul.
+     !important porque essas vars são definidas inline (tema navy) e inline vence o @media */
+  .ari-sim__out {
+    --sim-label: var(--brand-navy) !important;
+    --sim-line: rgba(0, 16, 49, 0.1) !important;
+    --sim-accent: var(--brand-gold) !important;
+    color: var(--brand-navy) !important;
+    border-top: var(--line-1) solid rgba(0, 16, 49, 0.1);
+    padding-top: var(--s-5) !important;
+  }
+  .ari-sim .ari-sim__num {
+    font-size: var(--fs-32) !important;
+  }
+  /* botões de prazo/forma menores no mobile pra não estourar a borda do card */
+  .ari-sim button {
+    font-size: var(--fs-13) !important;
+    padding: var(--s-2) var(--s-2) !important;
+    min-width: 0;
+  }
+}
+
+/* Destaque Tourmaline (/empreendimentos): no mobile esconde o conteúdo sobre a foto;
+   o texto/botão são renderizados num bloco separado abaixo da imagem (.tm-hero__below) */
+@media (max-width: 1023px) {
+  .tm-hero {
+    aspect-ratio: auto !important;
+    overflow: visible !important;
+    background: transparent !important;
+  }
+  .tm-hero__img {
+    height: auto !important;
+    aspect-ratio: 16 / 9;
+    border-radius: 24px;
+  }
+  .tm-hero__overlay {
+    display: none !important;
+  }
+  .tm-hero__content {
+    display: none !important;
+  }
 }

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem \"c:\\\\Users\\\\Arck1Pro\\\\Desktop\\\\site-arck1pro\" -Exclude node_modules)",
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\Arck1Pro\\\\Desktop\\\\site-arck1pro\" | Where-Object { $_.Name -ne 'node_modules' })",
+      "Bash(Get-Content \"c:\\\\Users\\\\Arck1Pro\\\\Desktop\\\\site-arck1pro\\\\ARCK1PRO Design System \\(1\\).html\" -TotalCount 100)",
+      "Bash(ConvertTo-Json)"
+    ]
+  }
+}
