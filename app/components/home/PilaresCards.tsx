@@ -30,7 +30,7 @@ const N = projects.length;
 const CARD_H = 60;                          // svh — altura do card (svh = fixo, não muda com a barra do browser)
 const STICKY_TOP = (100 - CARD_H) / 2;     // 20svh — centraliza o card na tela
 const SEG = 100;                            // svh por segmento de scroll
-const Y_PER_CARD = 20;                      // px que cada card enterrado sobe
+const Y_PER_CARD = 40;                      // px que cada card enterrado sobe
 
 // Card j trava no centro quando scroll ≈ j/(N-1) de progresso
 const stickProgress = (j: number) => (N === 1 ? 0 : j / (N - 1));
@@ -53,20 +53,24 @@ function Card({
   // vals: [  0,                  0,                    -20,                ...]
   const keys: number[] = [];
   const yVals: number[] = [];
+  const scaleVals: number[] = [];
 
   for (let j = index; j < N; j++) {
     keys.push(stickProgress(j));
-    // Y só começa a mudar um passo depois de o próximo chegar
-    const buried = Math.max(0, j - index - 1);
+    // Sobe e encolhe já quando o próximo card entra (em sincronia)
+    const buried = Math.max(0, j - index);
     yVals.push(-buried * Y_PER_CARD);
+    scaleVals.push(Math.max(0.84, 1 - buried * 0.05));
   }
 
   const y = useTransform(progress, keys, yVals);
+  const scale = useTransform(progress, keys, scaleVals);
 
   return (
     <motion.div
       style={{
         y,
+        scale,
         position: "sticky",
         top: `${STICKY_TOP}svh`,
         height: `${CARD_H}svh`,
