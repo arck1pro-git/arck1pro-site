@@ -29,6 +29,13 @@ export default function ContatoForm({ variant = 'light' }: { variant?: Variant }
 
   const isInvestidor = form.role === 'investidor'
 
+  const submitLabel =
+    form.role === 'corretor'
+      ? 'Quero vender o Tourmaline'
+      : form.role === 'investidor'
+        ? 'Quero me qualificar'
+        : 'Enviar'
+
   const dark = variant === 'dark'
 
   const inputStyle: React.CSSProperties = {
@@ -223,7 +230,7 @@ export default function ContatoForm({ variant = 'light' }: { variant?: Variant }
         className="btn btn--gold"
         style={{ width: 'fit-content', margin: 'auto auto 0' }}
       >
-        Enviar <span className="arrow">→</span>
+        {submitLabel} <span className="arrow">→</span>
       </button>
     </form>
   )
