@@ -66,10 +66,10 @@ export default function AriForm() {
           className="font-display text-navy"
           style={{ fontSize: 'var(--fs-24)', fontWeight: 500, marginBottom: 'var(--s-3)' }}
         >
-          Recebemos seu interesse.
+          Recebemos sua candidatura.
         </p>
         <p className="font-sans" style={{ fontSize: 'var(--fs-15)', color: 'var(--text-muted)' }}>
-          Nossa equipe de estruturação entrará em contato com você o quanto antes.
+          Nossa equipe de estruturação avalia o seu perfil e retoma o contato com os próximos passos.
         </p>
       </div>
     )
@@ -170,7 +170,7 @@ export default function AriForm() {
         style={selectStyle(form.prazo)}
       >
         <option value="" disabled>
-          Pronto para investir nos próximos
+          Horizonte para iniciar a alocação
         </option>
         {prazoOptions.map((opt) => (
           <option key={opt} value={opt} style={{ color: 'var(--brand-navy)' }}>
@@ -183,7 +183,7 @@ export default function AriForm() {
         className="btn btn--gold"
         style={{ width: 'fit-content', margin: 'auto auto 0' }}
       >
-        Quero investir no ARI <span className="arrow">→</span>
+        Solicitar qualificação <span className="arrow">→</span>
       </button>
     </form>
   )

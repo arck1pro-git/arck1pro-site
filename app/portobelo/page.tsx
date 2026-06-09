@@ -25,7 +25,7 @@ const triade = [
   {
     name: 'Balneário Camboriú',
     tag: 'Consolidado',
-    text: 'A referência do alto padrão vertical no Brasil, com um dos m² mais caros do país, a R$ 15.215 (FIPEZAP), agora superado por Itapema. Os terrenos são poucos e caros, e quem queria comprar barato já perdeu o momento.',
+    text: 'A referência do alto padrão vertical no Brasil, com um dos m² mais caros do país, a R$ 15.215 (FIPEZAP), agora superado por Itapema. Os terrenos são poucos e caros, e o ciclo de entrada de menor valor já se encerrou.',
   },
   {
     name: 'Itapema',
@@ -265,7 +265,8 @@ export default function PortoBeloPage() {
               </p>
               <p style={{ margin: 0 }}>
                 Esse litoral oferece o que nenhuma cidade grande tem: terra escassa de verdade. A cada
-                ciclo sobra menos terreno na orla, e o preço acompanha. Quem percebe isso cedo paga menos.
+                ciclo sobra menos terreno na orla, e o preço acompanha. A escassez se reflete
+                diretamente no valor do metro quadrado.
               </p>
             </div>
           </div>
@@ -280,7 +281,7 @@ export default function PortoBeloPage() {
                 Em vinte anos, o litoral catarinense se transformou num corredor contínuo de
                 valorização, de Florianópolis ao norte. As cidades desse eixo, até Piçarras,
                 amadurecem no mesmo padrão, com três a cinco anos de diferença entre uma e outra.
-                Entender esse ritmo é saber em que ponto está cada cidade e qual o melhor momento de comprar.
+                Entender esse ritmo é saber em que ponto cada cidade está dentro do ciclo de valorização.
               </p>
             </div>
 
@@ -376,10 +377,10 @@ export default function PortoBeloPage() {
           <div>
             <div style={{ marginBottom: 'var(--s-10)', textAlign: 'center' }}>
               <h2 className="font-display text-navy" style={sectionTitle}>
-                A bola da vez
+                O ponto de inflexão
               </h2>
               <p className="font-sans" style={{ fontSize: 'var(--fs-16)', lineHeight: 1.85, color: 'var(--text-muted)', margin: 'var(--s-4) auto 0', maxWidth: 680 }}>
-                Porto Belo reúne hoje os três motivos que mostram que esta é a hora certa de comprar.
+                Porto Belo reúne hoje os três fatores que definem o atual estágio do ciclo de valorização.
               </p>
             </div>
 
@@ -595,7 +596,7 @@ export default function PortoBeloPage() {
               <p className="font-sans" style={{ fontSize: 'var(--fs-16)', lineHeight: 1.85, color: 'var(--text)', margin: 'var(--s-5) 0 0' }}>
                 Em cinco anos, Porto Belo valorizou mais de 300%, quase quatro vezes mais que a
                 poupança e o dólar e bem acima do Ibovespa no mesmo período. A cidade repete o caminho
-                de Itapema, com a vantagem de ainda dar tempo de comprar antes da maior parte da alta.
+                de Itapema, com boa parte do ciclo de valorização ainda à frente.
               </p>
 
               <div

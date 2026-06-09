@@ -8,7 +8,7 @@ import RouteHeroBg from '../components/RouteHeroBg'
 export const metadata: Metadata = {
   title: 'ARI · Ativo de Renda Imobiliária — ARCK1PRO',
   description:
-    'Invista com retornos de até 3% ao mês no litoral de Santa Catarina, isento de IR e com garantia real de 200% em ativos registrados em cartório.',
+    'Um ativo de renda imobiliária com retornos de até 3% ao mês no litoral de Santa Catarina, isento de IR e com garantia real de 200% em ativos registrados em cartório. Acesso mediante qualificação.',
 }
 
 const metrics = [
@@ -99,12 +99,12 @@ export default function AriPage() {
           className="font-display text-cream lg:text-5xl text-4xl"
           style={{ fontWeight: 700, lineHeight: 1.12, margin: 0, maxWidth: 900, marginInline: 'auto' }}
         >
-          Invista com retornos de até 3% ao mês no litoral de Santa Catarina,{' '}
+          Um ativo de renda imobiliária no litoral de Santa Catarina, com retornos de até 3% ao mês e{' '}
           <span className="text-gold-hero">isento de IR</span>
         </h1>
         <div className='m-10'  style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--s-3)', justifyContent: 'center' }}>
           <Link href="#formulario" className="btn btn--gold">
-            Quero saber mais <span className="arrow">→</span>
+            Solicitar avaliação <span className="arrow">→</span>
           </Link>
           <a href="#o-que-e" className="btn btn--ghost-inv">
             Entenda o ativo ↓
@@ -199,7 +199,7 @@ export default function AriPage() {
 
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: 'var(--s-8)' }}>
               <Link href="#formulario" className="btn btn--gold">
-                Quero investir <span className="arrow">→</span>
+                Solicitar qualificação <span className="arrow">→</span>
               </Link>
             </div>
 
@@ -312,8 +312,8 @@ export default function AriPage() {
                 Tire suas dúvidas
               </h2>
               <p className="font-sans" style={{ fontSize: 'var(--fs-15)', color: 'var(--text-muted)', margin: 0, maxWidth: 560, marginInline: 'auto' }}>
-                Se a sua pergunta não estiver aqui, preencha o formulário abaixo e nossa equipe entra
-                em contato.
+                Se a sua pergunta não estiver aqui, encaminhe sua candidatura abaixo e nossa equipe
+                de estruturação retoma o contato.
               </p>
             </div>
 
@@ -330,10 +330,11 @@ export default function AriPage() {
                   className="font-display text-navy"
                   style={{ fontSize: 'var(--fs-32)', fontWeight: 300, lineHeight: 1.2, margin: '0 0 var(--s-4)' }}
                 >
-                  Assuma a sua posição no litoral de SC
+                  Candidate-se a uma posição no litoral de SC
                 </h2>
                 <p className="font-sans" style={{ fontSize: 'var(--fs-16)', lineHeight: 1.7, color: 'var(--text-muted)', margin: '0 0 var(--s-5)' }}>
-                  Preencha o formulário e nossa equipe entrará em contato com você imediatamente.
+                  O ARI opera por seleção. Preencha sua candidatura e nossa equipe de estruturação
+                  avalia o seu perfil antes de apresentar as operações abertas.
                 </p>
                 <p className="font-sans" style={{ fontSize: 'var(--fs-13)', lineHeight: 1.6, color: 'var(--text-faint)', margin: 0 }}>
                   Ao enviar, você concorda em receber contato da equipe ARCK1PRO. Seus dados não são

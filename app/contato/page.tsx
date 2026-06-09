@@ -127,7 +127,7 @@ export default function ContatoPage() {
           className="font-display text-cream lg:text-5xl text-4xl"
           style={{ fontWeight: 700, lineHeight: 1.15, margin: 0, maxWidth: 820, marginInline: 'auto' }}
         >
-          Vamos estruturar o seu <span className="text-gold-hero">próximo investimento</span>
+          O primeiro passo para acessar o <span className="text-gold-hero">ecossistema</span>
         </h1>
         <p
           className="font-sans"
@@ -139,7 +139,8 @@ export default function ContatoPage() {
             margin: 'var(--s-5) auto 0',
           }}
         >
-          Fale com o nosso time pelos canais diretos ou preencha o formulário. Sem compromisso.
+          Fale com o nosso time pelos canais diretos ou encaminhe sua candidatura. Tudo começa por
+          uma conversa de qualificação.
         </p>
       </div>
 

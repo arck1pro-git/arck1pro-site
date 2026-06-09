@@ -61,7 +61,7 @@ export default function HeroSection() {
         </h1>
 
         <p className="font-sans fs-16 leading-[1.75] font-bold text-[rgba(236,235,231,0.55)] max-w-[540px]">
-          Grandes carteiras de investimento são construídas sobre bases concretas. Abrimos o mercado imobiliário para quem quer investir com inteligência onde o dinheiro realmente circula
+          Grandes patrimônios se constroem sobre bases concretas. Abrimos a fase mais rentável da incorporação a um grupo restrito de investidores qualificados, onde o capital realmente trabalha.
         </p>
 
         <div className="flex gap-3 flex-wrap pt-2">
@@ -69,7 +69,7 @@ export default function HeroSection() {
             Nossa história <span className="arrow">→</span>
           </a>
           <a href="#ari" className="btn btn--ghost-inv">
-            Conhecer o ARI
+            Conhecer o ARI <span className="arrow">→</span>
           </a>
         </div>
       </div>

@@ -149,7 +149,7 @@ export default function EmpreendimentosPage() {
                   toda a operação do prédio.
                 </p>
                 <Link href="/contato" className="btn btn--gold" style={{ width: 'fit-content' }}>
-                  Quero conhecer <span className="arrow">→</span>
+                  Solicitar acesso <span className="arrow">→</span>
                 </Link>
               </div>
             </div>
@@ -181,7 +181,7 @@ export default function EmpreendimentosPage() {
                 toda a operação do prédio.
               </p>
               <Link href="/contato" className="btn btn--gold" style={{ width: 'fit-content' }}>
-                Quero conhecer <span className="arrow">→</span>
+                Solicitar acesso <span className="arrow">→</span>
               </Link>
             </div>
           </div>
@@ -199,9 +199,9 @@ export default function EmpreendimentosPage() {
                 Por dentro do projeto
               </p>
               <p style={{ margin: '0 0 var(--s-5)' }}>
-                O Tourmaline Tower é mais do que um prédio bonito. Ele foi pensado para render e para
-                se valorizar com o tempo: um sistema integrado controla a operação do edifício, reduz
-                custos e desgaste e ajuda a sustentar o valor do imóvel no longo prazo.
+                O Tourmaline Tower é mais do que um endereço de alto padrão. Ele foi concebido para
+                render e para se valorizar com o tempo: um sistema integrado controla a operação do
+                edifício, reduz custos e desgaste e sustenta o valor do imóvel no longo prazo.
               </p>
               <p style={{ margin: 0 }}>
                 A tecnologia trabalha a favor de quem mora e de quem investe. Ela cuida da rotina do
@@ -371,10 +371,10 @@ export default function EmpreendimentosPage() {
                 maxWidth: 560,
               }}
             >
-              Quer investir em um empreendimento estruturado pela ARCK1PRO?
+              Quer ser avaliado para investir em um empreendimento estruturado pela ARCK1PRO?
             </p>
             <Link href="/contato" className="btn btn--gold">
-              Falar com o nosso time <span className="arrow">→</span>
+              Solicitar avaliação estratégica <span className="arrow">→</span>
             </Link>
           </div>
         </div>

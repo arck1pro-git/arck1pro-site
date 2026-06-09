@@ -70,7 +70,7 @@ export default function PeopleSection() {
             className="btn btn--gold w-full justify-center"
             aria-expanded={open}
           >
-            Fabhrício
+            Fabhrício ARI
             <ChevronDown
               size={16}
               className="transition-transform duration-300"

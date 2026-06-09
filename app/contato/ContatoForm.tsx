@@ -123,7 +123,7 @@ export default function ContatoForm({ variant = 'light' }: { variant?: Variant }
           Sou…
         </option>
         <option value="corretor" style={{ color: 'var(--brand-navy)' }}>
-          Sou corretor e quero vender o Tourmaline
+          Sou corretor e quero representar o Tourmaline
         </option>
         <option value="investidor" style={{ color: 'var(--brand-navy)' }}>
           Sou investidor

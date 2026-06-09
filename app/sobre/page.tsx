@@ -242,7 +242,7 @@ export default function SobrePage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
               {/* Fabrício */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-6)' }}>
-                <FounderPhoto src="/fabhricio.png" name="Fabrício" role="Fundador · Arquiteto" />
+                <FounderPhoto src="/fabhricio.png" name="Fabhrício ARI" role="Fundador · Arquiteto" />
                 <div
                   className="font-sans"
                   style={{ fontSize: 'var(--fs-15)', lineHeight: 1.8, color: 'var(--text)' }}

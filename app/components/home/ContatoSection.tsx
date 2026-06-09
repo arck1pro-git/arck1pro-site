@@ -1,8 +1,8 @@
 const icpOptions = [
-  { label: "Quero investir no ARI", sub: "Qualificação de investidor", href: "#ari" },
-  { label: "Sou corretor e quero vender o Tourmaline", sub: "Contato comercial Harpaluus", href: "#tourmaline" },
-  { label: "Quero comprar um apartamento no Tourmaline", sub: "LP do Tourmaline Tower", href: "#tourmaline" },
-  { label: "Tenho um terreno para negociar", sub: "Formulário de terrenos", href: "#contato" },
+  { label: "Candidatar-me ao ARI", sub: "Qualificação de investidor", href: "#ari" },
+  { label: "Sou corretor e quero representar o Tourmaline", sub: "Credenciamento Harpaluus", href: "#tourmaline" },
+  { label: "Quero acessar o Tourmaline Tower", sub: "LP do Tourmaline Tower", href: "#tourmaline" },
+  { label: "Tenho um terreno para apresentar", sub: "Análise de terrenos", href: "#contato" },
 ];
 
 export default function ContatoSection() {
