@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Clock, Building2, Briefcase, MapPin, TrendingUp, type LucideIcon } from "lucide-react";
+import ContactModal from "../ContactModal";
 
 type Stat = {
   value: string;
@@ -48,6 +49,7 @@ const stats: Stat[] = [
 export default function PortfolioSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     let sectionTop = 0;
@@ -124,6 +126,15 @@ export default function PortfolioSection() {
                 Não entregamos apenas paredes; entregamos um ecossistema digital projetado para performar, onde a tecnologia serve à vida e a inteligência garante a perpetuidade do valor.
               </p>
             </div>
+
+            <button
+              type="button"
+              className="btn btn--gold"
+              style={{ width: "fit-content" }}
+              onClick={() => setModalOpen(true)}
+            >
+              Quero vender o Tourmaline <span className="arrow">→</span>
+            </button>
           </div>
 
           {/* Espaçador — afasta um pouco os bullets do texto */}
@@ -157,6 +168,8 @@ export default function PortfolioSection() {
             })}
           </div>
         </div>
+
+        <ContactModal open={modalOpen} role={modalOpen ? "corretor" : null} onClose={() => setModalOpen(false)} />
     </section>
   );
 }

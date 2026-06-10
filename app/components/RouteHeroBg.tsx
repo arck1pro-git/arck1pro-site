@@ -52,7 +52,7 @@ export default function RouteHeroBg() {
         className="absolute top-[-30%] bottom-[-30%] left-0 right-0 will-change-transform"
         style={{
           background:
-            "linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.62)), url('/hero.png') center 30% / cover no-repeat",
+            "linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.62)), url('/header.png') center 30% / cover no-repeat",
         }}
       />
     </div>

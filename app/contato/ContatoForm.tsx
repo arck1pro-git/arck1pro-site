@@ -13,11 +13,20 @@ const investOptions = [
 const monthsOptions = ['3 meses', '6 meses', '12 meses', '24 meses', '36 meses ou mais']
 
 type Variant = 'light' | 'dark'
+type Role = '' | 'corretor' | 'investidor'
 
-export default function ContatoForm({ variant = 'light' }: { variant?: Variant }) {
+export default function ContatoForm({
+  variant = 'light',
+  initialRole = '',
+  lockRole = false,
+}: {
+  variant?: Variant
+  initialRole?: Role
+  lockRole?: boolean
+}) {
   const [sent, setSent] = useState(false)
   const [form, setForm] = useState({
-    role: '',
+    role: initialRole as Role,
     name: '',
     email: '',
     phone: '',
@@ -119,23 +128,25 @@ export default function ContatoForm({ variant = 'light' }: { variant?: Variant }
         ...cardStyle,
       }}
     >
-      <select
-        required
-        value={form.role}
-        onChange={(e) => setForm({ ...form, role: e.target.value })}
-        className="font-sans"
-        style={selectStyle(form.role)}
-      >
-        <option value="" disabled>
-          Sou…
-        </option>
-        <option value="corretor" style={{ color: 'var(--brand-navy)' }}>
-          Sou corretor e quero representar o Tourmaline
-        </option>
-        <option value="investidor" style={{ color: 'var(--brand-navy)' }}>
-          Sou investidor
-        </option>
-      </select>
+      {!lockRole && (
+        <select
+          required
+          value={form.role}
+          onChange={(e) => setForm({ ...form, role: e.target.value as Role })}
+          className="font-sans"
+          style={selectStyle(form.role)}
+        >
+          <option value="" disabled>
+            Sou…
+          </option>
+          <option value="corretor" style={{ color: 'var(--brand-navy)' }}>
+            Sou corretor e quero representar o Tourmaline
+          </option>
+          <option value="investidor" style={{ color: 'var(--brand-navy)' }}>
+            Sou investidor
+          </option>
+        </select>
+      )}
       <input
         type="text"
         required

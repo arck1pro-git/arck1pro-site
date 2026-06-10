@@ -387,7 +387,7 @@ body {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #000 0%, #000 42%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0.2) 100%);
+  background: linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.75) 42%, rgba(0,0,0,0.45) 72%, rgba(0,0,0,0.1) 100%);
   pointer-events: none;
 }
 

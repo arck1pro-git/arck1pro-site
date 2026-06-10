@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import ContatoForm from "../contato/ContatoForm";
+import ContactModal from "./ContactModal";
+
+type ModalRole = "corretor" | "investidor";
 
 type FAQItem = {
   number: string;
@@ -48,6 +50,7 @@ const faqItems: FAQItem[] = [
 
 export default function Footer() {
   const [open, setOpen] = useState<number | null>(null);
+  const [modalRole, setModalRole] = useState<ModalRole | null>(null);
 
   return (
     <footer
@@ -71,22 +74,38 @@ export default function Footer() {
           gap: "var(--s-10)",
         }}
       >
-        {/* Formulário */}
-        <div style={{ maxWidth: 560, margin: "0 auto", width: "100%" }}>
+        {/* Segmentação — abre o formulário no modal conforme o perfil */}
+        <div style={{ maxWidth: 560, margin: "0 auto", width: "100%", textAlign: "center" }}>
           <p
             className="font-display"
             style={{
               fontSize: "var(--fs-24)",
               fontWeight: 300,
               letterSpacing: "-0.01em",
-              textAlign: "center",
-              marginBottom: "var(--s-4)",
+              marginBottom: "var(--s-3)",
             }}
           >
             Fale com a ARCK<span className="text-gold-grad" style={{ fontWeight: 600 }}>1</span>PRO
           </p>
-
-          <ContatoForm variant="dark" />
+          <p
+            className="font-sans"
+            style={{
+              fontSize: "var(--fs-14)",
+              lineHeight: 1.65,
+              color: "rgba(236,235,231,0.6)",
+              marginBottom: "var(--s-6)",
+            }}
+          >
+            Diga quem você é e damos sequência à sua qualificação.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--s-3)", justifyContent: "center" }}>
+            <button type="button" className="btn btn--gold" onClick={() => setModalRole("investidor")}>
+              Sou investidor <span className="arrow">→</span>
+            </button>
+            <button type="button" className="btn btn--ghost-inv" onClick={() => setModalRole("corretor")}>
+              Sou corretor <span className="arrow">→</span>
+            </button>
+          </div>
         </div>
 
         {/* Accordion */}
@@ -295,6 +314,12 @@ export default function Footer() {
           </p>
         </div>
       </div>
+
+      <ContactModal
+        open={modalRole !== null}
+        role={modalRole}
+        onClose={() => setModalRole(null)}
+      />
     </footer>
   );
 }

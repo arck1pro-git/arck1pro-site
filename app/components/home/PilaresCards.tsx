@@ -6,23 +6,28 @@ import { useRef } from "react";
 const projects = [
   {
     title: "Desenvolvimento de Projeto",
-    body: "BIM completo com tipologia orientada à eficiência de capital. Cada metro quadrado é projetado para maximizar VGV e reduzir o tempo de venda.",
+    body: "Aquisição do terreno, diligências jurídicas da área e viabilidades técnicas do projeto com os órgãos públicos, inclusive ambientais. Desenvolvimento de todo o projeto em tecnologia BIM. Todo o projeto é desenvolvido para um público específico, com tipologias de plantas orientadas à eficiência de capital e maior retorno do investidor em todas as fases. Cada metro quadrado é projetado para maximizar VGV e reduzir o tempo de venda. Além de contar com sustentabilidade integrada e certificada e tecnologia IA Smart Building.",
     src: "/pilar1.png",
   },
   {
     title: "Captação de Recursos",
-    body: "Estrutura própria de captação via ARI. Aqui é onde o investidor entra. Captamos recurso necessário para o desenvolvimento do projeto.",
+    body: "Após o desenvolvimento e validação de todo o projeto, com critérios extremamente rígidos, entra a estrutura própria de captação via ARI – Ativo de Renda Imobiliária. Aqui é onde o investidor entra. Captamos no máximo 5% do valor do VGV para a estruturação de todo o projeto. Esse valor normalmente é captado com grupos de 8 a 17 investidores qualificados, criteriosamente selecionados para participar do desenvolvimento do projeto e do sucesso da incorporação.",
     src: "/pilar 2.png",
   },
   {
+    title: "Incorporação",
+    body: "Nesse momento finalizamos todo o processo legal de aprovar e registrar a construção de um empreendimento, para então obter o R.I. (Registro da Incorporação), que nos permite vender as unidades antes ou durante as obras de forma totalmente legal e com segurança aos compradores e investidores.",
+    src: "/pilar4.png",
+  },
+  {
     title: "Lançamento Imobiliário",
-    body: "Equipe comercial, evento e treinamento de corretores dentro do mesmo ecossistema. A operação de vendas é montada antes do lançamento, não durante.",
+    body: "Aqui é onde toda a nossa equipe comercial, devidamente treinada, capacita e orienta mais de 10.000 corretores, no Brasil e no exterior, para a venda do empreendimento. As unidades disponíveis esgotam-se em poucos meses. Com a venda do empreendimento, fechamos o ciclo ARI, onde o capital retorna aos investidores, encerrando a operação de incorporação imobiliária.",
     src: "/pilar3.png",
   },
   {
-    title: "Incorporação",
-    body: "Estruturação técnica, jurídica e comercial do empreendimento em uma operação integrada. Do registro de incorporação à entrega das chaves.",
-    src: "/pilar4.png",
+    title: "Construção do Empreendimento",
+    body: "Para concretizar todo o processo, entramos na fase de construção do empreendimento com a execução física do projeto. Através da captação com a venda e parceria com fundos imobiliários, garantimos o capital necessário para que a obra avance com rapidez. Essa fase exige seguir normas técnicas rigorosas e a execução de etapas interdependentes, que garantem a segurança, a qualidade estrutural e a entrega do imóvel no prazo.",
+    src: "/tourmaline.png",
   },
 ];
 
