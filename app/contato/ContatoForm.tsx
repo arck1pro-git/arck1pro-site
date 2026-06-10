@@ -10,8 +10,6 @@ const investOptions = [
   'R$ 1 milhão ou mais',
 ]
 
-const monthsOptions = ['3 meses', '6 meses', '12 meses', '24 meses', '36 meses ou mais']
-
 type Variant = 'light' | 'dark'
 type Role = '' | 'corretor' | 'investidor'
 
@@ -30,10 +28,10 @@ export default function ContatoForm({
     name: '',
     email: '',
     phone: '',
-    profession: '',
+    estado: '',
+    cidade: '',
     alreadyInvests: '',
     investFrom: '',
-    investMonths: '',
   })
 
   const isInvestidor = form.role === 'investidor'
@@ -165,20 +163,31 @@ export default function ContatoForm({
         className="font-sans"
         style={inputStyle}
       />
+      <input
+        type="tel"
+        required
+        placeholder={form.role === 'corretor' ? 'WhatsApp' : 'Telefone'}
+        value={form.phone}
+        onChange={(e) => setForm({ ...form, phone: e.target.value })}
+        className="font-sans"
+        style={inputStyle}
+      />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <input
-          type="tel"
-          placeholder="Telefone"
-          value={form.phone}
-          onChange={(e) => setForm({ ...form, phone: e.target.value })}
+          type="text"
+          required
+          placeholder="Estado"
+          value={form.estado}
+          onChange={(e) => setForm({ ...form, estado: e.target.value })}
           className="font-sans"
           style={inputStyle}
         />
         <input
           type="text"
-          placeholder="Profissão"
-          value={form.profession}
-          onChange={(e) => setForm({ ...form, profession: e.target.value })}
+          required
+          placeholder="Cidade"
+          value={form.cidade}
+          onChange={(e) => setForm({ ...form, cidade: e.target.value })}
           className="font-sans"
           style={inputStyle}
         />
@@ -195,11 +204,14 @@ export default function ContatoForm({
             <option value="" disabled>
               Você já investe?
             </option>
-            <option value="sim" style={{ color: 'var(--brand-navy)' }}>
-              Sim, já invisto
+            <option value="imobiliario" style={{ color: 'var(--brand-navy)' }}>
+              Sim, no mercado imobiliário
+            </option>
+            <option value="financeiro" style={{ color: 'var(--brand-navy)' }}>
+              Sim, no mercado financeiro
             </option>
             <option value="nao" style={{ color: 'var(--brand-navy)' }}>
-              Ainda não
+              Ainda não invisto
             </option>
           </select>
           <select
@@ -210,25 +222,9 @@ export default function ContatoForm({
             style={selectStyle(form.investFrom)}
           >
             <option value="" disabled>
-              Quero investir a partir de
+              Capital disponível para investir?
             </option>
             {investOptions.map((opt) => (
-              <option key={opt} value={opt} style={{ color: 'var(--brand-navy)' }}>
-                {opt}
-              </option>
-            ))}
-          </select>
-          <select
-            required
-            value={form.investMonths}
-            onChange={(e) => setForm({ ...form, investMonths: e.target.value })}
-            className="font-sans"
-            style={selectStyle(form.investMonths)}
-          >
-            <option value="" disabled>
-              Quero investir em
-            </option>
-            {monthsOptions.map((opt) => (
               <option key={opt} value={opt} style={{ color: 'var(--brand-navy)' }}>
                 {opt}
               </option>
@@ -239,7 +235,7 @@ export default function ContatoForm({
       <button
         type="submit"
         className="btn btn--gold"
-        style={{ width: 'fit-content', margin: 'auto auto 0' }}
+        style={{ width: 'fit-content', margin: 'var(--s-4) auto 0' }}
       >
         {submitLabel} <span className="arrow">→</span>
       </button>

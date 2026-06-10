@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import RouteHeroBg from '../components/RouteHeroBg'
 
@@ -7,19 +7,6 @@ export const metadata: Metadata = {
   description:
     'Por que Porto Belo e a Costa Esmeralda se tornaram a região que mais valoriza no litoral brasileiro.',
 }
-
-const corredor = [
-  'Florianópolis',
-  'Gov. Celso Ramos',
-  'Tijucas',
-  'Porto Belo',
-  'Itapema',
-  'Balneário Camboriú',
-  'Itajaí',
-  'Navegantes',
-  'Penha',
-  'Piçarras',
-]
 
 const triade = [
   {
@@ -35,9 +22,10 @@ const triade = [
   {
     name: 'Porto Belo',
     tag: 'Ponto de inflexão',
-    text: 'Foi a cidade onde o mercado imobiliário mais cresceu em Santa Catarina em 2024, com mais vendas que Balneário Camboriú e Itapema. Tem um terço da oferta de Itapema para uma procura cada vez maior, fica ao lado de Bombinhas e recebe a sobra de demanda das duas vizinhas.',
+    text: 'Foi a cidade onde o mercado imobiliário mais cresceu em Santa Catarina em 2024, com mais vendas que Balneário Camboriú e Itapema. Tem um terço da oferta de Itapema para uma procura cada vez maior, fica ao lado de Bombinhas e recebe o excesso de demanda das duas vizinhas.',
   },
 ]
+
 
 const porqueAgora = [
   {
@@ -134,7 +122,7 @@ const celebridades = [
   { nome: 'Ratinho', area: 'Apresentador', iniciais: 'R' },
   { nome: 'Fernando & Sorocaba', area: 'Dupla sertaneja', iniciais: 'FS' },
   { nome: 'Felipe Titto', area: 'Ator', iniciais: 'FT' },
-  { nome: 'Maria Cecília', area: 'Cantora', iniciais: 'MC' },
+  { nome:'Rafael Nadal', area: 'Cantora', iniciais: 'MC' },
 ]
 
 const sectionTitle: React.CSSProperties = {
@@ -218,9 +206,10 @@ export default function PortoBeloPage() {
             margin: 'var(--s-6) auto 0',
           }}
         >
-          Itapema, Porto Belo e a Costa Esmeralda concentram a atenção dos grandes investidores do
-          Brasil. A valorização não é moda: tem base econômica, geográfica e populacional que não se
-          repete em nenhum outro trecho do litoral do país.
+          Itapema, Porto Belo são cidades da Costa Esmeralda no litoral catarinense
+          e concentram a atenção dos grandes investidores do Brasil e do exterior.
+          A valorização não é moda: tem base econômica, geográfica e populacional
+          que não se repete em nenhum outro trecho do litoral do país.
         </p>
       </div>
 
@@ -285,54 +274,6 @@ export default function PortoBeloPage() {
               </p>
             </div>
 
-            <div
-              className="rounded-4xl lift"
-              style={{
-                background: 'var(--brand-navy)',
-                padding: 'var(--s-10) var(--s-8)',
-              }}
-            >
-              <p
-                className="font-mono"
-                style={{
-                  fontSize: 11,
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(236,235,231,0.45)',
-                  marginBottom: 'var(--s-6)',
-                  textAlign: 'center',
-                }}
-              >
-                O corredor da Costa Esmeralda
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--s-2)', justifyContent: 'center', alignItems: 'center' }}>
-                {corredor.map((city, i) => {
-                  const destaque = city === 'Porto Belo'
-                  return (
-                    <div key={city} style={{ display: 'flex', alignItems: 'center', gap: 'var(--s-2)' }}>
-                      <span
-                        className="font-display"
-                        style={{
-                          fontSize: 'var(--fs-14)',
-                          padding: 'var(--s-2) var(--s-4)',
-                          borderRadius: 'var(--r-pill)',
-                          whiteSpace: 'nowrap',
-                          background: destaque ? 'var(--brand-gold)' : 'rgba(255,255,255,0.06)',
-                          color: destaque ? 'var(--brand-navy)' : 'var(--brand-cream)',
-                          fontWeight: destaque ? 600 : 400,
-                          border: destaque ? 'none' : 'var(--line-1) solid rgba(236,235,231,0.14)',
-                        }}
-                      >
-                        {city}
-                      </span>
-                      {i < corredor.length - 1 && (
-                        <span style={{ color: 'rgba(236,235,231,0.3)', fontSize: 'var(--fs-12)' }}>→</span>
-                      )}
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
           </div>
 
           {/* DOBRA 5 — A tríade */}
@@ -357,8 +298,8 @@ export default function PortoBeloPage() {
                   }}
                 >
                   <span
-                    className="font-mono text-gold"
-                    style={{ fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase' }}
+                    className="font-display text-gold text-base"
+                    style={{ letterSpacing: '0.12em', textTransform: 'uppercase' }}
                   >
                     {c.tag}
                   </span>
@@ -446,9 +387,8 @@ export default function PortoBeloPage() {
                     {d.label}
                   </p>
                   <p
-                    className="font-mono"
+                    className="font-display text-base"
                     style={{
-                      fontSize: 10,
                       letterSpacing: '0.1em',
                       textTransform: 'uppercase',
                       color: 'var(--text-faint)',
@@ -469,14 +409,13 @@ export default function PortoBeloPage() {
               className="rounded-4xl lift overflow-clip"
               style={{
                 minHeight: 380,
-                background: "url('/footer.png') center / cover no-repeat",
+                background: "url('/header.png') center / cover no-repeat",
               }}
             />
             <div style={{ maxWidth: 720, marginInline: 'auto', textAlign: 'center', marginTop: 'var(--s-10)' }}>
               <p
-                className="font-mono"
+                className="font-display text-base"
                 style={{
-                  fontSize: 11,
                   letterSpacing: '0.18em',
                   textTransform: 'uppercase',
                   color: 'var(--brand-gold)',
@@ -535,7 +474,7 @@ export default function PortoBeloPage() {
                     gap: 'var(--s-4)',
                   }}
                 >
-                  <span className="font-mono text-gold" style={{ fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                  <span className="font-display text-gold text-base" style={{ letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                     {m.tag}
                   </span>
                   <h3 className="font-display" style={{ fontSize: 'var(--fs-24)', fontWeight: 500, margin: 0, lineHeight: 1.2 }}>
@@ -591,7 +530,7 @@ export default function PortoBeloPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-5">
               <h2 className="font-display text-navy" style={{ fontSize: 'var(--fs-32)', fontWeight: 400, lineHeight: 1.2, margin: 0 }}>
-                Quem entendeu Itapema em 2018 não precisou de mais nada
+                Quem entendeu o litoral em 2018 não precisou de mais nada
               </h2>
               <p className="font-sans" style={{ fontSize: 'var(--fs-16)', lineHeight: 1.85, color: 'var(--text)', margin: 'var(--s-5) 0 0' }}>
                 Em cinco anos, Porto Belo valorizou mais de 300%, quase quatro vezes mais que a
@@ -615,7 +554,7 @@ export default function PortoBeloPage() {
                   retorno médio do imóvel no Brasil, acima da Selic de 14,25%, somando 6,2% de
                   aluguel e 12,9% de valorização real.
                 </p>
-                <p className="font-mono" style={{ fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-faint)', margin: 0 }}>
+                <p className="font-display text-base" style={{ letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-faint)', margin: 0 }}>
                   Fonte: FGV-IBRE / QuintoAndar · via Estadão
                 </p>
               </div>
@@ -630,7 +569,7 @@ export default function PortoBeloPage() {
                   padding: 'var(--s-10) var(--s-8)',
                 }}
               >
-                <p className="font-mono" style={{ fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-faint)', margin: '0 0 var(--s-6)' }}>
+                <p className="font-display text-base" style={{ letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-faint)', margin: '0 0 var(--s-6)' }}>
                   Valorização acumulada · 2018–2023
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-5)' }}>
@@ -657,7 +596,7 @@ export default function PortoBeloPage() {
                     </div>
                   ))}
                 </div>
-                <p className="font-mono" style={{ fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-faint)', margin: 'var(--s-6) 0 0' }}>
+                <p className="font-display text-base" style={{ letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-faint)', margin: 'var(--s-6) 0 0' }}>
                   Fonte: FipeZAP · rendimento acumulado em 5 anos
                 </p>
               </div>
@@ -671,8 +610,7 @@ export default function PortoBeloPage() {
                 Onde o grande capital já chegou
               </h2>
               <p className="font-sans" style={{ fontSize: 'var(--fs-16)', lineHeight: 1.85, color: 'var(--text)', margin: 0 }}>
-                Quem tem a melhor assessoria de patrimônio do país aposta na mesma região. Grandes
-                nomes do esporte e da música já compraram imóveis aqui.
+                Quem tem a melhor assessoria de patrimônio do país aposta na mesma região. Grandes nomes do esporte e da música já compraram imóveis aqui em Porto Belo.
               </p>
             </div>
 
@@ -713,7 +651,7 @@ export default function PortoBeloPage() {
                   <h3 className="font-display text-navy" style={{ fontSize: 'var(--fs-16)', fontWeight: 500, margin: 0, lineHeight: 1.2, overflowWrap: 'break-word' }}>
                     {c.nome}
                   </h3>
-                  <span className="font-mono text-gold" style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', overflowWrap: 'break-word' }}>
+                  <span className="font-display text-gold text-base" style={{ letterSpacing: '0.12em', textTransform: 'uppercase', overflowWrap: 'break-word' }}>
                     {c.area}
                   </span>
                 </div>
@@ -735,7 +673,7 @@ export default function PortoBeloPage() {
               className="font-display"
               style={{ fontSize: 'var(--fs-40)', fontWeight: 400, lineHeight: 1.15, margin: '0 auto var(--s-5)', maxWidth: 640 }}
             >
-              O mercado está claro. A posição está disponível.
+              O mercado está claro. Candidate-se para investir.
             </h2>
             <p
               className="font-sans"

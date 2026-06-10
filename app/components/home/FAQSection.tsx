@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 
@@ -153,7 +153,7 @@ export default function FAQSection() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontFamily: "var(--font-mono)",
+                    fontFamily: "var(--font-display)",
                     fontSize: "var(--fs-16)",
                     lineHeight: 1,
                     padding: 0,

@@ -61,9 +61,8 @@ export default async function ArticlePage({
         <header style={{ marginBottom: 'var(--s-10)' }}>
           {post.category && (
             <p
-              className="font-mono text-gold"
+              className="font-display text-gold text-base"
               style={{
-                fontSize: 'var(--fs-12)',
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
                 marginBottom: 'var(--s-3)',
@@ -86,8 +85,8 @@ export default async function ArticlePage({
           </h1>
 
           <p
-            className="font-mono"
-            style={{ fontSize: 'var(--fs-12)', color: 'var(--text-faint)', letterSpacing: '0.1em' }}
+            className="font-display text-base"
+            style={{ color: 'var(--text-faint)', letterSpacing: '0.1em' }}
           >
             {formatDate(post.scheduledAt ?? post.updatedAt)}
           </p>

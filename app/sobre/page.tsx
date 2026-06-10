@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import RouteHeroBg from '../components/RouteHeroBg'
 
@@ -71,7 +71,7 @@ const pilares = [
   },
   {
     title: 'Capital estruturado',
-    text: 'O ARI financia a pré-incorporação e elimina a dependência de banco na fase mais crítica e arriscada do ciclo.',
+    text: 'O ARI financia a pré-incorporação e elimina a dependência de banco na fase de maior retorno do ciclo.',
   },
   {
     title: 'Mercado estratégico',
@@ -129,9 +129,8 @@ function FounderPhoto({
           }}
         >
           <span
-            className="font-mono"
+            className="font-display text-base"
             style={{
-              fontSize: 11,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
               color: 'rgba(236,235,231,0.4)',
@@ -146,9 +145,8 @@ function FounderPhoto({
           {name}
         </p>
         <p
-          className="font-mono"
+          className="font-display text-base"
           style={{
-            fontSize: 11,
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
             color: 'var(--brand-gold-soft)',
@@ -187,8 +185,8 @@ export default function SobrePage() {
         }}
       >
         <p
-          className="font-mono text-gold-soft"
-          style={{ fontSize: 'var(--fs-12)', letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
+          className="font-display text-gold-soft text-base"
+          style={{ letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
         >
           Nossa História
         </p>
@@ -226,14 +224,13 @@ export default function SobrePage() {
           <div>
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-12)' }}>
               <p
-                className="font-mono text-gold"
-                style={{ fontSize: 'var(--fs-12)', letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
+                className="font-display text-gold text-base"
+                style={{ letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
               >
                 Os fundadores
               </p>
               <h2
-                className="font-display text-navy"
-                style={{ fontSize: 'var(--fs-32)', fontWeight: 300, lineHeight: 1.2, margin: 0 }}
+                className="font-display text-4xl lg:text-6xl font-bold text-navy"
               >
                 Duas jornadas, um ecossistema
               </h2>
@@ -298,14 +295,13 @@ export default function SobrePage() {
           <div>
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-12)' }}>
               <p
-                className="font-mono text-gold"
-                style={{ fontSize: 'var(--fs-12)', letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
+                className="font-display text-gold text-base"
+                style={{ letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
               >
                 A trajetória
               </p>
               <h2
-                className="font-display text-navy"
-                style={{ fontSize: 'var(--fs-32)', fontWeight: 300, lineHeight: 1.2, margin: 0 }}
+                className="font-display text-4xl lg:text-6xl font-bold text-navy"
               >
                 Os marcos que definiram a ARCK1PRO
               </h2>
@@ -358,14 +354,13 @@ export default function SobrePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-4">
               <p
-                className="font-mono text-gold"
-                style={{ fontSize: 'var(--fs-12)', letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
+                className="font-display text-gold text-base"
+                style={{ letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
               >
                 O que é a ARCK1PRO
               </p>
               <h2
-                className="font-display text-navy"
-                style={{ fontSize: 'var(--fs-32)', fontWeight: 300, lineHeight: 1.2, margin: 0 }}
+                className="font-display text-4xl font-bold text-navy"
               >
                 Somos o método por trás de cada empreendimento
               </h2>
@@ -426,7 +421,7 @@ export default function SobrePage() {
               },
               {
                 label: 'Visão',
-                text: 'Ser reconhecida como o maior hub de estruturação de incorporação imobiliária do litoral sul do Brasil, com R$ 300 milhões captados via ARI, R$ 3 bilhões em VGV estruturado para a Harpaluus e dezenas de empreendimentos tecnológicos e sustentáveis que redefinam o padrão de moradia e investimento na região.',
+                text: 'Ser reconhecida como o maior ecossistema de estruturação de incorporação imobiliária do Brasil, com R$ 3 bilhões em VGV estruturado para incorporadoras do grupo e dezenas de empreendimentos tecnológicos e sustentáveis que redefinam o padrão de moradia e investimento no litoral catarinense.',
               },
             ].map((b) => (
               <div
@@ -439,9 +434,8 @@ export default function SobrePage() {
                 }}
               >
                 <p
-                  className="font-mono text-gold"
+                  className="font-display text-gold text-base"
                   style={{
-                    fontSize: 'var(--fs-12)',
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
                     marginBottom: 'var(--s-4)',
@@ -463,14 +457,13 @@ export default function SobrePage() {
           <div>
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-10)' }}>
               <p
-                className="font-mono text-gold"
-                style={{ fontSize: 'var(--fs-12)', letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
+                className="font-display text-gold text-base"
+                style={{ letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
               >
                 Os quatro pilares
               </p>
               <h2
-                className="font-display text-navy"
-                style={{ fontSize: 'var(--fs-32)', fontWeight: 300, lineHeight: 1.2, margin: 0 }}
+                className="font-display text-4xl lg:text-6xl font-bold text-navy"
               >
                 Os princípios que guiam produto, comunicação e crescimento
               </h2>
@@ -490,7 +483,7 @@ export default function SobrePage() {
                     gap: 'var(--s-3)',
                   }}
                 >
-                  <span className="font-mono text-gold" style={{ fontSize: 'var(--fs-13)' }}>
+                  <span className="font-display text-gold" style={{ fontSize: 'var(--fs-13)' }}>
                     0{i + 1}
                   </span>
                   <h3
@@ -513,19 +506,13 @@ export default function SobrePage() {
           {/* DOBRA 7 — CTA */}
           <div style={{ textAlign: 'center' }}>
             <h2
-              className="font-display text-navy"
-              style={{
-                fontSize: 'var(--fs-32)',
-                fontWeight: 300,
-                lineHeight: 1.3,
-                margin: '0 auto var(--s-4)',
-                maxWidth: 560,
-              }}
+              className="font-display text-4xl font-bold 
+ text-navy"
             >
               Quer entender o ecossistema por dentro?
             </h2>
             <p
-              className="font-sans"
+              className="font-display"
               style={{
                 fontSize: 'var(--fs-15)',
                 lineHeight: 1.7,

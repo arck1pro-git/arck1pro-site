@@ -1,4 +1,4 @@
-const icpOptions = [
+﻿const icpOptions = [
   { label: "Candidatar-me ao ARI", sub: "Qualificação de investidor", href: "#ari" },
   { label: "Sou corretor e quero representar o Tourmaline", sub: "Credenciamento Harpaluus", href: "#tourmaline" },
   { label: "Quero acessar o Tourmaline Tower", sub: "LP do Tourmaline Tower", href: "#tourmaline" },
@@ -24,8 +24,8 @@ export default function ContatoSection() {
         {/* Filtro ICP */}
         <div>
           <p
-            className="font-mono"
-            style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(236,235,231,0.4)", marginBottom: "var(--s-5)" }}
+            className="font-display text-base"
+            style={{ letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(236,235,231,0.4)", marginBottom: "var(--s-5)" }}
           >
             Antes de continuar, nos diga: qual é o seu interesse?
           </p>
@@ -48,7 +48,7 @@ export default function ContatoSection() {
                 <span className="font-sans text-cream" style={{ fontSize: "var(--fs-14)", fontWeight: 500, lineHeight: 1.4 }}>
                   {opt.label} →
                 </span>
-                <span className="font-mono" style={{ fontSize: 11, color: "rgba(236,235,231,0.35)", letterSpacing: "0.08em" }}>
+                <span className="font-display" style={{ fontSize: 11, color: "rgba(236,235,231,0.35)", letterSpacing: "0.08em" }}>
                   {opt.sub}
                 </span>
               </a>

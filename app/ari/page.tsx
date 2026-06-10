@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import AriForm from './AriForm'
 import AriFaq from './AriFaq'
@@ -15,7 +15,7 @@ const metrics = [
   { value: '200%', label: 'de garantia real em ativos registrados em cartório' },
   { value: '0%', label: 'de IR sobre os rendimentos: o valor declarado já é líquido' },
   { value: 'R$ 50 mil', label: 'de aporte mínimo' },
-  { value: '1,5% a 3%', label: 'de retorno ao mês' },
+  { value: '1,5% a 3%', label: 'de retorno estimado ao mês' },
 ]
 
 const protecoes = [
@@ -44,6 +44,10 @@ const mercado = [
 ]
 
 const faqs = [
+  {
+    q: 'Qualquer pessoa pode investir?',
+    a: 'Não. O ARI opera por seleção: somente investidores qualificados e criteriosamente selecionados poderão participar. Para cada nova incorporação formamos um grupo restrito de 8 a 17 investidores, o que preserva a governança da operação e o alinhamento entre os sócios. Por isso o acesso acontece mediante qualificação. Você preenche seus dados, nossa equipe avalia o seu perfil e havendo aderência, apresenta as operações abertas.',
+  },
   {
     q: 'O ARI é um investimento seguro?',
     a: 'Sim. O ARI conta com três camadas de proteção: contrato regido pelo Código Civil, garantia de 200% em unidades futuras do empreendimento em que você investe e um imóvel físico de propriedade da incorporadora reservado como garantia no seu nome.',
@@ -122,32 +126,24 @@ export default function AriPage() {
       >
         <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-24)' }}>
           {/* DOBRA 2 — O que é o ARI */}
-          <div id="o-que-e" style={{ scrollMarginTop: 100 }}>
-            <div className="grid grid-cols-1 text-center gap-8 items-start" style={{ marginBottom: 'var(--s-10)' }}>
-              <div className="lg:col-span-5">
-                <h2
-                  className="font-display text-navy"
-                  style={{ fontSize: 'var(--fs-32)', fontWeight: 300, lineHeight: 1.2, margin: 0 }}
-                >
-                  Uma estrutura de investimento diferente de tudo que você conhece
-                </h2>
-              </div>
-              <div
-                className="lg:col-span-7 font-sans"
-                style={{ fontSize: 'var(--fs-16)', lineHeight: 1.85, color: 'var(--text)' }}
-              >
-                <p style={{ margin: '0 0 var(--s-5)' }}>
+          <div id="o-que-e" className="scroll-mt-[100px]">
+            <div className="max-w-[820px] mx-auto text-center mb-10">
+              <h2 className="lg:text-6xl text-4xl font-bold font-display text-navy">
+                Uma estrutura de investimento diferente de tudo que você conhece
+              </h2>
+              <div className="font-sans text-base leading-[1.85] text-navy mt-8">
+                <p className="mb-5">
                   No ARI, Ativo de Renda Imobiliária, você entra como sócio participante de um
                   empreendimento no litoral de Santa Catarina e recebe retorno prefixado proporcional
                   à performance do projeto. Você participa do resultado e também do processo de
                   geração de valor, com previsibilidade e alinhamento direto com quem executa a obra.
                 </p>
-                <p style={{ margin: '0 0 var(--s-5)' }}>
+                <p className="mb-5">
                   O ARI é capital direto com lastro real. Cada participação é garantida por 200% do
                   valor investido em unidades imobiliárias registradas em cartório, uma proteção que
                   um CRI, FII ou debênture dificilmente oferece da mesma forma.
                 </p>
-                <p style={{ margin: 0 }}>
+                <p className="m-0">
                   O rendimento de 1,5% a 3% ao mês é isento de Imposto de Renda pelo enquadramento
                   legal da estrutura. O valor declarado já é o rendimento líquido.
                 </p>
@@ -188,8 +184,7 @@ export default function AriPage() {
           <div>
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-10)' }}>
               <h2
-                className="font-display text-navy"
-                style={{ fontSize: 'var(--fs-32)', fontWeight: 300, lineHeight: 1.2, margin: 0 }}
+                className="lg:text-6xl text-4xl font-bold font-display text-navy"
               >
                 Simule o seu retorno
               </h2>
@@ -216,8 +211,7 @@ export default function AriPage() {
           <div>
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-10)' }}>
               <h2
-                className="font-display text-navy"
-                style={{ fontSize: 'var(--fs-32)', fontWeight: 300, lineHeight: 1.2, margin: '0 0 var(--s-3)' }}
+                className="font-display text-4xl lg:text-6xl font-bold m-5 text-navy"
               >
                 O ARI é um investimento seguro
               </h2>
@@ -259,8 +253,7 @@ export default function AriPage() {
             <div className="grid text-center grid-cols-1 gap-8 items-end" style={{ marginBottom: 'var(--s-10)' }}>
               <div >
                 <h2
-                  className="font-display text-navy"
-                  style={{ fontSize: 'var(--fs-40)', fontWeight: 400, lineHeight: 1.1, margin: 0 }}
+                  className="font-display text-4xl lg:text-6xl font-bold text-navy"
                 >
                   O litoral que não para de crescer
                 </h2>
@@ -292,8 +285,8 @@ export default function AriPage() {
                     {d.label}
                   </p>
                   <p
-                    className="font-mono"
-                    style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}
+                    className="font-display text-base"
+                    style={{ letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}
                   >
                     Fonte: {d.fonte}
                   </p>
@@ -306,8 +299,7 @@ export default function AriPage() {
           <div>
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-10)' }}>
               <h2
-                className="font-display text-navy"
-                style={{ fontSize: 'var(--fs-32)', fontWeight: 300, lineHeight: 1.2, margin: '0 0 var(--s-3)' }}
+                className="font-display text-4xl lg:text-5xl font-bold text-navy"
               >
                 Tire suas dúvidas
               </h2>
@@ -327,14 +319,13 @@ export default function AriPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-5">
                 <h2
-                  className="font-display text-navy"
-                  style={{ fontSize: 'var(--fs-32)', fontWeight: 300, lineHeight: 1.2, margin: '0 0 var(--s-4)' }}
+                  className="font-display text-4xl lg:text-5xl font-bold text-navy"
                 >
                   Candidate-se a uma posição no litoral de SC
                 </h2>
                 <p className="font-sans" style={{ fontSize: 'var(--fs-16)', lineHeight: 1.7, color: 'var(--text-muted)', margin: '0 0 var(--s-5)' }}>
                   O ARI opera por seleção. Preencha sua candidatura e nossa equipe de estruturação
-                  avalia o seu perfil antes de apresentar as operações abertas.
+                  avalia o seu perfil antes de apresentar a operação disponível.
                 </p>
                 <p className="font-sans" style={{ fontSize: 'var(--fs-13)', lineHeight: 1.6, color: 'var(--text-faint)', margin: 0 }}>
                   Ao enviar, você concorda em receber contato da equipe ARCK1PRO. Seus dados não são

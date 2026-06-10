@@ -1,6 +1,7 @@
-'use client'
+﻿'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import ContatoForm from '../contato/ContatoForm'
 
 type Role = 'corretor' | 'investidor'
@@ -31,6 +32,12 @@ export default function ContactModal({
   role: Role | null
   onClose: () => void
 }) {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
@@ -45,9 +52,9 @@ export default function ContactModal({
     }
   }, [open, onClose])
 
-  if (!open || !role) return null
+  if (!open || !role || !mounted) return null
 
-  return (
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
@@ -107,9 +114,8 @@ export default function ContactModal({
         </button>
 
         <p
-          className="font-mono text-gold"
+          className="font-display text-gold text-base"
           style={{
-            fontSize: 'var(--fs-12)',
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
             textAlign: 'center',
@@ -146,6 +152,7 @@ export default function ContactModal({
 
         <ContatoForm variant="light" initialRole={role} lockRole />
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

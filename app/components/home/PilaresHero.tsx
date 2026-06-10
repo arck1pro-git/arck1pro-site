@@ -7,18 +7,18 @@ export default function PilaresHero() {
       >
         A incorporação é a fase
         <br />
-        de maior rendimento no mercado imobiliário, e <span className="text-gold">poucos sabem como acessá-la.</span>
+        de maior rendimento no mercado imobiliário e <span className="text-gold">poucos sabem como acessá-la.</span>
         <br />
       </h2>
       <div className="max-w-2xl mt-6 flex flex-col gap-4" style={{ color: "var(--brand-navy)" }}>
         <p className="text-base leading-relaxed opacity-80">
-          Desenvolvemos empreendimentos imobiliários únicos com tecnologia e sustentabilidade e convidamos poucos investidores qualificados e criteriosamente selecionados para se tornarem nossos sócios investidores.
+          Desenvolvemos empreendimentos imobiliários únicos com tecnologia e sustentabilidade e conectamos investidores qualificados e criteriosamente selecionados para se tornarem sócios investidores das incorporadoras mais estruturadas do litoral catarinense.
         </p>
         <p className="text-base leading-relaxed opacity-80">
           Como investidor, você acompanha cada etapa com total transparência sobre os números e resultados esperados.
         </p>
         <p className="text-base leading-relaxed font-semibold">
-          Aqui, você lucra como um incorporador, participando dos bastidores da multiplicação de patrimônio do mercado imobiliário.
+          Aqui, você lucra como um incorporador, participando dos bastidores da multiplicação de patrimônio na etapa mais lucrativa do mercado imobiliário.
         </p>
       </div>
     </div>

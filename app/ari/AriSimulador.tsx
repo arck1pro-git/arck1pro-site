@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 
@@ -53,7 +53,7 @@ export default function AriSimulador() {
   })
 
   const label: React.CSSProperties = {
-    fontSize: 11,
+    fontSize: '1rem',
     letterSpacing: '0.12em',
     textTransform: 'uppercase',
     color: 'var(--sim-eyebrow, var(--text-faint))',
@@ -75,7 +75,7 @@ export default function AriSimulador() {
       >
         {/* Capital */}
         <div>
-          <p className="font-mono" style={{ ...label, marginBottom: 'var(--s-3)' }}>
+          <p className="font-display" style={{ ...label, marginBottom: 'var(--s-3)' }}>
             Capital a investir
           </p>
           <p className="font-display text-navy ari-sim__num" style={{ fontSize: 'var(--fs-40)', fontWeight: 600, lineHeight: 1, margin: 0 }}>
@@ -94,7 +94,7 @@ export default function AriSimulador() {
           />
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'var(--s-2)' }}>
             {['R$ 50k', 'R$ 500k', 'R$ 1M'].map((m) => (
-              <span key={m} className="font-mono" style={{ fontSize: 11, color: 'var(--sim-eyebrow, var(--text-faint))' }}>
+              <span key={m} className="font-display" style={{ fontSize: 11, color: 'var(--sim-eyebrow, var(--text-faint))' }}>
                 {m}
               </span>
             ))}
@@ -103,7 +103,7 @@ export default function AriSimulador() {
 
         {/* Prazo */}
         <div>
-          <p className="font-mono lg:block hidden" style={{ ...label, marginBottom: 'var(--s-3)' }}>
+          <p className="font-display lg:block hidden" style={{ ...label, marginBottom: 'var(--s-3)' }}>
             Prazo
           </p>
           <div style={{ display: 'flex', gap: 'var(--s-2)' }}>
@@ -117,7 +117,7 @@ export default function AriSimulador() {
 
         {/* Forma de retorno */}
         <div>
-          <p className="font-mono lg:block hidden" style={{ ...label, marginBottom: 'var(--s-3)' }}>
+          <p className="font-display lg:block hidden" style={{ ...label, marginBottom: 'var(--s-3)' }}>
             Forma de retorno
           </p>
           <div style={{ display: 'flex', gap: 'var(--s-2)' }}>
@@ -167,7 +167,7 @@ export default function AriSimulador() {
           <p className="font-display text-gold ari-sim__num" style={{ fontSize: 'var(--fs-40)', fontWeight: 600, lineHeight: 1.05, margin: 'var(--s-2) 0 var(--s-1)' }}>
             {forma === 'final' ? brl0(total) : brl0(rendaMensal)}
           </p>
-          <p className="font-mono" style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--sim-accent)', margin: 0 }}>
+          <p className="font-display text-base" style={{ letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--sim-accent)', margin: 0 }}>
             isento de Imposto de Renda
           </p>
         </div>

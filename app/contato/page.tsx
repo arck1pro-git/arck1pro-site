@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import ContatoForm from './ContatoForm'
 import RouteHeroBg from '../components/RouteHeroBg'
 
@@ -118,8 +118,8 @@ export default function ContatoPage() {
         }}
       >
         <p
-          className="font-mono text-gold-soft"
-          style={{ fontSize: 'var(--fs-12)', letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
+          className="font-display text-gold-soft text-base"
+          style={{ letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
         >
           Contato
         </p>
@@ -190,9 +190,8 @@ export default function ContatoPage() {
                 </span>
                 <span style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
                   <span
-                    className="font-mono"
+                    className="font-display text-base"
                     style={{
-                      fontSize: 11,
                       letterSpacing: '0.15em',
                       textTransform: 'uppercase',
                       color: 'var(--text-faint)',
@@ -228,9 +227,8 @@ export default function ContatoPage() {
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-3)' }}>
                 <p
-                  className="font-mono"
+                  className="font-display text-base"
                   style={{
-                    fontSize: 'var(--fs-12)',
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
                     color: 'var(--brand-gold-soft)',
@@ -301,8 +299,8 @@ export default function ContatoPage() {
           <div>
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-6)' }}>
               <p
-                className="font-mono text-gold"
-                style={{ fontSize: 'var(--fs-12)', letterSpacing: '0.15em', marginBottom: 'var(--s-2)' }}
+                className="font-display text-gold text-base"
+                style={{ letterSpacing: '0.15em', marginBottom: 'var(--s-2)' }}
               >
                 Onde estamos
               </p>

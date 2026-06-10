@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Poppins, JetBrains_Mono } from "next/font/google";
+import { Montserrat, Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -21,13 +21,6 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "500"],
-  display: "swap",
-});
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -46,7 +39,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       data-theme="light"
-      className={`${montserrat.variable} ${poppins.variable} ${jetbrainsMono.variable}`}
+      className={`${montserrat.variable} ${poppins.variable}`}
     >
       <body style={{ background: "var(--brand-navy)" }}>
         <SmoothScroller />

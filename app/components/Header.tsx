@@ -36,7 +36,7 @@ export default function Header() {
         justifyContent: "space-between",
         gap: "var(--s-8)",
         padding: "0 var(--s-6)",
-        background: "rgba(0,16,49,0.55)",
+        background: "rgba(21, 29, 53, 0.55)",
         backdropFilter: "blur(28px) saturate(160%)",
         WebkitBackdropFilter: "blur(28px) saturate(160%)",
         boxShadow: "0 8px 32px rgba(0,0,0,0.28)",

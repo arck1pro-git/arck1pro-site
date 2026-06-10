@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import RouteHeroBg from '../components/RouteHeroBg'
 
@@ -55,8 +55,8 @@ export default function EmpreendimentosPage() {
         }}
       >
         <p
-          className="font-mono text-gold-soft"
-          style={{ fontSize: 'var(--fs-12)', letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
+          className="font-display text-gold-soft text-base"
+          style={{ letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
         >
           Empreendimentos
         </p>
@@ -92,6 +92,17 @@ export default function EmpreendimentosPage() {
         <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-24)' }}>
           {/* Destaque — Tourmaline (imagem + overlay no desktop, texto abaixo no mobile) */}
           <div>
+            <h2
+              className="font-display text-navy"
+              style={{
+                fontSize: 'clamp(var(--fs-32), 5vw, var(--fs-56))',
+                fontWeight: 700,
+                lineHeight: 1.05,
+                margin: '0 0 var(--s-5)',
+              }}
+            >
+              Tourmaline Tower
+            </h2>
             <div
               className="tm-hero rounded-4xl overflow-clip"
               style={{ position: 'relative', aspectRatio: '16 / 9', background: 'var(--brand-navy)' }}
@@ -124,29 +135,18 @@ export default function EmpreendimentosPage() {
                   maxWidth: 640,
                 }}
               >
-                <h2
+                <p
                   className="font-display"
                   style={{
-                    fontSize: 'clamp(var(--fs-32), 5vw, var(--fs-56))',
-                    fontWeight: 700,
-                    lineHeight: 1.05,
+                    fontSize: 'clamp(var(--fs-20), 3vw, var(--fs-32))',
+                    fontWeight: 600,
+                    lineHeight: 1.25,
                     color: '#fff',
-                    margin: '0 0 var(--s-4)',
-                  }}
-                >
-                  Tourmaline Tower
-                </h2>
-                <p
-                  className="font-sans"
-                  style={{
-                    fontSize: 'var(--fs-15)',
-                    lineHeight: 1.7,
-                    color: 'rgba(255,255,255,0.8)',
                     margin: '0 0 var(--s-6)',
+                    maxWidth: 540,
                   }}
                 >
-                  O primeiro edifício inteligente de Porto Belo, com um sistema que controla e integra
-                  toda a operação do prédio.
+                 O primeiro edifício inteligente de Porto Belo, com um sistema gerencial com Inteligência Artificial que controla e integra toda a operação do prédio.
                 </p>
                 <Link href="/contato" className="btn btn--gold" style={{ width: 'fit-content' }}>
                   Solicitar acesso <span className="arrow">→</span>
@@ -156,29 +156,17 @@ export default function EmpreendimentosPage() {
 
             {/* Mobile — texto e botão abaixo da imagem, em azul */}
             <div className="lg:hidden" style={{ marginTop: 'var(--s-6)' }}>
-              <h2
+              <p
                 className="font-display"
                 style={{
-                  fontSize: 'var(--fs-32)',
-                  fontWeight: 700,
-                  lineHeight: 1.1,
+                  fontSize: 'var(--fs-24)',
+                  fontWeight: 600,
+                  lineHeight: 1.3,
                   color: 'var(--brand-navy)',
-                  margin: '0 0 var(--s-3)',
-                }}
-              >
-                Tourmaline Tower
-              </h2>
-              <p
-                className="font-sans"
-                style={{
-                  fontSize: 'var(--fs-15)',
-                  lineHeight: 1.7,
-                  color: 'var(--brand-navy-500)',
                   margin: '0 0 var(--s-5)',
                 }}
               >
-                O primeiro edifício inteligente de Porto Belo, com um sistema que controla e integra
-                toda a operação do prédio.
+                O primeiro edifício inteligente de Porto Belo, com um sistema gerencial com Inteligência Artificial que controla e integra toda a operação do prédio.
               </p>
               <Link href="/contato" className="btn btn--gold" style={{ width: 'fit-content' }}>
                 Solicitar acesso <span className="arrow">→</span>
@@ -193,20 +181,17 @@ export default function EmpreendimentosPage() {
               style={{ fontSize: 'var(--fs-16)', lineHeight: 1.85, color: 'var(--text)' }}
             >
               <p
-                className="font-mono text-gold"
-                style={{ fontSize: 'var(--fs-12)', letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
+                className="font-display text-gold text-base"
+                style={{ letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
               >
                 Por dentro do projeto
               </p>
               <p style={{ margin: '0 0 var(--s-5)' }}>
-                O Tourmaline Tower é mais do que um endereço de alto padrão. Ele foi concebido para
-                render e para se valorizar com o tempo: um sistema integrado controla a operação do
-                edifício, reduz custos e desgaste e sustenta o valor do imóvel no longo prazo.
+                O Tourmaline Tower é mais do que um endereço de alto padrão. Ele foi concebido para gerar retorno e para se valorizar com o tempo: um sistema integrado com inteligência artificial controla a operação do edifício, reduz custos e desgaste e sustenta o valor do imóvel no longo prazo.
+
               </p>
               <p style={{ margin: 0 }}>
-                A tecnologia trabalha a favor de quem mora e de quem investe. Ela cuida da rotina do
-                prédio nos bastidores, deixa o dia a dia mais simples e confortável e, com ambientes
-                pensados para o bem-estar, mantém o patrimônio valorizado ao longo dos anos.
+                A tecnologia trabalha a favor de quem mora e de quem investe. Ela cuida da rotina do prédio nos bastidores, deixa o dia a dia mais simples e confortável e, com ambientes pensados para o bem-estar, mantém o patrimônio valorizado ao longo dos anos.
               </p>
             </div>
 
@@ -232,9 +217,8 @@ export default function EmpreendimentosPage() {
                     }}
                   >
                     <span
-                      className="font-mono"
+                      className="font-display text-base"
                       style={{
-                        fontSize: 11,
                         letterSpacing: '0.12em',
                         textTransform: 'uppercase',
                         color: 'var(--text-faint)',
@@ -292,8 +276,8 @@ export default function EmpreendimentosPage() {
           <div>
             <div style={{ marginBottom: 'var(--s-10)' }}>
               <p
-                className="font-mono text-gold"
-                style={{ fontSize: 'var(--fs-12)', letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
+                className="font-display text-gold text-base"
+                style={{ letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
               >
                 Portfólio
               </p>
@@ -342,9 +326,8 @@ export default function EmpreendimentosPage() {
                       {p.name}
                     </h3>
                     <p
-                      className="font-mono"
+                      className="font-display text-base"
                       style={{
-                        fontSize: 11,
                         letterSpacing: '0.12em',
                         textTransform: 'uppercase',
                         color: 'var(--brand-gold-soft)',

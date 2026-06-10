@@ -50,8 +50,8 @@ export default function BlogList({ posts }: { posts: BlogCard[] }) {
           color: 'var(--text-muted)',
         }}
       >
-        Este é o blog da ARCK<span className="text-gold">1</span>PRO — aqui você acompanha as
-        análises de mercado e o universo de investimento do ARI.
+       Este é o blog da ARCK<span className='text-gold'>1</span>PRO.
+Aqui você acompanha as análises de mercado e o universo de investimento do ARI.
       </p>
 
       {/* Barra de pesquisa */}
