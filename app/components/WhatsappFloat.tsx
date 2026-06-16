@@ -1,10 +1,11 @@
 export default function WhatsappFloat() {
   return (
     <a
-      href="https://wa.me/5547991458708"
+      href="https://wa.me/5547991458708?text=Ol%C3%A1.%20Cheguei%20pelo%20site%20da%20ARCK1PRO%20e%20gostaria%20de%20conhecer%20o%20ARI."
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Falar no WhatsApp"
+      aria-label="Falar com a ARCK1PRO no WhatsApp"
+      data-source="flutuante"
       className="wa-float"
       style={{
         position: "fixed",

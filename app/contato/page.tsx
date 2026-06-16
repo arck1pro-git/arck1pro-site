@@ -3,8 +3,20 @@ import ContatoForm from './ContatoForm'
 import RouteHeroBg from '../components/RouteHeroBg'
 
 export const metadata: Metadata = {
-  title: 'Contato · ARCK1PRO',
-  description: 'Fale com a ARCK1PRO — estruturação imobiliária no litoral catarinense.',
+  title: 'Contato · Porto Belo SC · WhatsApp (47) 99145-8708',
+  description:
+    'Fale com a ARCK1PRO em Porto Belo. Escritório no Balneário Perequê. Qualificação para investidores e corretores. Resposta em horário comercial.',
+  alternates: { canonical: '/contato' },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'ARCK1PRO',
+    url: '/contato',
+    title: 'Contato ARCK1PRO · Porto Belo SC',
+    description:
+      'Canais diretos e qualificação para investidores e corretores. Escritório no Balneário Perequê, Porto Belo — SC.',
+    images: ['/hero.png'],
+  },
 }
 
 function InstagramIcon({ size = 20 }: { size?: number }) {

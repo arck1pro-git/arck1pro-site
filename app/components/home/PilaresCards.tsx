@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 const projects = [
   {
@@ -84,7 +85,7 @@ function Card({
       }}
       className="rounded-2xl overflow-hidden bg-white border border-white/10"
     >
-      <img src={src} alt={title} className="h-full w-full object-cover" />
+      <Image src={src} alt={title} fill sizes="100vw" className="object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col gap-1">
         <h3 className="text-white font-bold text-base">{title}</h3>

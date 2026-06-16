@@ -1,11 +1,45 @@
 ﻿import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import RouteHeroBg from '../components/RouteHeroBg'
 
 export const metadata: Metadata = {
-  title: 'Empreendimentos · ARCK1PRO',
+  title: 'Empreendimentos — Tourmaline Tower · Porto Belo SC',
   description:
-    'Tourmaline Tower e o portfólio da ARCK1PRO: empreendimentos de alto padrão no litoral catarinense.',
+    'Tourmaline Tower, empreendimento âncora do ARI em Porto Belo, e o portfólio da ARCK1PRO no litoral catarinense. Imóveis de alto padrão estruturados de ponta a ponta.',
+  alternates: { canonical: '/empreendimentos' },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'ARCK1PRO',
+    url: '/empreendimentos',
+    title: 'Tourmaline Tower · Porto Belo SC — Empreendimentos ARCK1PRO',
+    description:
+      'Empreendimento âncora do ARI em Porto Belo, no epicentro da Costa Esmeralda, e o portfólio estruturado pela ARCK1PRO.',
+    images: ['/tourmaline%20perspectiva.png'],
+  },
+}
+
+const residenceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Residence',
+  name: 'Tourmaline Tower',
+  description:
+    'Empreendimento de alto padrão em Porto Belo, trinta e um andares, cento e cinquenta e seis unidades, VGV de R$ 114 milhões.',
+  url: 'https://arck1pro.com.br/empreendimentos',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Porto Belo',
+    addressRegion: 'SC',
+    addressCountry: 'BR',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -26.77,
+    longitude: -48.55,
+  },
+  numberOfRooms: 156,
+  numberOfFloors: 31,
 }
 
 const specs = [
@@ -39,6 +73,10 @@ export default function EmpreendimentosPage() {
         background: 'var(--brand-navy)',
       }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(residenceJsonLd) }}
+      />
       <RouteHeroBg />
       {/* Hero sobre a imagem do footer */}
       <div
@@ -107,11 +145,13 @@ export default function EmpreendimentosPage() {
               className="tm-hero rounded-4xl overflow-clip"
               style={{ position: 'relative', aspectRatio: '16 / 9', background: 'var(--brand-navy)' }}
             >
+              {/* Mantido como <img>: o CSS responsivo do .tm-hero depende do fluxo
+                  intrínseco da imagem no mobile (container sem aspect-ratio fixo). */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className="tm-hero__img"
                 src="/tourmaline%20perspectiva.png"
-                alt="Tourmaline Tower — perspectiva"
+                alt="Render externo do Tourmaline Tower, trinta e um andares em Porto Belo"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
               />
               <div
@@ -296,11 +336,12 @@ export default function EmpreendimentosPage() {
                   className="blog-card rounded-3xl"
                   style={{ position: 'relative', overflow: 'hidden', aspectRatio: '1542 / 2160' }}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={p.src}
-                    alt={p.name}
-                    style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover', objectPosition: p.objectPosition ?? 'center' }}
+                    alt={`${p.name}, empreendimento estruturado pela ARCK1PRO em ${p.local}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    style={{ objectFit: 'cover', objectPosition: p.objectPosition ?? 'center' }}
                   />
                   <div
                     style={{

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { LEADS_WEBHOOK_URL } from '@/lib/webhook'
 
 const capitalOptions = [
   'R$ 50 mil a R$ 100 mil',
@@ -17,8 +18,6 @@ const modalidadeOptions = [
   'Não invisto atualmente',
 ]
 
-const prazoOptions = ['15 dias', '30 dias', '60 dias', 'Ainda estou avaliando']
-
 const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: 'var(--s-3) var(--s-5)',
@@ -33,14 +32,13 @@ const inputStyle: React.CSSProperties = {
 
 export default function AriForm() {
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
   const [form, setForm] = useState({
     name: '',
     phone: '',
     email: '',
-    profession: '',
     capital: '',
     modalidade: '',
-    prazo: '',
   })
 
   const selectStyle = (value: string): React.CSSProperties => ({
@@ -48,6 +46,32 @@ export default function AriForm() {
     cursor: 'pointer',
     color: value ? 'var(--text)' : 'var(--text-faint)',
   })
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (sending) return
+    setSending(true)
+
+    const url = new URL(LEADS_WEBHOOK_URL)
+    url.searchParams.set('tipo', 'investidor')
+    url.searchParams.set('nome', form.name)
+    url.searchParams.set('email', form.email)
+    url.searchParams.set('whatsapp', form.phone)
+    url.searchParams.set('valor', form.capital)
+    url.searchParams.set('investe', form.modalidade)
+    // Obrigatórios no webhook, mas não coletados neste form: enviados vazios.
+    url.searchParams.set('estado', '')
+    url.searchParams.set('cidade', '')
+
+    try {
+      await fetch(url.toString(), { method: 'POST', mode: 'no-cors' })
+    } catch {
+      // Não bloqueia a confirmação por falha de rede/CORS.
+    }
+
+    setSending(false)
+    setSent(true)
+  }
 
   if (sent) {
     return (
@@ -77,10 +101,7 @@ export default function AriForm() {
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        setSent(true)
-      }}
+      onSubmit={handleSubmit}
       className="rounded-4xl"
       style={{
         width: '100%',
@@ -122,14 +143,6 @@ export default function AriForm() {
           style={inputStyle}
         />
       </div>
-      <input
-        type="text"
-        placeholder="Profissão"
-        value={form.profession}
-        onChange={(e) => setForm({ ...form, profession: e.target.value })}
-        className="font-sans"
-        style={inputStyle}
-      />
       <select
         required
         value={form.capital}
@@ -162,28 +175,18 @@ export default function AriForm() {
           </option>
         ))}
       </select>
-      <select
-        required
-        value={form.prazo}
-        onChange={(e) => setForm({ ...form, prazo: e.target.value })}
-        className="font-sans"
-        style={selectStyle(form.prazo)}
-      >
-        <option value="" disabled>
-          Horizonte para iniciar a alocação
-        </option>
-        {prazoOptions.map((opt) => (
-          <option key={opt} value={opt} style={{ color: 'var(--brand-navy)' }}>
-            {opt}
-          </option>
-        ))}
-      </select>
       <button
         type="submit"
         className="btn btn--gold"
-        style={{ width: 'fit-content', margin: 'auto auto 0' }}
+        disabled={sending}
+        style={{
+          width: 'fit-content',
+          margin: 'auto auto 0',
+          opacity: sending ? 0.7 : 1,
+          cursor: sending ? 'default' : 'pointer',
+        }}
       >
-        Solicitar qualificação <span className="arrow">→</span>
+        {sending ? 'Enviando…' : 'Solicitar qualificação'} {!sending && <span className="arrow">→</span>}
       </button>
     </form>
   )

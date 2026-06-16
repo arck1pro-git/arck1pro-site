@@ -3,9 +3,20 @@ import Link from 'next/link'
 import RouteHeroBg from '../components/RouteHeroBg'
 
 export const metadata: Metadata = {
-  title: 'Porto Belo · ARCK1PRO',
+  title: 'Porto Belo — Epicentro da Costa Esmeralda',
   description:
-    'Por que Porto Belo e a Costa Esmeralda se tornaram a região que mais valoriza no litoral brasileiro.',
+    'Por que Porto Belo concentra a maior assimetria entre demanda e oferta de alto padrão no litoral catarinense. Tese, dados e estruturação ARCK1PRO.',
+  alternates: { canonical: '/portobelo' },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'ARCK1PRO',
+    url: '/portobelo',
+    title: 'Porto Belo — Epicentro da Costa Esmeralda · ARCK1PRO',
+    description:
+      'A tese, os dados e a estruturação por trás do mercado de alto padrão de Porto Belo e da Costa Esmeralda.',
+    images: ['/header.png'],
+  },
 }
 
 const triade = [

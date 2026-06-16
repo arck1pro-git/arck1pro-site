@@ -1,6 +1,24 @@
+import type { Metadata } from 'next'
 import { getPosts, type Post } from '@/lib/airticles'
 import BlogList from './BlogList'
 import RouteHeroBg from '../components/RouteHeroBg'
+
+export const metadata: Metadata = {
+  title: 'Blog — Inteligência Imobiliária Aplicada',
+  description:
+    'Conteúdo técnico sobre incorporação, estruturação de capital, mercado imobiliário e o método ARCK1PRO. Leitura para investidor qualificado e corretor de alto padrão.',
+  alternates: { canonical: '/blog' },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'ARCK1PRO',
+    url: '/blog',
+    title: 'Blog ARCK1PRO — Inteligência Imobiliária Aplicada',
+    description:
+      'Conteúdo técnico sobre incorporação, estruturação de capital e mercado imobiliário do litoral catarinense.',
+    images: ['/hero.png'],
+  },
+}
 
 const API_BASE = 'https://api.airticles.ai'
 

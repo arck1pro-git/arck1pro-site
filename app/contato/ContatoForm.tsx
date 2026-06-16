@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { LEADS_WEBHOOK_URL } from '@/lib/webhook'
 
 const investOptions = [
   'R$ 50 mil',
@@ -17,12 +18,17 @@ export default function ContatoForm({
   variant = 'light',
   initialRole = '',
   lockRole = false,
+  compact = false,
 }: {
   variant?: Variant
   initialRole?: Role
   lockRole?: boolean
+  /** Remove o "card" próprio e aperta os espaçamentos — usado dentro do modal,
+   *  para o formulário caber na tela sem ultrapassar a altura do viewport. */
+  compact?: boolean
 }) {
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
   const [form, setForm] = useState({
     role: initialRole as Role,
     name: '',
@@ -36,6 +42,33 @@ export default function ContatoForm({
 
   const isInvestidor = form.role === 'investidor'
 
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (sending) return
+    setSending(true)
+
+    const url = new URL(LEADS_WEBHOOK_URL)
+    url.searchParams.set('tipo', form.role)
+    url.searchParams.set('nome', form.name)
+    url.searchParams.set('email', form.email)
+    url.searchParams.set('whatsapp', form.phone)
+    url.searchParams.set('estado', form.estado)
+    url.searchParams.set('cidade', form.cidade)
+    // investe e valor são obrigatórios no webhook (string). No corretor esses
+    // campos não existem, então seguem vazios (form.alreadyInvests/investFrom = '').
+    url.searchParams.set('investe', form.alreadyInvests)
+    url.searchParams.set('valor', form.investFrom)
+
+    try {
+      await fetch(url.toString(), { method: 'POST', mode: 'no-cors' })
+    } catch {
+      // Não bloqueia a confirmação por falha de rede/CORS — o webhook recebe a chamada.
+    }
+
+    setSending(false)
+    setSent(true)
+  }
+
   const submitLabel =
     form.role === 'corretor'
       ? 'Quero vender o Tourmaline'
@@ -47,7 +80,7 @@ export default function ContatoForm({
 
   const inputStyle: React.CSSProperties = {
     width: '100%',
-    padding: 'var(--s-3) var(--s-5)',
+    padding: `${compact ? 'var(--s-2)' : 'var(--s-3)'} var(--s-5)`,
     borderRadius: 'var(--r-pill)',
     border: `var(--line-1) solid ${dark ? 'rgba(236,235,231,0.2)' : 'rgba(0,16,49,0.15)'}`,
     background: dark ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.6)',
@@ -68,11 +101,13 @@ export default function ContatoForm({
         : 'var(--text-faint)',
   })
 
-  const cardStyle: React.CSSProperties = {
-    border: `var(--line-1) solid ${dark ? 'rgba(236,235,231,0.12)' : 'rgba(0,16,49,0.12)'}`,
-    background: dark ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.5)',
-    backdropFilter: 'blur(6px)',
-  }
+  const cardStyle: React.CSSProperties = compact
+    ? {}
+    : {
+        border: `var(--line-1) solid ${dark ? 'rgba(236,235,231,0.12)' : 'rgba(0,16,49,0.12)'}`,
+        background: dark ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.5)',
+        backdropFilter: 'blur(6px)',
+      }
 
   if (sent) {
     return (
@@ -81,7 +116,7 @@ export default function ContatoForm({
         style={{
           maxWidth: 560,
           margin: '0 auto',
-          padding: 'var(--s-12) var(--s-8)',
+          padding: compact ? 'var(--s-6) 0' : 'var(--s-12) var(--s-8)',
           textAlign: 'center',
           ...cardStyle,
         }}
@@ -112,17 +147,14 @@ export default function ContatoForm({
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        setSent(true)
-      }}
+      onSubmit={handleSubmit}
       className="rounded-4xl"
       style={{
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--s-4)',
-        padding: 'var(--s-8) var(--s-6)',
+        gap: compact ? 'var(--s-3)' : 'var(--s-4)',
+        padding: compact ? '0' : 'var(--s-8) var(--s-6)',
         ...cardStyle,
       }}
     >
@@ -172,7 +204,7 @@ export default function ContatoForm({
         className="font-sans"
         style={inputStyle}
       />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className={`grid grid-cols-1 sm:grid-cols-2 ${compact ? 'gap-3' : 'gap-4'}`}>
         <input
           type="text"
           required
@@ -235,9 +267,15 @@ export default function ContatoForm({
       <button
         type="submit"
         className="btn btn--gold"
-        style={{ width: 'fit-content', margin: 'var(--s-4) auto 0' }}
+        disabled={sending}
+        style={{
+          width: 'fit-content',
+          margin: `${compact ? 'var(--s-1)' : 'var(--s-4)'} auto 0`,
+          opacity: sending ? 0.7 : 1,
+          cursor: sending ? 'default' : 'pointer',
+        }}
       >
-        {submitLabel} <span className="arrow">→</span>
+        {sending ? 'Enviando…' : submitLabel} {!sending && <span className="arrow">→</span>}
       </button>
     </form>
   )

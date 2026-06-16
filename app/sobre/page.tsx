@@ -1,11 +1,23 @@
 ﻿import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import RouteHeroBg from '../components/RouteHeroBg'
 
 export const metadata: Metadata = {
-  title: 'Sobre · ARCK1PRO',
+  title: 'Sobre — Método, Ecossistema e Governança',
   description:
-    'De escritório de projetos a ecossistema imobiliário: a história de dois arquitetos que estruturaram o mercado para terceiros e decidiram aplicar o método em projetos próprios.',
+    'De escritório de projetos a ecossistema imobiliário: a história, o método próprio e a governança da ARCK1PRO. Autoridade técnica construída em vinte anos no litoral catarinense.',
+  alternates: { canonical: '/sobre' },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'ARCK1PRO',
+    url: '/sobre',
+    title: 'Sobre a ARCK1PRO — Método, Ecossistema e Governança',
+    description:
+      'A história, o método próprio e a governança da ARCK1PRO. Vinte anos de prática no litoral catarinense.',
+    images: ['/hero.png'],
+  },
 }
 
 const timeline = [
@@ -104,11 +116,12 @@ function FounderPhoto({
     >
       {src ? (
         <>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={src}
-            alt={name}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            alt={`${name}, ${role}`}
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            style={{ objectFit: 'cover' }}
           />
           <div
             style={{

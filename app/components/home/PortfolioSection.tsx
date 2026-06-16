@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import ContactModal from "../ContactModal";
+import { useEffect, useRef } from "react";
+import Link from "next/link";
 
 export default function PortfolioSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
-  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     let sectionTop = 0;
@@ -84,18 +83,15 @@ export default function PortfolioSection() {
               </p>
             </div>
 
-            <button
-              type="button"
+            <Link
+              href="/empreendimentos"
               className="btn btn--gold"
               style={{ width: "fit-content" }}
-              onClick={() => setModalOpen(true)}
             >
               Quero conhecer o Tourmaline <span className="arrow">→</span>
-            </button>
+            </Link>
           </div>
         </div>
-
-        <ContactModal open={modalOpen} role={modalOpen ? "corretor" : null} onClose={() => setModalOpen(false)} />
     </section>
   );
 }

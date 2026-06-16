@@ -80,11 +80,11 @@ export default function ContactModal({
           position: 'relative',
           width: '100%',
           maxWidth: 560,
-          maxHeight: '90svh',
+          maxHeight: '92svh',
           overflowY: 'auto',
           background: '#ffffff',
           border: 'var(--line-1) solid rgba(0,16,49,0.1)',
-          padding: 'var(--s-12) var(--s-8) var(--s-10)',
+          padding: 'var(--s-8) var(--s-6) var(--s-6)',
           boxShadow: '0 24px 80px rgba(0,16,49,0.35)',
         }}
       >
@@ -119,7 +119,7 @@ export default function ContactModal({
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
             textAlign: 'center',
-            margin: '0 0 var(--s-3)',
+            margin: '0 0 var(--s-2)',
           }}
         >
           {eyebrows[role]}
@@ -127,30 +127,30 @@ export default function ContactModal({
         <p
           className="font-display text-navy"
           style={{
-            fontSize: 'var(--fs-24)',
+            fontSize: 'var(--fs-20)',
             fontWeight: 300,
             lineHeight: 1.2,
             textAlign: 'center',
-            margin: '0 0 var(--s-3)',
+            margin: '0 0 var(--s-2)',
           }}
         >
           {titles[role]}
         </p>
         <p
-          className="font-sans"
+          className={`font-sans ${role === 'investidor' ? 'hidden lg:block' : ''}`}
           style={{
             fontSize: 'var(--fs-14)',
-            lineHeight: 1.65,
+            lineHeight: 1.55,
             color: 'var(--text-muted)',
             textAlign: 'center',
-            margin: '0 auto var(--s-8)',
+            margin: '0 auto var(--s-5)',
             maxWidth: 440,
           }}
         >
           {subtitles[role]}
         </p>
 
-        <ContatoForm variant="light" initialRole={role} lockRole />
+        <ContatoForm variant="light" initialRole={role} lockRole compact />
       </div>
     </div>,
     document.body
