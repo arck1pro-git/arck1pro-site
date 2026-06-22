@@ -126,14 +126,14 @@ const valorizacao = [
 ]
 
 const celebridades = [
-  { nome: 'Neymar Jr.', area: 'Jogador de futebol', iniciais: 'NJ' },
-  { nome: 'Leonardo', area: 'Cantor', iniciais: 'L' },
-  { nome: 'Zezé Di Camargo', area: 'Cantor', iniciais: 'ZD' },
-  { nome: 'Alexandre Pires', area: 'Cantor', iniciais: 'AP' },
-  { nome: 'Ratinho', area: 'Apresentador', iniciais: 'R' },
-  { nome: 'Fernando & Sorocaba', area: 'Dupla sertaneja', iniciais: 'FS' },
-  { nome: 'Felipe Titto', area: 'Ator', iniciais: 'FT' },
-  { nome:'Rafael Nadal', area: 'Cantora', iniciais: 'MC' },
+  { nome: 'Neymar Jr.', area: 'Jogador de futebol', iniciais: 'NJ', foto: '/neymar.webp' },
+  { nome: 'Leonardo', area: 'Cantor', iniciais: 'L', foto: '/leonardo.webp' },
+  { nome: 'Zezé Di Camargo', area: 'Cantor', iniciais: 'ZD', foto: '/zezedicamargo.webp' },
+  { nome: 'Alexandre Pires', area: 'Cantor', iniciais: 'AP', foto: '/alexandrepires.webp' },
+  { nome: 'Ratinho', area: 'Apresentador', iniciais: 'R', foto: '/ratinho.webp' },
+  { nome: 'Fernando & Sorocaba', area: 'Dupla sertaneja', iniciais: 'FS', foto: '/fernandoesorocaba.webp' },
+  { nome: 'Felipe Titto', area: 'Ator', iniciais: 'FT', foto: '/felipetitto.webp' },
+  { nome: 'Rafael Nadal', area: 'Tenista', iniciais: 'RN', foto: '/rafaelnadal.webp' },
 ]
 
 const sectionTitle: React.CSSProperties = {
@@ -420,7 +420,7 @@ export default function PortoBeloPage() {
               className="rounded-4xl lift overflow-clip"
               style={{
                 minHeight: 380,
-                background: "url('/header.png') center / cover no-repeat",
+                background: "url('/header.webp') center / cover no-repeat",
               }}
             />
             <div style={{ maxWidth: 720, marginInline: 'auto', textAlign: 'center', marginTop: 'var(--s-10)' }}>
@@ -644,20 +644,25 @@ export default function PortoBeloPage() {
                 >
                   <div
                     style={{
-                      width: 60,
-                      height: 60,
+                      width: 72,
+                      height: 72,
                       borderRadius: '50%',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      background: 'var(--brand-navy)',
+                      background: c.foto
+                        ? `var(--brand-navy) url('${c.foto}') center / cover no-repeat`
+                        : 'var(--brand-navy)',
                       border: '2px solid var(--brand-gold)',
                       flexShrink: 0,
+                      overflow: 'hidden',
                     }}
                   >
-                    <span className="font-display" style={{ fontSize: 'var(--fs-18)', fontWeight: 600, color: 'var(--brand-gold)', letterSpacing: '0.02em' }}>
-                      {c.iniciais}
-                    </span>
+                    {!c.foto && (
+                      <span className="font-display" style={{ fontSize: 'var(--fs-18)', fontWeight: 600, color: 'var(--brand-gold)', letterSpacing: '0.02em' }}>
+                        {c.iniciais}
+                      </span>
+                    )}
                   </div>
                   <h3 className="font-display text-navy" style={{ fontSize: 'var(--fs-16)', fontWeight: 500, margin: 0, lineHeight: 1.2, overflowWrap: 'break-word' }}>
                     {c.nome}

@@ -62,7 +62,7 @@ export default function FAQSection() {
       className="section"
       style={{
         background:
-          "linear-gradient(to bottom, rgba(246,245,241,0.96) 0%, rgba(246,245,241,0.78) 100%), url('/footer.png') center/cover no-repeat",
+          "linear-gradient(to bottom, rgba(246,245,241,0.96) 0%, rgba(246,245,241,0.78) 100%), url('/footer.webp') center/cover no-repeat",
       }}
     >
       <div className="container">

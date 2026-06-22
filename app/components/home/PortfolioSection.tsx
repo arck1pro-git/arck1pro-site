@@ -50,7 +50,7 @@ export default function PortfolioSection() {
         <div
           ref={bgRef}
           aria-hidden
-          className="absolute top-[-25%] bottom-[-25%] left-0 right-0 bg-[url('/tourmaline%20perspectiva.png')] bg-cover lg:bg-[length:100%_auto] bg-center bg-no-repeat will-change-transform"
+          className="absolute top-[-25%] bottom-[-25%] left-0 right-0 bg-[url('/tourmaline%20perspectiva.webp')] bg-cover lg:bg-[length:100%_auto] bg-center bg-no-repeat will-change-transform"
         />
         {/* Overlay para legibilidade */}
         <div

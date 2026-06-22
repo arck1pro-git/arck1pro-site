@@ -49,7 +49,7 @@ export default function HeroSection() {
       <div
         ref={bgRef}
         aria-hidden
-        className="absolute top-[-30%] bottom-[-30%] left-0 right-0 bg-[url('/header.png')] bg-cover bg-[center_30%] bg-no-repeat will-change-transform"
+        className="absolute top-[-30%] bottom-[-30%] left-0 right-0 bg-[url('/header.webp')] bg-cover bg-[center_30%] bg-no-repeat will-change-transform"
       />
 
       {/* Overlay navy vindo da esquerda */}

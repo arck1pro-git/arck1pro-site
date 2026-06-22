@@ -14,7 +14,7 @@ export default function Footer() {
       className="relative z-0 -mt-12 font-display"
       style={{
         background:
-          "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 2.5%), radial-gradient(120% 80% at 50% 100%, rgba(28,48,95,0.45) 0%, rgba(0,16,49,0) 60%), linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.82) 100%), url('/footerold.png') center/cover no-repeat",
+          "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 2.5%), radial-gradient(120% 80% at 50% 100%, rgba(28,48,95,0.45) 0%, rgba(0,16,49,0) 60%), linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.82) 100%), url('/footerold.webp') center/cover no-repeat",
         color: "var(--brand-cream)",
         overflowX: "hidden",
         boxShadow: "inset 0 0 220px 40px rgba(0,16,49,0.55)",

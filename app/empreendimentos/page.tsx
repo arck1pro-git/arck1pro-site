@@ -56,12 +56,12 @@ const numeros = [
 ]
 
 const portfolio: { name: string; local: string; src: string; objectPosition?: string }[] = [
-  { name: 'Alameda', local: 'Itapema — SC', src: '/alameda1.jpg' },
-  { name: 'Atmohaus', local: 'Balneário Camboriú — SC', src: '/atmohaus1.jpg' },
-  { name: 'Capri', local: 'Porto Belo — SC', src: '/capri1.jpeg', objectPosition: 'right' },
-  { name: 'Carolina', local: 'Bombinhas — SC', src: '/carolina1.jpg' },
-  { name: 'Erenita', local: 'Itapema — SC', src: '/erenita1.jpg' },
-  { name: 'Paradise', local: 'Porto Belo — SC', src: '/paradise1.jpg' },
+  { name: 'Alameda', local: 'Itapema — SC', src: '/alameda1.webp' },
+  { name: 'Atmohaus', local: 'Balneário Camboriú — SC', src: '/atmohaus1.webp' },
+  { name: 'Capri', local: 'Porto Belo — SC', src: '/capri1.webp', objectPosition: 'right' },
+  { name: 'Carolina', local: 'Bombinhas — SC', src: '/carolina1.webp' },
+  { name: 'Erenita', local: 'Itapema — SC', src: '/erenita1.webp' },
+  { name: 'Paradise', local: 'Porto Belo — SC', src: '/paradise1.webp' },
 ]
 
 export default function EmpreendimentosPage() {
@@ -150,7 +150,7 @@ export default function EmpreendimentosPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className="tm-hero__img"
-                src="/tourmaline%20perspectiva.png"
+                src="/tourmaline%20perspectiva.webp"
                 alt="Render externo do Tourmaline Tower, trinta e um andares em Porto Belo"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
               />
