@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 const faqItems = [
   {
@@ -60,12 +61,27 @@ export default function FAQSection() {
     <section
       id="faq"
       className="section"
-      style={{
-        background:
-          "linear-gradient(to bottom, rgba(246,245,241,0.96) 0%, rgba(246,245,241,0.78) 100%), url('/footer.webp') center/cover no-repeat",
-      }}
+      style={{ position: "relative", overflow: "hidden" }}
     >
-      <div className="container">
+      {/* Fundo via next/image (AVIF + responsivo) + véu creme por cima */}
+      <Image
+        src="/footer.webp"
+        alt=""
+        fill
+        sizes="100vw"
+        className="object-cover"
+        style={{ zIndex: 0 }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          zIndex: 0,
+          background:
+            "linear-gradient(to bottom, rgba(246,245,241,0.96) 0%, rgba(246,245,241,0.78) 100%)",
+        }}
+      />
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <div style={{ marginBottom: "var(--s-12)" }}>
           
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "var(--s-4)" }}>

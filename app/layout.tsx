@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -9,17 +9,12 @@ import CookieConsent from "./components/CookieConsent";
 
 const SITE_URL = "https://arck1pro.com.br";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
+// Poppins é a única família do site: serve tanto o corpo (--font-sans, via
+// globals.css) quanto os títulos (--font-display).
 const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["300", "400", "600"],
+  weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -137,7 +132,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       data-theme="light"
-      className={`${montserrat.variable} ${poppins.variable}`}
+      className={poppins.variable}
     >
       <body style={{ background: "var(--brand-navy)" }}>
         <script

@@ -56,7 +56,7 @@
   --gold-grad-h: linear-gradient(90deg,  #b07d3e 0%, #c28f50 35%, #e0b56e 70%, #fae394 100%);
 
   /* Tipografia */
-  --font-sans:    "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    var(--font-display);
   --font-display: "Poppins", ui-sans-serif, sans-serif;
   --font-carla:   "Carla Sans", ui-sans-serif, sans-serif;
 

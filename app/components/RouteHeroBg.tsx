@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 
 // Imagem de fundo do topo das rotas internas, com o mesmo parallax da home hero.
 // A altura (75svh desktop / 100svh mobile) vem da classe .route-hero-bg no globals.css.
@@ -50,11 +51,19 @@ export default function RouteHeroBg() {
       <div
         ref={bgRef}
         className="absolute top-[-30%] bottom-[-30%] left-0 right-0 will-change-transform"
-        style={{
-          background:
-            "linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.62)), url('/header.webp') center 30% / cover no-repeat",
-        }}
-      />
+      >
+        <Image
+          src="/header.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+          style={{ objectPosition: 'center 30%' }}
+        />
+        {/* Escurecimento para legibilidade do conteúdo do hero */}
+        <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.62)' }} />
+      </div>
     </div>
   )
 }

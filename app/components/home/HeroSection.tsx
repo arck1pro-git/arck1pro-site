@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import ContactModal from "../ContactModal";
 
 export default function HeroSection() {
@@ -45,12 +46,22 @@ export default function HeroSection() {
       id="hero"
       className="-mt-[82px] min-h-svh flex flex-col justify-center pt-24 px-6 pb-20 relative overflow-hidden"
     >
-      {/* Foto de fundo com parallax */}
+      {/* Foto de fundo com parallax — next/image (priority) para o LCP:
+          gera preload, AVIF e srcset responsivo. */}
       <div
         ref={bgRef}
         aria-hidden
-        className="absolute top-[-30%] bottom-[-30%] left-0 right-0 bg-[url('/header.webp')] bg-cover bg-[center_30%] bg-no-repeat will-change-transform"
-      />
+        className="absolute top-[-30%] bottom-[-30%] left-0 right-0 will-change-transform"
+      >
+        <Image
+          src="/header.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[center_30%]"
+        />
+      </div>
 
       {/* Overlay navy vindo da esquerda */}
       <div aria-hidden className="hero-overlay" />

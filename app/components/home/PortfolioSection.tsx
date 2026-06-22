@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function PortfolioSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -46,12 +47,20 @@ export default function PortfolioSection() {
       className="min-h-screen lg:min-h-screen flex flex-col p-6 overflow-hidden relative"
       style={{ background: "var(--brand-navy)" }}
     >
-        {/* Foto de fundo com parallax — cobre toda a section */}
+        {/* Foto de fundo com parallax — next/image (AVIF + responsivo) */}
         <div
           ref={bgRef}
           aria-hidden
-          className="absolute top-[-25%] bottom-[-25%] left-0 right-0 bg-[url('/tourmaline%20perspectiva.webp')] bg-cover lg:bg-[length:100%_auto] bg-center bg-no-repeat will-change-transform"
-        />
+          className="absolute top-[-25%] bottom-[-25%] left-0 right-0 will-change-transform"
+        >
+          <Image
+            src="/tourmaline perspectiva.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
         {/* Overlay para legibilidade */}
         <div
           aria-hidden
