@@ -56,11 +56,11 @@ const numeros = [
 ]
 
 const portfolio: { name: string; local: string; src: string; objectPosition?: string }[] = [
-  { name: 'Alameda', local: 'Itapema — SC', src: '/alameda1.webp' },
-  { name: 'Atmohaus', local: 'Balneário Camboriú — SC', src: '/atmohaus1.webp' },
-  { name: 'Capri', local: 'Porto Belo — SC', src: '/capri1.webp', objectPosition: 'right' },
-  { name: 'Carolina', local: 'Bombinhas — SC', src: '/carolina1.webp' },
-  { name: 'Erenita', local: 'Itapema — SC', src: '/erenita1.webp' },
+  { name: 'Alameda', local: 'Itajaí — SC', src: '/alameda1.webp' },
+  { name: 'Atmohaus', local: 'Porto Belo — SC', src: '/atmohaus1.webp' },
+  { name: 'Capri', local: 'Itapoá — SC', src: '/capri1.webp', objectPosition: 'right' },
+  { name: 'Carolina', local: 'Itamepa — SC', src: '/carolina1.webp' },
+  { name: 'Erenita', local: 'Brusque — SC', src: '/erenita1.webp' },
   { name: 'Paradise', local: 'Porto Belo — SC', src: '/paradise1.webp' },
 ]
 
