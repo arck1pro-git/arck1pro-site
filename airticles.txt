@@ -1,0 +1,394 @@
+================================================================================
+ INTEGRACAO AIRTICLES — ARCK1PRO
+ Tudo que e preciso para puxar os artigos.
+ ATENCAO: este arquivo contem a API KEY. Esta no .gitignore. Nao commitar.
+================================================================================
+
+
+--------------------------------------------------------------------------------
+ 1. VARIAVEIS DE AMBIENTE
+--------------------------------------------------------------------------------
+
+Existe apenas UMA variavel. Arquivo `.env` na raiz do projeto:
+
+BLOG_API='22cYrh2xXAPtaqt4KDhKQkLA6DnVFV5GRkfeaZ1MMeY'
+
+Observacoes:
+  - Sem prefixo NEXT_PUBLIC_ de proposito: e server-only, a chave nunca vai
+    para o browser.
+  - `.env*` esta no .gitignore, entao a variavel NAO viaja no git.
+    Em qualquer deploy (Vercel, etc.) e preciso cadastrar BLOG_API a mao
+    no painel de Environment Variables do projeto.
+  - Se faltar, o app lanca: "BLOG_API env var is missing".
+  - O host da API (https://api.airticles.ai) NAO e env, esta hardcoded como
+    a constante API_BASE.
+
+
+--------------------------------------------------------------------------------
+ 2. A API DA AIRTICLES
+--------------------------------------------------------------------------------
+
+Base URL:        https://api.airticles.ai
+Autenticacao:    header  X-API-Key: <BLOG_API>
+Projeto:         projectId 1658
+
+Endpoints:
+
+  GET /api/posts?limit=<n>&page=<n>
+      -> { projectId, count, items[], pagination }
+      pagination = { currentPage, totalPages, totalItems, limit,
+                     hasNextPage, hasPrevPage }
+
+  GET /api/posts/:id
+      -> artigo completo (html + category)
+      -> ACEITA SOMENTE ID. Nao existe busca por slug na API.
+
+ATENCAO ao campo `slug`: a API vem devolvendo NULL nele. Por isso o slug da URL
+e montado a partir do titulo (helper postSlug, secao 3) — se um dia a API
+passar a mandar slug preenchido, ele e usado no lugar do titulo
+automaticamente.
+
+Como a URL publica e /blog/<slug> e a API so busca por id, getPostBySlug
+resolve o slug pela LISTAGEM (acha o item cujo postSlug bate) e so entao pede o
+detalhe pelo id. Consequencias que valem lembrar:
+
+  - editar o titulo de um artigo MUDA a URL dele e o link antigo vira 404;
+  - o lookup ve os 200 primeiros posts (hoje sao 20) — passando disso,
+    precisa paginar;
+  - dois artigos com o mesmo titulo dao o mesmo slug e um fica inacessivel;
+  - sem a listagem nao ha como resolver o artigo (na pratica e o mesmo fetch
+    cacheado que o /blog ja faz).
+
+Teste rapido via curl:
+
+  curl -s "https://api.airticles.ai/api/posts?limit=2" \
+    -H "X-API-Key: 22cYrh2xXAPtaqt4KDhKQkLA6DnVFV5GRkfeaZ1MMeY"
+
+
+IMPORTANTE — as duas respostas tem formatos DIFERENTES:
+
+  LISTA  (/api/posts) devolve por item:
+      id, title, slug, status, createdAt, updatedAt, scheduledAt,
+      mainKeyword, secondaryKeywords, coverImageUrl, html
+      -> coverImageUrl vem ABSOLUTO (https://api.airticles.ai/uploads/...)
+
+  DETALHE (/api/posts/:id) devolve:
+      title, slug, status, category, html, coverImageUrl, scheduled_at,
+      project_id, wordpress_id, wordpress_enabled, wordpress_publish_error,
+      wix_post_id, wix_enabled, wix_publish_error
+      -> coverImageUrl vem RELATIVO (/uploads/...)
+      -> NAO devolve id, createdAt nem updatedAt
+      -> a data vem como scheduled_at (snake_case), nao scheduledAt
+
+  Por isso todo consumo de imagem passa por um helper que prefixa API_BASE
+  quando a url nao comeca com "http".
+
+
+--------------------------------------------------------------------------------
+ 3. CLIENTE — lib/airticles.ts
+--------------------------------------------------------------------------------
+
+Unico ponto que le a env e fala com a Airticles. Cache ISR de 5 minutos.
+
+--- COPIAR A PARTIR DAQUI ---
+
+const API_BASE = 'https://api.airticles.ai'
+
+function apiKey() {
+  const key = process.env.BLOG_API
+  if (!key) throw new Error('BLOG_API env var is missing')
+  return key
+}
+
+export interface Post {
+  id: number
+  title: string
+  slug: string
+  status: string
+  createdAt: string
+  updatedAt: string
+  scheduledAt: string | null
+  mainKeyword: string
+  secondaryKeywords: string[]
+  html?: string
+  coverImageUrl?: string | null
+}
+
+export interface PostDetail extends Post {
+  html: string
+  coverImageUrl: string | null
+  category: string
+}
+
+export interface PostsResponse {
+  projectId: number
+  count: number
+  items: Post[]
+  pagination: {
+    currentPage: number
+    totalPages: number
+    totalItems: number
+    limit: number
+    hasNextPage: boolean
+    hasPrevPage: boolean
+  }
+}
+
+export async function getPosts(params?: Record<string, string>): Promise<PostsResponse> {
+  const url = new URL(`${API_BASE}/api/posts`)
+  if (params) {
+    for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v)
+  }
+  const res = await fetch(url.toString(), {
+    headers: { 'X-API-Key': apiKey() },
+    next: { revalidate: 300 },
+  })
+  if (!res.ok) throw new Error(`Airticles API error: ${res.status}`)
+  return res.json()
+}
+
+export async function getPost(id: string): Promise<PostDetail> {
+  const res = await fetch(`${API_BASE}/api/posts/${id}`, {
+    headers: { 'X-API-Key': apiKey() },
+    next: { revalidate: 300 },
+  })
+  if (!res.ok) throw new Error(`Airticles API error: ${res.status}`)
+  return res.json()
+}
+
+// Busca o detalhe (so existe por id) e completa com o item da listagem: o
+// detalhe nao devolve id/createdAt/updatedAt e manda a data como scheduled_at.
+async function withListFields(id: number, item?: Post): Promise<PostDetail> {
+  const detail = await getPost(String(id))
+  return {
+    ...detail,
+    id,
+    slug: item?.slug ?? detail.slug,
+    createdAt: item?.createdAt ?? detail.createdAt,
+    updatedAt: item?.updatedAt ?? detail.updatedAt,
+    scheduledAt: item?.scheduledAt ?? detail.scheduled_at ?? null,
+  }
+}
+
+// A URL e /blog/<slug> e a API nao tem busca por slug (o campo vem null), entao
+// o slug e resolvido pela listagem — mesmo fetch cacheado de 5 min do /blog.
+// Titulos iguais gerariam o mesmo slug: nesse caso vence o primeiro da lista.
+export async function getPostBySlug(slug: string): Promise<PostDetail | null> {
+  const { items } = await getPosts({ limit: '200' })
+  const item = items.find((post) => postSlug(post) === slug)
+  if (!item) return null
+  return withListFields(item.id, item)
+}
+
+// Compatibilidade com as URLs antigas /blog/<id>.
+export async function getSlugById(id: string): Promise<string | null> {
+  const { items } = await getPosts({ limit: '200' })
+  const item = items.find((post) => String(post.id) === id)
+  return item ? postSlug(item) : null
+}
+
+export function slugify(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[^\x00-\x7f]/g, '') // tira acentos e outros nao-ASCII
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+// Slug da URL: a Airticles vem mandando `slug` null, entao o titulo e a fonte
+// na pratica — mas o slug curado da API tem prioridade quando existir.
+export function postSlug(post: { slug?: string | null; title: string }): string {
+  const base = post.slug?.trim() ? post.slug : post.title
+  return slugify(base) || 'artigo'
+}
+
+--- ATE AQUI ---
+
+AVISO sobre esse tipo: PostDetail herda createdAt / updatedAt / scheduledAt de
+Post, mas o endpoint de detalhe NAO devolve esses campos (ver secao 2 e 7).
+O TypeScript nao acusa porque o res.json() e um cast direto — por isso
+getPostBySlug completa esses campos com os dados da listagem.
+
+
+--------------------------------------------------------------------------------
+ 4. HELPER DE IMAGEM (usado em toda listagem)
+--------------------------------------------------------------------------------
+
+--- COPIAR A PARTIR DAQUI ---
+
+const API_BASE = 'https://api.airticles.ai'
+
+// resolve capa: usa coverImageUrl e, se nao houver, cai para a 1a <img> do html
+function extractImage(post: Post): string | null {
+  const url = post.coverImageUrl ?? null
+  if (url) return url.startsWith('http') ? url : `${API_BASE}${url}`
+  const match = post.html?.match(/<img[^>]+src=["']([^"']+)["']/i)
+  if (!match) return null
+  const src = match[1]
+  return src.startsWith('http') ? src : `${API_BASE}${src}`
+}
+
+// versao simples, para quando so existe a url (pagina de detalhe)
+function resolveImageUrl(url: string | null): string | null {
+  if (!url) return null
+  if (url.startsWith('http')) return url
+  return `${API_BASE}${url}`
+}
+
+--- ATE AQUI ---
+
+
+--------------------------------------------------------------------------------
+ 5. COMO PUXAR — RECEITAS
+--------------------------------------------------------------------------------
+
+5.1) Server Component (recomendado, e o padrao do projeto)
+     A chave fica no servidor; nada vaza para o cliente.
+
+     import { getPosts, getPost, type Post } from '@/lib/airticles'
+
+     export default async function MinhaSecao() {
+       let posts: Post[] = []
+       try {
+         const data = await getPosts({ limit: '3' })
+         posts = data.items
+       } catch (err) {
+         console.error('[MinhaSecao] Airticles API error:', err)
+       }
+       return <>{posts.map(p => <div key={p.id}>{p.title}</div>)}</>
+     }
+
+5.2) Um artigo so
+
+     const post = await getPost(id)   // post.html, post.category, post.title
+
+     Na pagina do artigo usar getPostBySlug, que resolve o slug e ja
+     normaliza as datas:
+
+     const post = await getPostBySlug(slug)   // null quando nao existe
+
+     E o link para o artigo se monta assim (URL = /blog/<slug>):
+
+     href={`/blog/${postSlug(post)}`}
+
+5.3) Todos os artigos (a listagem do /blog usa isso)
+
+     const data = await getPosts({ limit: '200' })
+
+5.4) Paginado
+
+     const data = await getPosts({ limit: '12', page: '2' })
+     data.pagination.hasNextPage  // -> boolean
+
+5.5) Client Component — NAO importar lib/airticles (vazaria a chave).
+     Usar as rotas proxy internas:
+
+     const res  = await fetch('/api/blog?limit=6')
+     const data = await res.json()
+
+     const res2 = await fetch(`/api/blog/${id}`)
+
+
+--------------------------------------------------------------------------------
+ 6. ROTAS PROXY (para consumo client-side sem expor a chave)
+--------------------------------------------------------------------------------
+
+app/api/blog/route.ts
+--- COPIAR A PARTIR DAQUI ---
+
+import { type NextRequest } from 'next/server'
+import { getPosts } from '@/lib/airticles'
+
+export async function GET(request: NextRequest) {
+  try {
+    const params = Object.fromEntries(request.nextUrl.searchParams)
+    const data = await getPosts(params)
+    return Response.json(data)
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Internal error'
+    return Response.json({ error: message }, { status: 500 })
+  }
+}
+
+--- ATE AQUI ---
+
+
+app/api/blog/[id]/route.ts
+--- COPIAR A PARTIR DAQUI ---
+
+import { getPost } from '@/lib/airticles'
+
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params
+    const data = await getPost(id)
+    return Response.json(data)
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Internal error'
+    const status = message.includes('404') ? 404 : 500
+    return Response.json({ error: message }, { status })
+  }
+}
+
+--- ATE AQUI ---
+
+Nota: em Next 15+ o `params` das rotas dinamicas e uma Promise e precisa de
+await — ver `node_modules/next/dist/docs/` antes de mexer.
+
+
+--------------------------------------------------------------------------------
+ 7. BUG DE DATAS (corrigido)
+--------------------------------------------------------------------------------
+
+Em app/blog/[slug]/page.tsx as datas vinham de campos que o endpoint de
+detalhe nao retorna:
+
+  formatDate(post.scheduledAt ?? post.updatedAt)
+              -> undefined ?? undefined -> a data renderizava VAZIA na pagina
+
+  datePublished / dateModified no JSON-LD
+              -> sumiam do schema (perda de sinal de SEO)
+
+Causa: o detalhe devolve `scheduled_at` (snake_case) e nao devolve createdAt
+nem updatedAt. A interface PostDetail promete o contrario.
+
+Correcao aplicada: getPostBySlug faz o merge do detalhe com o item da listagem
+(id, slug, createdAt, updatedAt) e aceita `scheduled_at` como fonte da data.
+Quem chamar getPost(id) direto continua sujeito ao problema.
+
+
+--------------------------------------------------------------------------------
+ 8. ONDE ISSO JA E USADO NO SITE
+--------------------------------------------------------------------------------
+
+  lib/airticles.ts                     cliente unico da API
+  app/components/home/BlogSection.tsx  3 ultimos artigos na home (limit 3)
+  app/blog/page.tsx                    listagem completa (limit 200)
+  app/blog/BlogList.tsx                grid da listagem (client)
+  app/blog/[...slug]/page.tsx          artigo + metadata + JSON-LD
+                                       URL = /blog/<slug>. E catch-all so para
+                                       as URLs antigas: /blog/<id> e
+                                       /blog/<id>/<qualquer-coisa> caem em 308
+                                       para /blog/<slug>.
+  app/api/blog/route.ts                proxy REST da listagem
+  app/api/blog/[id]/route.ts           proxy REST do detalhe
+  app/globals.css                      estilos .article-body (html da Airticles)
+
+
+--------------------------------------------------------------------------------
+ 9. CHECKLIST PARA UM PROJETO NOVO
+--------------------------------------------------------------------------------
+
+  [ ] criar .env com BLOG_API=...
+  [ ] confirmar que .env* esta no .gitignore
+  [ ] criar lib/airticles.ts (secao 3)
+  [ ] criar app/api/blog/route.ts e app/api/blog/[id]/route.ts (secao 6)
+  [ ] consumir via Server Component com getPosts/getPost (secao 5)
+  [ ] estilizar o html retornado (classe .article-body)
+  [ ] cadastrar BLOG_API nas env vars do deploy
+
+================================================================================

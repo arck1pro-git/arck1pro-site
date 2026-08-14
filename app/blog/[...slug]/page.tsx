@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import { getPost } from '@/lib/airticles'
+import { notFound, permanentRedirect } from 'next/navigation'
+import { getPostBySlug, getSlugById, postSlug, type PostDetail } from '@/lib/airticles'
 
 const API_BASE = 'https://api.airticles.ai'
 
@@ -22,16 +22,32 @@ function formatDate(iso: string | null) {
 export default async function ArticlePage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ slug: string[] }>
 }) {
-  const { id } = await params
+  const { slug } = await params
+  const [first, ...rest] = slug
 
-  let post
+  // URLs antigas /blog/<id> e /blog/<id>/<slug>: 308 para a URL só com slug.
+  if (/^\d+$/.test(first)) {
+    let legacySlug: string | null = null
+    try {
+      legacySlug = await getSlugById(first)
+    } catch {
+      // cai no 404 abaixo
+    }
+    if (legacySlug) permanentRedirect(`/blog/${legacySlug}`)
+  }
+
+  let post: PostDetail | null = null
   try {
-    post = await getPost(id)
+    post = await getPostBySlug(first)
   } catch {
     notFound()
   }
+  if (!post) notFound()
+
+  // Segmento extra depois do slug (link torto, tracking) volta para a canônica.
+  if (rest.length > 0) permanentRedirect(`/blog/${postSlug(post)}`)
 
   const coverUrl = resolveImageUrl(post.coverImageUrl)
 

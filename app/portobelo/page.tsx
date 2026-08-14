@@ -170,7 +170,7 @@ export default function PortoBeloPage() {
   return (
     <main
       style={{
-        marginTop: '-74px',
+        marginTop: 'calc(var(--header-h) * -1)',
         position: 'relative',
         background: 'var(--brand-navy)',
       }}
@@ -186,7 +186,7 @@ export default function PortoBeloPage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          padding: 'calc(74px + var(--s-12)) var(--s-6) var(--s-16)',
+          padding: 'calc(var(--header-h) + var(--s-12)) var(--s-6) var(--s-16)',
           textAlign: 'center',
         }}
       >
@@ -214,7 +214,7 @@ export default function PortoBeloPage() {
       </div>
 
       <section
-        className="section rounded-4xl overflow-clip relative z-10"
+        className="section overflow-clip relative z-10"
         style={{
           background:
             'radial-gradient(ellipse 55% 55% at 100% 100%, rgba(0,16,49,0.13) 0%, transparent 100%), var(--surface)',
@@ -414,11 +414,10 @@ export default function PortoBeloPage() {
             />
             <div style={{ maxWidth: 720, marginInline: 'auto', textAlign: 'center', marginTop: 'var(--s-10)' }}>
               <p
-                className="font-display text-base"
+                className="font-display text-base text-gold"
                 style={{
                   letterSpacing: '0.18em',
                   textTransform: 'uppercase',
-                  color: 'var(--brand-gold)',
                   margin: '0 0 var(--s-5)',
                 }}
               >
@@ -644,7 +643,7 @@ export default function PortoBeloPage() {
                       flexShrink: 0,
                     }}
                   >
-                    <span className="font-display" style={{ fontSize: 'var(--fs-18)', fontWeight: 600, color: 'var(--brand-gold)', letterSpacing: '0.02em' }}>
+                    <span className="font-display text-gold" style={{ fontSize: 'var(--fs-18)', fontWeight: 600, letterSpacing: '0.02em' }}>
                       {c.iniciais}
                     </span>
                   </div>

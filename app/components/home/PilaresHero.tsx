@@ -1,6 +1,6 @@
 export default function PilaresHero() {
   return (
-    <div className="lg:hidden max-w-[1400px] mx-auto px-6 py-10">
+    <div className="lg:hidden max-w-[1400px] mx-auto px-6 py-10 text-center">
       <h2
         className="font-display font-bold leading-[1.15] text-2xl tracking-[-0.01em]"
         style={{ color: "var(--brand-navy)" }}
@@ -10,7 +10,7 @@ export default function PilaresHero() {
         de maior rendimento no mercado imobiliário e <span className="text-gold">poucos sabem como acessá-la.</span>
         <br />
       </h2>
-      <div className="max-w-2xl mt-6 flex flex-col gap-4" style={{ color: "var(--brand-navy)" }}>
+      <div className="max-w-2xl mx-auto mt-6 flex flex-col gap-4" style={{ color: "var(--brand-navy)" }}>
         <p className="text-base leading-relaxed opacity-80">
           Desenvolvemos empreendimentos imobiliários únicos com tecnologia e sustentabilidade e conectamos investidores qualificados e criteriosamente selecionados para se tornarem sócios investidores das incorporadoras mais estruturadas do litoral catarinense.
         </p>

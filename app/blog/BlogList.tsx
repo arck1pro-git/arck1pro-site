@@ -8,6 +8,7 @@ const PER_PAGE = 12
 
 export type BlogCard = {
   id: number
+  slug: string
   title: string
   mainKeyword: string | null
   imageUrl: string | null
@@ -99,7 +100,7 @@ Aqui você acompanha as análises de mercado e o universo de investimento do ARI
         <>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
           {paginated.map((post) => (
-            <Link key={post.id} href={`/blog/${post.id}`} style={{ textDecoration: 'none' }}>
+            <Link key={post.id} href={`/blog/${post.slug}`} style={{ textDecoration: 'none' }}>
               <article
                 className="blog-card rounded-lg"
                 style={{

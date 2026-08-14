@@ -108,7 +108,7 @@ export default function PilaresCards() {
       style={{ height: `${N * SEG}svh` }}
     >
       <div className="px-6 pt-10 pb-6">
-        <p className="font-display text-4xl text-center font-nbold text-navy">
+        <p className="font-sans text-4xl text-center font-nbold text-navy">
           Etapas do nosso processo:
         </p>
       </div>

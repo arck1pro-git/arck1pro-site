@@ -7,7 +7,7 @@ export default function PeopleSection() {
   return (
     <section
       id="lider"
-      className="font-display bg-white relative z-10 -mt-12 rounded-t-4xl overflow-clip min-h-auto lg:h-auto flex flex-col"
+      className="font-sans bg-white relative z-10 overflow-clip min-h-auto lg:h-auto flex flex-col"
     >
       {/* Hero — apresentação do líder (centralizado) */}
       <div className="shrink-0 max-w-[1400px] w-full mx-auto px-6 pt-12 pb-8 lg:pt-16 lg:pb-6 text-center flex flex-col items-center">
@@ -32,7 +32,7 @@ export default function PeopleSection() {
                 border: "1px solid rgba(0,16,49,0.08)",
               }}
             >
-              <span className="font-display font-bold text-5xl lg:text-7xl text-gold leading-none">
+              <span className="font-sans font-bold text-5xl lg:text-7xl text-gold leading-none">
                 {s.value}
               </span>
               <span

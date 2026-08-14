@@ -41,22 +41,30 @@
    TOKENS GLOBAIS
    ========================================================= */
 :root {
-  /* Brand core */
+  /* Brand core — a paleta inteira do site:
+     azul escuro #001031 · azul #121f73 · amarelo queimado #c28f50
+     dourado claro #fae394 · cinza claro #ecebe7
+     Os aliases abaixo (navy-700/500, gold-soft, stone) existiam como tons
+     intermediários; agora apontam para a paleta e ficam só por compatibilidade. */
   --brand-navy:        #001031;
-  --brand-navy-700:    #0a1c45;
-  --brand-navy-500:    #1c305f;
+  --brand-blue:        #121f73;
   --brand-gold:        #c28f50;
-  --brand-gold-soft:   #d6a974;
   --brand-gold-light:  #fae394;
   --brand-cream:       #ecebe7;
-  --brand-stone:       #d8d6cf;
 
-  /* Gradientes */
-  --gold-grad:   linear-gradient(180deg, #b07d3e 0%, #c28f50 25%, #e0b56e 55%, #fae394 100%);
-  --gold-grad-h: linear-gradient(90deg,  #b07d3e 0%, #c28f50 35%, #e0b56e 70%, #fae394 100%);
+  --brand-navy-700:    var(--brand-blue);
+  --brand-navy-500:    var(--brand-blue);
+  --brand-gold-soft:   var(--brand-gold);
+  --brand-stone:       var(--brand-cream);
+
+  /* Gradientes da paleta — só as duas paradas de cada, do claro para o escuro. */
+  --gold-grad:   linear-gradient(180deg, #fae394 0%, #c28f50 100%);
+  --gold-grad-h: linear-gradient(90deg,  #fae394 0%, #c28f50 100%);
+  --navy-grad:   linear-gradient(180deg, #001031 0%, #121f73 100%);
+  --navy-grad-h: linear-gradient(90deg,  #001031 0%, #121f73 100%);
 
   /* Tipografia */
-  --font-sans:    "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Poppins", ui-sans-serif, sans-serif;
   --font-carla:   "Carla Sans", ui-sans-serif, sans-serif;
 
@@ -97,6 +105,9 @@
   --r-3:    8px;
   --r-pill: 999px;
 
+  /* Altura do header sticky — as páginas compensam com -var(--header-h). */
+  --header-h: 58px;
+
   /* Bordas */
   --hairline: 0.5px;
   --line-1:   1px;
@@ -130,7 +141,7 @@
   --line:         rgba(0,16,49,.10);
   --line-strong:  rgba(0,16,49,.22);
   --text:         #001031;
-  --text-2:       #1c305f;
+  --text-2:       var(--brand-blue);
   --text-muted:   #54607a;
   --text-faint:   #8c95a8;
   --text-inverse: #f6f5f1;
@@ -147,16 +158,16 @@
   --bg-soft:      #061a3d;
   --bg-inverse:   #ecebe7;
   --surface:      #061a3d;
-  --surface-2:    #0a1c45;
+  --surface-2:    var(--brand-blue);
   --surface-3:    #122657;
   --line:         rgba(236,235,231,.12);
   --line-strong:  rgba(236,235,231,.28);
   --text:         #f6f5f1;
-  --text-2:       #d8d6cf;
+  --text-2:       var(--brand-cream);
   --text-muted:   #9aa3b8;
   --text-faint:   #6b7591;
   --text-inverse: #001031;
-  --accent:       #e0b56e;
+  --accent:       #fae394; /* dourado claro da paleta (era #e0b56e, fora dela) */
   --accent-text:  #001031;
   --focus:        #fae394;
   --grid-line:    rgba(236,235,231,.05);
@@ -209,6 +220,8 @@ body {
 /* Background gradiente */
 .bg-gold-grad    { background: var(--gold-grad); }
 .bg-gold-grad-h  { background: var(--gold-grad-h); }
+.bg-navy-grad    { background: var(--navy-grad); }
+.bg-navy-grad-h  { background: var(--navy-grad-h); }
 
 /* =========================================================
    UTILITÁRIOS DE COR — Text
@@ -216,7 +229,16 @@ body {
 .text-navy       { color: var(--brand-navy); }
 .text-navy-700   { color: var(--brand-navy-700); }
 .text-navy-500   { color: var(--brand-navy-500); }
-.text-gold       { color: var(--brand-gold); }
+/* Dourado padrão: gradiente recortado no texto, mesma rampa do .btn--gold.
+   Não usar em elemento que tenha background próprio ou ícone herdando
+   currentColor — o clip deixa a cor transparente. */
+.text-gold {
+  color: var(--brand-gold); /* fallback se background-clip:text não pegar */
+  background-image: var(--gold-grad-h);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .text-gold-soft  { color: var(--brand-gold-soft); }
 .text-gold-light { color: var(--brand-gold-light); }
 .text-cream      { color: var(--brand-cream); }
@@ -235,18 +257,23 @@ body {
 
 
 
+/* Duas camadas: o brilho varre por cima (transparente nas bordas) e a rampa
+   dourada da marca fica parada por baixo. A camada de baixo tem size 100%,
+   então o background-position animado pelo text-shine só move o brilho. */
 .text-gold-hero {
   display: inline-block;
-  background: linear-gradient(
-    90deg,
-    #c28f50 35%,
-    #fae394 45%,
-    #ffffff 49%,
-    #ffffff 51%,
-    #fae394 55%,
-    #c28f50 65%
-  );
-  background-size: 300% auto;
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 45%,
+      rgba(255, 255, 255, 0.9) 49%,
+      rgba(255, 255, 255, 0.9) 51%,
+      transparent 55%
+    ),
+    var(--gold-grad-h);
+  background-size: 300% auto, 100% 100%;
+  background-position: 100% center, center;
+  background-repeat: no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -303,66 +330,58 @@ body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   border: none;
-  border-radius: var(--r-pill);
+  border-radius: 0;
   cursor: pointer;
   text-decoration: none;
   color: var(--col);
-  /* fill azul da esquerda via background-position — texto sempre acima */
-  background-image: linear-gradient(to right, var(--brand-navy) 50.01%, var(--bg) 50.01%);
-  background-size: 201% 100%;
-  background-position: 100% center;
+  background-color: var(--bg);
+  background-image: none;
   transition:
-    background-position 1s var(--ease-out),
-    color               var(--dur-2) var(--ease-out),
-    box-shadow          var(--dur-2) var(--ease-out);
-  overflow: hidden;
+    background-color var(--dur-2) var(--ease-out),
+    border-color     var(--dur-2) var(--ease-out),
+    filter           var(--dur-2) var(--ease-out);
 }
 
 .btn .arrow { display: inline-block; }
 
-/* Hover universal */
+/* Hover universal: mesma cor, levemente mais clara. */
 .btn:hover {
-  background-position: 0% center;
-  color: var(--brand-gold);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.65);
+  background-color: color-mix(in oklab, var(--bg), #fff 14%);
 }
 
 /* Variante: Primary */
 .btn--primary { --bg: var(--brand-navy); --col: var(--brand-cream); }
 :root[data-theme="dark"] .btn--primary { --bg: var(--brand-cream); --col: var(--brand-navy); }
 
-/* Variante: Gold — camada de slide sobre o gradiente dourado */
+/* Variante: Gold — gradiente dourado; color-mix não alcança background-image,
+   então o "mais claro" do hover vem de brightness (que é animável). */
 .btn--gold {
-  background-image:
-    linear-gradient(to right, var(--brand-navy) 50.01%, transparent 50.01%),
-    var(--gold-grad-h);
-  background-size: 201% 100%, 100% 100%;
-  background-position: 100% center, center;
+  background-image: var(--gold-grad-h);
   color: var(--brand-navy);
 }
-.btn--gold:hover { background-position: 0% center, center; }
+.btn--gold:hover { filter: brightness(1.08); }
 
-/* Variante: Ghost */
+/* Variante: Ghost — já é branco, então clarear não aparece: o feedback vem de
+   uma lavagem navy bem leve. */
 .btn--ghost {
-  background-color: var(--surface);
-  background-image: linear-gradient(to right, var(--brand-navy) 50.01%, transparent 50.01%);
-  background-size: 201% 100%;
-  background-position: 100% center;
+  --bg: var(--surface);
   color: var(--text);
   border: var(--line-1) solid var(--line-strong);
+}
+.btn--ghost:hover {
+  background-color: color-mix(in oklab, var(--surface), var(--brand-navy) 5%);
 }
 
 /* Variante: Ghost invertido (fundo escuro) */
 .btn--ghost-inv {
-  background-image: linear-gradient(to right, var(--brand-navy) 50.01%, transparent 50.01%);
-  background-size: 201% 100%;
-  background-position: 100% center;
+  --bg: transparent;
   color: var(--brand-cream);
   border: var(--line-1) solid rgba(236, 235, 231, 0.35);
 }
 
 /* Variante: Link — sem fill */
 .btn--link {
+  --bg: transparent;
   background: transparent;
   background-image: none;
   padding: 0 0 4px;
@@ -373,7 +392,12 @@ body {
   letter-spacing: 0.1em;
   overflow: visible;
 }
-.btn--link:hover { color: var(--brand-gold); border-color: var(--brand-gold); box-shadow: none; }
+/* Sem fundo no hover: é sublinhado, não caixa. */
+.btn--link:hover {
+  background-color: transparent;
+  color: var(--brand-gold);
+  border-color: var(--brand-gold);
+}
 
 /* Tamanhos */
 .btn--sm { padding: 7px 13px; font-size: 11px; }
@@ -382,11 +406,50 @@ body {
 /* =========================================================
    HERO
    ========================================================= */
-.hero-overlay {
+/* Painel atrás do bloco de texto + botões da hero: desfoca a foto e some para
+   a direita. A máscara é o que apaga o próprio blur — um gradiente no
+   background só apagaria a tinta, o desfoque continuaria até a borda. */
+.hero-panel {
+  position: absolute;
+  top: -28px;
+  bottom: -28px;
+  left: -32px;
+  width: min(920px, 100%);
+  pointer-events: none;
+  /* Só a esquerda arredonda; a direita dissolve na máscara. */
+  border-radius: 0.5rem 0 0 0.5rem;
+  backdrop-filter: blur(14px) saturate(115%);
+  -webkit-backdrop-filter: blur(14px) saturate(115%);
+  /* Tinta leve: sobre céu claro o blur sozinho não dá contraste ao texto creme. */
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.54) 0%,
+    rgba(0, 0, 0, 0.32) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 48%, transparent 100%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 48%, transparent 100%);
+}
+
+/* Mobile: a sombra cobre a seção inteira em vez de acompanhar o bloco. */
+.hero-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.75) 42%, rgba(0,0,0,0.45) 72%, rgba(0,0,0,0.1) 100%);
   pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.34) 0%,
+    rgba(0, 0, 0, 0.52) 45%,
+    rgba(0, 0, 0, 0.52) 100%
+  );
+}
+
+@media (min-width: 1024px) {
+  .hero-scrim { display: none; }
+}
+
+@media (max-width: 1023.98px) {
+  .hero-panel { display: none; }
 }
 
 /* =========================================================

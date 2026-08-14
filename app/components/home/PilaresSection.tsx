@@ -1,6 +1,3 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import { LayoutTemplate, TrendingUp, Building2, Megaphone, HardHat } from "lucide-react";
 import PilaresHero from "./PilaresHero";
 import PilaresCards from "./PilaresCards";
@@ -34,33 +31,24 @@ const solutions = [
 ];
 
 export default function PilaresSection() {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActive((a) => (a + 1) % solutions.length);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section id="metodo" className="font-display bg-white relative z-10 -mt-12 rounded-4xl overflow-clip">
+    <section id="metodo" className="font-sans bg-white relative z-10 overflow-clip">
       {/* Mobile */}
       <PilaresHero />
       <PilaresCards />
 
       {/* Desktop intro */}
-      <div className="hidden lg:block max-w-[1400px] mx-auto px-6 py-10">
+      <div className="hidden lg:block max-w-[1400px] mx-auto px-6 py-10 text-center">
         <h2
           className="font-display font-bold leading-[1.15] text-6xl tracking-[-0.01em] mb-20 mt-10"
           style={{ color: "var(--brand-navy)" }}
         >
           A incorporação é a fase
-          
+
           de maior rendimento no mercado imobiliário e <span className="text-gold">poucos sabem como acessá-la.</span>
           <br />
         </h2>
-        <div className="max-w-2xl mt-8 flex flex-col gap-4" style={{ color: "var(--brand-navy)" }}>
+        <div className="max-w-2xl mx-auto mt-8 flex flex-col gap-4" style={{ color: "var(--brand-navy)" }}>
           <p className="text-lg leading-relaxed opacity-80">
             Desenvolvemos empreendimentos imobiliários únicos com tecnologia e sustentabilidade e conectamos investidores qualificados e criteriosamente selecionados para se tornarem sócios investidores das incorporadoras mais estruturadas do litoral catarinense.
           </p>
@@ -73,62 +61,42 @@ export default function PilaresSection() {
         </div>
       </div>
 
-      {/* Desktop timeline */}
+      {/* Desktop — cards fixos: todos os textos visíveis ao mesmo tempo,
+          sem ciclo de item ativo. */}
       <div className="hidden lg:block bg-white">
         <div className="max-w-[1400px] mx-auto px-6 pt-10 pb-16">
-          <div className="relative py-20">
-            {/* Linha horizontal conectando os nós */}
-            <div
-              className="absolute left-[10%] right-[10%] h-px"
-              style={{ top: "calc(var(--s-20) + 28px)", background: "var(--brand-stone)" }}
-            />
-            <div className="grid grid-cols-5 gap-8">
-              {solutions.map(({ title, body, Icon }, i) => {
-                const isActive = i === active;
-                return (
-                  <div key={i} className="relative flex flex-col items-center text-center gap-4">
-                    {/* Nó com ícone */}
-                    <div
-                      className="relative z-10 flex items-center justify-center rounded-full bg-white"
-                      style={{
-                        width: 56,
-                        height: 56,
-                        border: "2px solid var(--brand-gold)",
-                        transform: isActive ? "scale(1.12)" : "scale(1)",
-                        boxShadow: isActive
-                          ? "0 0 0 4px rgba(194,143,80,0.18), 0 0 28px rgba(194,143,80,0.65)"
-                          : "0 0 0 0 rgba(194,143,80,0)",
-                        transition: "transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out)",
-                      }}
-                    >
-                      <Icon
-                        size={24}
-                        style={{
-                          color: "var(--brand-gold)",
-                          opacity: isActive ? 1 : 0.55,
-                          transition: "opacity 0.6s var(--ease-out)",
-                        }}
-                        strokeWidth={1.5}
-                      />
-                    </div>
-                    <span className="font-bold text-sm tracking-widest" style={{ color: "var(--brand-gold)" }}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="font-bold text-xl leading-snug" style={{ color: "var(--brand-navy)" }}>{title}</h3>
-                    <p
-                      className="text-sm leading-relaxed text-left w-full"
-                      style={{
-                        color: "var(--brand-navy)",
-                        opacity: isActive ? 0.7 : 0,
-                        transition: "opacity 0.6s var(--ease-out)",
-                      }}
-                    >
-                      {body}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
+          {/* 6 colunas com span 2: 3 cards na 1ª linha e 2 na 2ª. O col-start-3
+              no 4º card centraliza a linha de baixo. */}
+          <div className="grid grid-cols-6 gap-6 items-stretch">
+            {solutions.map(({ title, body, Icon }, i) => (
+              <div
+                key={i}
+                className={`col-span-2 ${i === 3 ? "col-start-2" : ""} flex flex-col items-center text-center gap-4 rounded-2xl p-6`}
+                style={{
+                  background: "rgba(0,16,49,0.03)",
+                  border: "1px solid rgba(0,16,49,0.08)",
+                }}
+              >
+                <div
+                  className="flex items-center justify-center rounded-full bg-white shrink-0"
+                  style={{ width: 56, height: 56, border: "2px solid var(--brand-gold)" }}
+                >
+                  <Icon size={24} style={{ color: "var(--brand-gold)" }} strokeWidth={1.5} />
+                </div>
+                <span className="font-bold text-sm tracking-widest text-gold">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="font-bold text-xl leading-snug" style={{ color: "var(--brand-navy)" }}>
+                  {title}
+                </h3>
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: "var(--brand-navy)", opacity: 0.7 }}
+                >
+                  {body}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -68,7 +68,7 @@ export default function PortfolioSection() {
               Tourmaline Tower: a arquitetura na era da inteligência.
             </h2>
             <div className="flex flex-col gap-2 lg:gap-5">
-              <h3 className="font-display text-white text-lg lg:text-4xl font-bold">
+              <h3 className="font-sans text-white text-lg lg:text-4xl font-bold">
                 A Soberania da Eficiência
               </h3>
               <p className="font-sans text-white/80 text-xs lg:text-base leading-snug lg:leading-[1.8] m-0">

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getPosts, type Post } from '@/lib/airticles'
+import { getPosts, postSlug, type Post } from '@/lib/airticles'
 
 const API_BASE = 'https://api.airticles.ai'
 
@@ -27,7 +27,7 @@ export default async function BlogSection() {
   return (
     <section
       id="blog"
-      className="section rounded-b-4xl overflow-clip relative z-10"
+      className="section overflow-clip relative z-10"
       style={{
         background:
           'radial-gradient(ellipse 55% 55% at 100% 100%, rgba(0,16,49,0.13) 0%, transparent 100%), var(--surface)',
@@ -68,7 +68,7 @@ export default async function BlogSection() {
             {posts.map((post) => {
               const imageUrl = extractImage(post)
               return (
-                <Link key={post.id} href={`/blog/${post.id}`} style={{ textDecoration: 'none' }}>
+                <Link key={post.id} href={`/blog/${postSlug(post)}`} style={{ textDecoration: 'none' }}>
                   <article
                   className='rounded-2xl'
                     style={{
@@ -102,7 +102,7 @@ export default async function BlogSection() {
                       }}
                     >
                       <h3
-                        className="font-display"
+                        className="font-sans"
                         style={{
                           color: '#ffffff',
                           fontSize: 'var(--fs-20)',

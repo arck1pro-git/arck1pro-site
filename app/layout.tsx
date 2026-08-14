@@ -1,15 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Poppins } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SmoothScroller from "./components/SmoothScroller";
 import WhatsappFloat from "./components/WhatsappFloat";
 
-const montserrat = Montserrat({
+// Inter é variável: não precisa listar weight, vem com o eixo inteiro (o site
+// usa de 300 a 700).
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
-  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -39,7 +40,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       data-theme="light"
-      className={`${montserrat.variable} ${poppins.variable}`}
+      className={`${inter.variable} ${poppins.variable}`}
     >
       <body style={{ background: "var(--brand-navy)" }}>
         <SmoothScroller />

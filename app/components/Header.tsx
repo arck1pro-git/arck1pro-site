@@ -25,20 +25,17 @@ export default function Header() {
 
   return (
     <header
-      className="rounded-full m-2"
       style={{
         position: "sticky",
         top: 0,
         zIndex: 100,
-        height: 58,
+        height: "var(--header-h)",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         gap: "var(--s-8)",
         padding: "0 var(--s-6)",
-        background: "rgba(21, 29, 53, 0.55)",
-        backdropFilter: "blur(28px) saturate(160%)",
-        WebkitBackdropFilter: "blur(28px) saturate(160%)",
+        background: "var(--navy-grad-h)",
         boxShadow: "0 8px 32px rgba(0,0,0,0.28)",
       }}
     >
@@ -54,7 +51,7 @@ export default function Header() {
           letterSpacing: "0.08em",
         }}
       >
-        ARCK<span style={{ color: "var(--brand-gold)" }}>1</span>PRO
+        ARCK<span className="text-gold">1</span>PRO
       </a>
 
       {/* Nav desktop */}

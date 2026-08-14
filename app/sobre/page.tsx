@@ -164,7 +164,7 @@ export default function SobrePage() {
   return (
     <main
       style={{
-        marginTop: '-74px',
+        marginTop: 'calc(var(--header-h) * -1)',
         position: 'relative',
         background: 'var(--brand-navy)',
       }}
@@ -180,7 +180,7 @@ export default function SobrePage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          padding: 'calc(74px + var(--s-12)) var(--s-6) var(--s-16)',
+          padding: 'calc(var(--header-h) + var(--s-12)) var(--s-6) var(--s-16)',
           textAlign: 'center',
         }}
       >
@@ -212,7 +212,7 @@ export default function SobrePage() {
       </div>
 
       <section
-        className="section rounded-4xl overflow-clip relative z-10"
+        className="section overflow-clip relative z-10"
         style={{
           background:
             'radial-gradient(ellipse 55% 55% at 100% 100%, rgba(0,16,49,0.13) 0%, transparent 100%), var(--surface)',
