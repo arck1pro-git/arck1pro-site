@@ -2,25 +2,21 @@
 
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import ContatoForm from '../contato/ContatoForm'
+import ContatoForm from './ContatoForm'
 
-type Role = 'corretor' | 'investidor'
+type Role = 'investidor'
 
 const eyebrows: Record<Role, string> = {
   investidor: 'Candidatura · ARI',
-  corretor: 'Parceria comercial',
 }
 
 const titles: Record<Role, string> = {
   investidor: 'Qualificação de investidor',
-  corretor: 'Quero vender o Tourmaline',
 }
 
 const subtitles: Record<Role, string> = {
   investidor:
     'O ARI opera por seleção. Preencha seus dados e nossa equipe avalia o seu perfil antes de apresentar as operações abertas.',
-  corretor:
-    'Conte um pouco sobre você. Nossa equipe comercial retoma o contato com os próximos passos.',
 }
 
 export default function ContactModal({

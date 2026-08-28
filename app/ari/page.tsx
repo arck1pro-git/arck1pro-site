@@ -1,9 +1,10 @@
 ﻿import type { Metadata } from 'next'
 import Link from 'next/link'
-import AriForm from './AriForm'
 import AriFaq from './AriFaq'
 import AriSimulador from './AriSimulador'
-import RouteHeroBg from '../components/RouteHeroBg'
+import RouteHero from '../components/RouteHero'
+import { ArrowUpRight } from "lucide-react";
+import { WHATSAPP_URL } from "@/lib/contato";
 
 export const metadata: Metadata = {
   title: 'ARI · Ativo de Renda Imobiliária — ARCK1PRO',
@@ -83,38 +84,27 @@ export default function AriPage() {
         background: 'var(--brand-navy)',
       }}
     >
-      <RouteHeroBg />
       {/* DOBRA 1 — Hero */}
-      <div
-        className="container"
-        style={{
-          position: 'relative',
-          zIndex: 1,
-          minHeight: '75svh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          padding: 'calc(var(--header-h) + var(--s-12)) var(--s-6) var(--s-16)',
-          textAlign: 'center',
-        }}
-      >
-        
-        <h1
-          className="font-display text-cream lg:text-5xl text-4xl"
-          style={{ fontWeight: 700, lineHeight: 1.12, margin: 0, maxWidth: 900, marginInline: 'auto' }}
-        >
-          Um ativo de renda imobiliária no litoral de Santa Catarina, com retornos de até 3% ao mês e{' '}
-          <span className="text-gold-hero">isento de IR</span>
-        </h1>
-        <div className='m-10'  style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--s-3)', justifyContent: 'center' }}>
-          <Link href="#formulario" className="btn btn--gold">
-            Solicitar avaliação <span className="arrow">→</span>
-          </Link>
-          <a href="#o-que-e" className="btn btn--ghost-inv">
-            Entenda o ativo ↓
-          </a>
-        </div>
-      </div>
+      <RouteHero
+        escala="compacta"
+        titulo={
+          <>
+            Um ativo de renda imobiliária no litoral de Santa Catarina, com retornos de até 3% ao
+            mês e{' '}
+            <span className="text-gold-hero font-serif-italic font-normal">isento de IR</span>
+          </>
+        }
+        acoes={
+          <>
+            <Link href="#comercial" className="btn btn--gold">
+              Solicitar avaliação <ArrowUpRight className="arrow" size={16} strokeWidth={2} aria-hidden />
+            </Link>
+            <a href="#o-que-e" className="btn btn--ghost-inv">
+              Entenda o ativo ↓
+            </a>
+          </>
+        }
+      />
 
       <section
         className="section overflow-clip relative z-10"
@@ -124,9 +114,10 @@ export default function AriPage() {
           paddingTop: 'var(--s-20)',
         }}
       >
-        <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-24)' }}>
+        <div aria-hidden className="claro-dots" />
+        <div className="container relative" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-24)' }}>
           {/* DOBRA 2 — O que é o ARI */}
-          <div id="o-que-e" className="scroll-mt-[100px]">
+          <div id="o-que-e" className="reveal scroll-mt-[100px]">
             <div className="max-w-[820px] mx-auto text-center mb-10">
               <h2 className="lg:text-6xl text-4xl font-bold font-display text-navy">
                 Uma estrutura de investimento diferente de tudo que você conhece
@@ -155,7 +146,7 @@ export default function AriPage() {
               {metrics.map((m) => (
                 <div
                   key={m.label}
-                  className="rounded-4xl lift"
+                  className="rounded-lg lift"
                   style={{
                     padding: 'var(--s-8)',
                     textAlign: 'center',
@@ -181,7 +172,7 @@ export default function AriPage() {
           </div>
 
           {/* DOBRA 3 — Simulação */}
-          <div>
+          <div className="reveal">
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-10)' }}>
               <h2
                 className="lg:text-6xl text-4xl font-bold font-display text-navy"
@@ -193,8 +184,8 @@ export default function AriPage() {
             <AriSimulador />
 
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: 'var(--s-8)' }}>
-              <Link href="#formulario" className="btn btn--gold">
-                Solicitar qualificação <span className="arrow">→</span>
+              <Link href="#comercial" className="btn btn--gold">
+                Solicitar qualificação <ArrowUpRight className="arrow" size={16} strokeWidth={2} aria-hidden />
               </Link>
             </div>
 
@@ -207,15 +198,27 @@ export default function AriPage() {
             </p>
           </div>
 
+        </div>
+      </section>
+
+      {/* Dobra em navy. É a alternância clara → navy → clara da home: com uma
+          superfície só do topo ao pé, uma página desta altura vira um bloco de
+          texto sem respiro, e nada nela se destaca. */}
+      <section
+        className="section overflow-clip relative z-10"
+        style={{ background: 'var(--navy-grad)' }}
+      >
+        <div aria-hidden className="navy-dots" />
+        <div className="container relative" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-24)' }}>
           {/* DOBRA 4 — Três camadas de proteção */}
-          <div>
+          <div className="reveal">
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-10)' }}>
               <h2
-                className="font-display text-4xl lg:text-6xl font-bold m-5 text-navy"
+                className="font-display text-4xl lg:text-6xl font-bold m-5 text-cream"
               >
                 O ARI é um investimento seguro
               </h2>
-              <p className="font-sans" style={{ fontSize: 'var(--fs-15)', color: 'var(--text-muted)', margin: 0 }}>
+              <p className="font-sans" style={{ fontSize: 'var(--fs-15)', color: 'rgba(236,235,231,0.75)', margin: 0 }}>
                 Três camadas de proteção independentes, formalizadas em contrato.
               </p>
             </div>
@@ -224,11 +227,11 @@ export default function AriPage() {
               {protecoes.map((p) => (
                 <div
                   key={p.n}
-                  className="rounded-4xl lift"
+                  className="rounded-lg"
                   style={{
                     padding: 'var(--s-8)',
-                    border: 'var(--line-1) solid rgba(0,16,49,0.1)',
-                    background: '#ffffff',
+                    border: 'var(--line-1) solid rgba(236,235,231,0.14)',
+                    background: 'rgba(236,235,231,0.05)',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 'var(--s-3)',
@@ -237,10 +240,10 @@ export default function AriPage() {
                   <span className="font-display text-gold" style={{ fontSize: 'var(--fs-32)', fontWeight: 600, lineHeight: 1 }}>
                     {p.n}
                   </span>
-                  <h3 className="font-display text-navy" style={{ fontSize: 'var(--fs-20)', fontWeight: 500, margin: 0 }}>
+                  <h3 className="font-display text-cream" style={{ fontSize: 'var(--fs-20)', fontWeight: 500, margin: 0 }}>
                     {p.title}
                   </h3>
-                  <p className="font-sans" style={{ fontSize: 'var(--fs-14)', lineHeight: 1.7, color: 'var(--text-muted)', margin: 0 }}>
+                  <p className="font-sans" style={{ fontSize: 'var(--fs-14)', lineHeight: 1.7, color: 'rgba(236,235,231,0.75)', margin: 0 }}>
                     {p.text}
                   </p>
                 </div>
@@ -248,8 +251,20 @@ export default function AriPage() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      <section
+        className="section overflow-clip relative z-10"
+        style={{
+          background:
+            'radial-gradient(ellipse 55% 55% at 100% 100%, rgba(0,16,49,0.13) 0%, transparent 100%), var(--surface)',
+        }}
+      >
+        <div aria-hidden className="claro-dots" />
+        <div className="container relative" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-24)' }}>
           {/* DOBRA 5 — O mercado */}
-          <div>
+          <div className="reveal">
             <div className="grid text-center grid-cols-1 gap-8 items-end" style={{ marginBottom: 'var(--s-10)' }}>
               <div >
                 <h2
@@ -271,7 +286,7 @@ export default function AriPage() {
               {mercado.map((d) => (
                 <div
                   key={d.label}
-                  className="rounded-4xl lift"
+                  className="rounded-lg lift"
                   style={{
                     padding: 'var(--s-8)',
                     border: 'var(--line-1) solid rgba(0,16,49,0.1)',
@@ -296,7 +311,7 @@ export default function AriPage() {
           </div>
 
           {/* DOBRA 6 — FAQ */}
-          <div>
+          <div className="reveal">
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-10)' }}>
               <h2
                 className="font-display text-4xl lg:text-5xl font-bold text-navy"
@@ -314,28 +329,36 @@ export default function AriPage() {
             </div>
           </div>
 
-          {/* DOBRA 7 — Formulário */}
-          <div id="formulario" style={{ scrollMarginTop: 100 }}>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-5">
-                <h2
-                  className="font-display text-4xl lg:text-5xl font-bold text-navy"
-                >
-                  Candidate-se a uma posição no litoral de SC
-                </h2>
-                <p className="font-sans" style={{ fontSize: 'var(--fs-16)', lineHeight: 1.7, color: 'var(--text-muted)', margin: '0 0 var(--s-5)' }}>
-                  O ARI opera por seleção. Preencha sua candidatura e nossa equipe de estruturação
-                  avalia o seu perfil antes de apresentar a operação disponível.
-                </p>
-                <p className="font-sans" style={{ fontSize: 'var(--fs-13)', lineHeight: 1.6, color: 'var(--text-faint)', margin: 0 }}>
-                  Ao enviar, você concorda em receber contato da equipe ARCK1PRO. Seus dados não são
-                  compartilhados com terceiros.
-                </p>
-              </div>
-
-              <div className="lg:col-span-7">
-                <AriForm />
-              </div>
+          {/* DOBRA 7 — Candidatura. Era o formulário de captação; hoje a
+              candidatura acontece na conversa com o comercial, então sobrou o
+              texto que explica a seleção e um botão. A nota sobre dados saiu
+              junto: ela existia por causa dos campos do formulário. */}
+          <div className="reveal" id="comercial" style={{ scrollMarginTop: 100, textAlign: 'center' }}>
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-navy">
+              Candidate-se a uma posição no litoral de SC
+            </h2>
+            <p
+              className="font-sans"
+              style={{
+                fontSize: 'var(--fs-16)',
+                lineHeight: 1.7,
+                color: 'var(--text-muted)',
+                maxWidth: 560,
+                margin: 'var(--s-5) auto var(--s-8)',
+              }}
+            >
+              O ARI opera por seleção. Fale com a nossa equipe de estruturação: ela avalia o seu
+              perfil antes de apresentar a operação disponível.
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--s-3)', justifyContent: 'center' }}>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--gold"
+              >
+                Falar com o comercial <ArrowUpRight className="arrow" size={16} strokeWidth={2} aria-hidden />
+              </a>
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@ export default function AriFaq({ items }: { items: FaqItem[] }) {
         return (
           <div
             key={i}
-            className="rounded-4xl lift"
+            className="rounded-lg lift"
             style={{
               position: 'relative',
               overflow: 'hidden',

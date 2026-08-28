@@ -23,7 +23,7 @@ const faqItems = [
     number: "/03",
     question: "Onde fica o empreendimento e por que Porto Belo?",
     answer:
-      "O Tourmaline Tower está em Porto Belo, Santa Catarina — no eixo entre Balneário Camboriú, Itapema e Bombinhas. Porto Belo é o mercado que está repetindo o ciclo de valorização que Itapema viveu entre 2018 e 2023: assimetria entre oferta e demanda de alto padrão, com mercado em expansão acelerada e ainda com janela de entrada aberta.",
+      "Nossos empreendimentos ficam em Porto Belo, Santa Catarina — no eixo entre Balneário Camboriú, Itapema e Bombinhas. Porto Belo é o mercado que está repetindo o ciclo de valorização que Itapema viveu entre 2018 e 2023: assimetria entre oferta e demanda de alto padrão, com mercado em expansão acelerada e ainda com janela de entrada aberta.",
     cta: "Ver análise completa do mercado",
     ctaHref: "#mercado",
   },
@@ -31,7 +31,7 @@ const faqItems = [
     number: "/04",
     question: "Quem é a Harpaluus Incorporadora?",
     answer:
-      "A Harpaluus é a incorporadora do ecossistema. Executa e assina os empreendimentos perante o mercado, compradores e cartório. Ela recebe da ARCK1PRO toda a estruturação técnica, jurídica e comercial — e foca exclusivamente em entregar empreendimentos de alto padrão no litoral catarinense. O Tourmaline Tower é o primeiro empreendimento lançado pela Harpaluus.",
+      "A Harpaluus é a incorporadora do ecossistema. Executa e assina os empreendimentos perante o mercado, compradores e cartório. Ela recebe da ARCK1PRO toda a estruturação técnica, jurídica e comercial — e foca exclusivamente em entregar empreendimentos de alto padrão no litoral catarinense.",
     cta: null,
     ctaHref: null,
   },
@@ -59,7 +59,7 @@ export default function FAQSection() {
   return (
     <section
       id="faq"
-      className="section"
+      className="reveal section"
       style={{
         background:
           "linear-gradient(to bottom, rgba(246,245,241,0.96) 0%, rgba(246,245,241,0.78) 100%), url('/footer.png') center/cover no-repeat",

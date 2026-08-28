@@ -1,102 +1,65 @@
-import { LayoutTemplate, TrendingUp, Building2, Megaphone, HardHat } from "lucide-react";
-import PilaresHero from "./PilaresHero";
-import PilaresCards from "./PilaresCards";
-
-const solutions = [
-  {
-    title: "Desenvolvimento de Projeto",
-    body: "Aquisição do terreno, diligências jurídicas da área e viabilidades técnicas do projeto com os órgãos públicos, inclusive ambientais. Desenvolvimento de todo o projeto em tecnologia BIM. Todo o projeto é desenvolvido para um público específico, com tipologias de plantas orientadas à eficiência de capital e maior retorno do investidor em todas as fases. Cada metro quadrado é projetado para maximizar VGV e reduzir o tempo de venda. Além de contar com sustentabilidade integrada e certificada e tecnologia IA Smart Building.",
-    Icon: LayoutTemplate,
-  },
-  {
-    title: "Captação de Recursos",
-    body: "Após o desenvolvimento e validação de todo o projeto, com critérios extremamente rígidos, entra a estrutura própria de captação via ARI – Ativo de Renda Imobiliária. Aqui é onde o investidor entra. Captamos no máximo 5% do valor do VGV para a estruturação de todo o projeto. Esse valor normalmente é captado com grupos de 8 a 17 investidores qualificados, criteriosamente selecionados para participar do desenvolvimento do projeto e do sucesso da incorporação.",
-    Icon: TrendingUp,
-  },
-  {
-    title: "Incorporação",
-    body: "Nesse momento finalizamos todo o processo legal de aprovar e registrar a construção de um empreendimento, para então obter o R.I. (Registro da Incorporação), que nos permite vender as unidades antes ou durante as obras de forma totalmente legal e com segurança aos compradores e investidores.",
-    Icon: Building2,
-  },
-  {
-    title: "Lançamento Imobiliário",
-    body: "Aqui é onde toda a nossa equipe comercial, devidamente treinada, capacita e orienta mais de 10.000 corretores, no Brasil e no exterior, para a venda do empreendimento. As unidades disponíveis esgotam-se em poucos meses. Com a venda do empreendimento, fechamos o ciclo ARI, onde o capital retorna aos investidores, encerrando a operação de incorporação imobiliária.",
-    Icon: Megaphone,
-  },
-  {
-    title: "Construção do Empreendimento",
-    body: "Para concretizar todo o processo, entramos na fase de construção do empreendimento com a execução física do projeto. Através da captação com a venda e parceria com fundos imobiliários, garantimos o capital necessário para que a obra avance com rapidez. Essa fase exige seguir normas técnicas rigorosas e a execução de etapas interdependentes, que garantem a segurança, a qualidade estrutural e a entrega do imóvel no prazo.",
-    Icon: HardHat,
-  },
-];
+import Image from "next/image";
+import obraImg from "../../../public/obra.png";
+// Sem "use client": o acordeão saiu e com ele o único estado do arquivo.
+// A esteira de etapas, que também morava aqui, foi para a EtapasCarrossel e
+// hoje é renderizada dentro da PeopleSection, sobre o navy.
 
 export default function PilaresSection() {
   return (
-    <section id="metodo" className="font-sans bg-white relative z-10 overflow-clip">
-      {/* Mobile */}
-      <PilaresHero />
-      <PilaresCards />
+    <section
+      id="metodo"
+      className="reveal font-sans relative z-10 overflow-clip"
+      style={{ background: "var(--surface)" }}
+    >
+      {/* Mesma trama e mesma máscara da .navy-dots, em tinta escura: a trama
+          branca é invisível agora que a section é clara. */}
+      <div aria-hidden className="claro-dots" />
 
-      {/* Desktop intro */}
-      <div className="hidden lg:block max-w-[1400px] mx-auto px-6 py-10 text-center">
+      {/* Intro — mesmo bloco no mobile e no desktop */}
+      <div className="relative max-w-[1400px] mx-auto px-6 pt-20 lg:pt-28 pb-20 lg:pb-28 text-center">
         <h2
-          className="font-display font-bold leading-[1.15] text-6xl tracking-[-0.01em] mb-20 mt-10"
+          className="font-display font-light text-2xl lg:text-[2.5rem] leading-[1.15] tracking-[-0.01em] max-w-[1280px] mx-auto mb-10 lg:mb-20"
           style={{ color: "var(--brand-navy)" }}
         >
-          A incorporação é a fase
-
-          de maior rendimento no mercado imobiliário e <span className="text-gold">poucos sabem como acessá-la.</span>
+          Aqui você lucra participando dos bastidores da multiplicação de patrimônio
+          na etapa mais lucrativa do mercado imobiliário,
           <br />
+          {/* Mesma dupla da hero: Playfair itálica contra a sem-serifa do resto
+              da frase, e o mesmo --gold-grad-h recortado no texto. O peso 400
+              sobrepõe o font-light do h2 — a itálica em 300 ficaria fina demais
+              para carregar a linha sozinha. */}
+          <span className="text-gold font-serif-italic font-normal">
+            com total transparência em cada etapa.
+          </span>
         </h2>
-        <div className="max-w-2xl mx-auto mt-8 flex flex-col gap-4" style={{ color: "var(--brand-navy)" }}>
-          <p className="text-lg leading-relaxed opacity-80">
-            Desenvolvemos empreendimentos imobiliários únicos com tecnologia e sustentabilidade e conectamos investidores qualificados e criteriosamente selecionados para se tornarem sócios investidores das incorporadoras mais estruturadas do litoral catarinense.
-          </p>
-          <p className="text-lg leading-relaxed opacity-80">
-            Como investidor, você acompanha cada etapa com total transparência sobre os números e resultados esperados.
-          </p>
-          <p className="text-lg leading-relaxed font-semibold">
-            Aqui, você lucra como um incorporador, participando dos bastidores da multiplicação de patrimônio na etapa mais lucrativa do mercado imobiliário.
-          </p>
-        </div>
-      </div>
 
-      {/* Desktop — cards fixos: todos os textos visíveis ao mesmo tempo,
-          sem ciclo de item ativo. */}
-      <div className="hidden lg:block bg-white">
-        <div className="max-w-[1400px] mx-auto px-6 pt-10 pb-16">
-          {/* 6 colunas com span 2: 3 cards na 1ª linha e 2 na 2ª. O col-start-3
-              no 4º card centraliza a linha de baixo. */}
-          <div className="grid grid-cols-6 gap-6 items-stretch">
-            {solutions.map(({ title, body, Icon }, i) => (
-              <div
-                key={i}
-                className={`col-span-2 ${i === 3 ? "col-start-2" : ""} flex flex-col items-center text-center gap-4 rounded-2xl p-6`}
-                style={{
-                  background: "rgba(0,16,49,0.03)",
-                  border: "1px solid rgba(0,16,49,0.08)",
-                }}
-              >
-                <div
-                  className="flex items-center justify-center rounded-full bg-white shrink-0"
-                  style={{ width: 56, height: 56, border: "2px solid var(--brand-gold)" }}
-                >
-                  <Icon size={24} style={{ color: "var(--brand-gold)" }} strokeWidth={1.5} />
-                </div>
-                <span className="font-bold text-sm tracking-widest text-gold">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="font-bold text-xl leading-snug" style={{ color: "var(--brand-navy)" }}>
-                  {title}
-                </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: "var(--brand-navy)", opacity: 0.7 }}
-                >
-                  {body}
-                </p>
-              </div>
-            ))}
+        {/* Texto e foto lado a lado no desktop; empilhados no mobile, com a foto
+            depois do texto. As duas colunas dividem a largura por igual. */}
+        <div className="flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-16">
+          {/* Preto puro, não o --brand-navy do resto da página: aqui o texto é
+              tinta, não cor de marca. A headline logo acima segue em navy. */}
+          <div
+            className="metodo-intro flex flex-col gap-4 max-w-2xl mx-auto lg:mx-0 lg:max-w-none lg:flex-1"
+            style={{ color: "#000000" }}
+          >
+            {/* Trocados de posição. Cada frase levou o próprio peso junto: o
+                semibold marca a afirmação forte, não a primeira linha do bloco. */}
+            <p className="text-base lg:text-lg leading-relaxed font-semibold">
+              A incorporação é a fase de maior rendimento no mercado imobiliário e poucos sabem como acessá-la.
+            </p>
+            <p className="text-base lg:text-lg leading-relaxed opacity-80">
+              Desenvolvemos empreendimentos imobiliários únicos com tecnologia e sustentabilidade e conectamos investidores qualificados e criteriosamente selecionados para se tornarem sócios investidores.
+            </p>
+          </div>
+
+          <div className="w-full max-w-2xl mx-auto lg:mx-0 lg:max-w-none lg:flex-1">
+            <Image
+              src={obraImg}
+              alt="Engenheiro de capacete analisando a planta do projeto em frente à estrutura de um empreendimento em obras"
+              sizes="(min-width: 1024px) 45vw, 90vw"
+              placeholder="blur"
+              className="w-full h-auto rounded-lg"
+            />
           </div>
         </div>
       </div>

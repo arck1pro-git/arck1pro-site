@@ -2,55 +2,39 @@
 
 import { useState } from 'react'
 
-type Prazo = 18 | 24 | 36
-type Forma = 'mensal' | 'final'
-
-// Taxa ao mês (juros simples) por prazo e forma de retorno
-const RATES: Record<Forma, Record<Prazo, number>> = {
-  mensal: { 18: 0.015, 24: 0.016, 36: 0.018 },
-  final: { 18: 0.02, 24: 0.021, 36: 0.023 },
-}
-
-const MIN = 50_000
-const MAX = 1_000_000
-const STEP = 10_000
-
-const prazos: Prazo[] = [18, 24, 36]
-
-const brl0 = (n: number) =>
-  n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 })
-const brl2 = (n: number) =>
-  n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 })
-
-const pct = (n: number) => {
-  const s = n.toFixed(1).replace('.0', '').replace('.', ',')
-  return `${s}%`
-}
+// Taxas, faixas e formatação vivem em lib/ari-taxas: o simulador do /simulador
+// usa os mesmos números, e duas tabelas separadas acabariam divergindo.
+import {
+  MIN,
+  MAX,
+  STEP,
+  PRAZOS,
+  taxaPara,
+  brl2,
+  brl0,
+  pct,
+  taxaPct,
+  type Forma,
+  type Prazo,
+} from '@/lib/ari-taxas'
 
 export default function AriSimulador() {
   const [capital, setCapital] = useState(50_000)
   const [prazo, setPrazo] = useState<Prazo>(36)
   const [forma, setForma] = useState<Forma>('final')
 
-  const taxa = RATES[forma][prazo]
+  const taxa = taxaPara(forma, prazo, capital)
   const retornoTotal = capital * taxa * prazo
   const rendaMensal = capital * taxa
   const total = capital + retornoTotal
   const ganho = taxa * prazo * 100
 
-  const segBtn = (active: boolean): React.CSSProperties => ({
-    flex: 1,
-    padding: 'var(--s-3) var(--s-4)',
-    borderRadius: 'var(--r-pill)',
-    border: active ? 'none' : 'var(--line-1) solid rgba(0,16,49,0.15)',
-    background: active ? 'var(--brand-gold)' : 'transparent',
-    color: active ? 'var(--brand-navy)' : 'var(--text-muted)',
-    fontWeight: active ? 600 : 400,
-    fontSize: 'var(--fs-14)',
-    cursor: 'pointer',
-    whiteSpace: 'nowrap',
-    transition: 'background .15s, color .15s',
-  })
+  // Os segmentados são os próprios botões do site: .btn--gold quando ativos,
+  // .btn--ghost quando não. Antes eram pílulas de desenho próprio, com dourado
+  // chapado e minúsculas — o único par de botões do projeto que não seguia o
+  // .btn (reto, versalete, com a rampa dourada).
+  const segCls = (active: boolean) => `btn ${active ? 'btn--gold' : 'btn--ghost'}`
+  const segStyle: React.CSSProperties = { flex: 1, justifyContent: 'center', whiteSpace: 'nowrap' }
 
   const label: React.CSSProperties = {
     fontSize: '1rem',
@@ -63,11 +47,11 @@ export default function AriSimulador() {
     <div className="ari-sim grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
       {/* Controles */}
       <div
-        className="ari-sim__ctrl lg:col-span-7 rounded-4xl lift"
+        className="ari-sim__ctrl lg:col-span-7 rounded-lg lift"
         style={{
           border: 'var(--line-1) solid rgba(0,16,49,0.1)',
           background: '#ffffff',
-          padding: 'var(--s-10) var(--s-8)',
+          padding: 'var(--s-8)',
           display: 'flex',
           flexDirection: 'column',
           gap: 'var(--s-8)',
@@ -90,7 +74,14 @@ export default function AriSimulador() {
             onChange={(e) => setCapital(Number(e.target.value))}
             aria-label="Capital a investir"
             className="ari-range"
-            style={{ width: '100%', marginTop: 'var(--s-5)', accentColor: 'var(--brand-gold)', cursor: 'pointer' }}
+            style={{
+              width: '100%',
+              marginTop: 'var(--s-5)',
+              // A parcela já percorrida da trilha, lida pelo CSS para pintar o
+              // trecho dourado. Sem isto o preenchimento dependeria do
+              // accent-color, que cada browser desenha de um jeito.
+              ['--pos' as string]: `${((capital - MIN) / (MAX - MIN)) * 100}%`,
+            } as React.CSSProperties}
           />
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'var(--s-2)' }}>
             {['R$ 50k', 'R$ 500k', 'R$ 1M'].map((m) => (
@@ -107,8 +98,15 @@ export default function AriSimulador() {
             Prazo
           </p>
           <div style={{ display: 'flex', gap: 'var(--s-2)' }}>
-            {prazos.map((p) => (
-              <button key={p} type="button" onClick={() => setPrazo(p)} className="font-display" style={segBtn(prazo === p)}>
+            {PRAZOS.map((p) => (
+              <button
+                key={p}
+                type="button"
+                onClick={() => setPrazo(p)}
+                aria-pressed={prazo === p}
+                className={segCls(prazo === p)}
+                style={segStyle}
+              >
                 {p} meses
               </button>
             ))}
@@ -121,10 +119,22 @@ export default function AriSimulador() {
             Forma de retorno
           </p>
           <div style={{ display: 'flex', gap: 'var(--s-2)' }}>
-            <button type="button" onClick={() => setForma('mensal')} className="font-display" style={segBtn(forma === 'mensal')}>
+            <button
+              type="button"
+              onClick={() => setForma('mensal')}
+              aria-pressed={forma === 'mensal'}
+              className={segCls(forma === 'mensal')}
+              style={segStyle}
+            >
               Mensal
             </button>
-            <button type="button" onClick={() => setForma('final')} className="font-display" style={segBtn(forma === 'final')}>
+            <button
+              type="button"
+              onClick={() => setForma('final')}
+              aria-pressed={forma === 'final'}
+              className={segCls(forma === 'final')}
+              style={segStyle}
+            >
               Final
             </button>
           </div>
@@ -138,11 +148,11 @@ export default function AriSimulador() {
 
       {/* Resultado */}
       <div
-        className="ari-sim__out lg:col-span-5 rounded-4xl lift"
+        className="ari-sim__out lg:col-span-5 rounded-lg lift"
         style={{
           background: 'var(--brand-navy)',
           color: 'var(--brand-cream)',
-          padding: 'var(--s-10) var(--s-8)',
+          padding: 'var(--s-8)',
           display: 'flex',
           flexDirection: 'column',
           gap: 'var(--s-6)',
@@ -156,7 +166,7 @@ export default function AriSimulador() {
             Taxa aplicada
           </span>
           <span className="font-display text-gold" style={{ fontSize: 'var(--fs-20)', fontWeight: 600 }}>
-            {(taxa * 100).toFixed(2).replace('.', ',')}% a.m.
+            {taxaPct(taxa)} a.m.
           </span>
         </div>
 

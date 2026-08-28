@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { ArrowUpRight } from "lucide-react";
 
 const capitalOptions = [
   'R$ 50 mil a R$ 100 mil',
@@ -52,7 +53,7 @@ export default function AriForm() {
   if (sent) {
     return (
       <div
-        className="rounded-4xl"
+        className="rounded-lg"
         style={{
           width: '100%',
           padding: 'var(--s-12) var(--s-8)',
@@ -81,7 +82,7 @@ export default function AriForm() {
         e.preventDefault()
         setSent(true)
       }}
-      className="rounded-4xl"
+      className="rounded-lg"
       style={{
         width: '100%',
         display: 'flex',
@@ -183,7 +184,7 @@ export default function AriForm() {
         className="btn btn--gold"
         style={{ width: 'fit-content', margin: 'auto auto 0' }}
       >
-        Solicitar qualificação <span className="arrow">→</span>
+        Solicitar qualificação <ArrowUpRight className="arrow" size={16} strokeWidth={2} aria-hidden />
       </button>
     </form>
   )

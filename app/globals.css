@@ -64,9 +64,11 @@
   --navy-grad-h: linear-gradient(90deg,  #001031 0%, #121f73 100%);
 
   /* Tipografia */
-  --font-sans:    "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:     "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-headline: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Poppins", ui-sans-serif, sans-serif;
   --font-carla:   "Carla Sans", ui-sans-serif, sans-serif;
+  --font-serif:   "Playfair Display", ui-serif, Georgia, serif;
 
   /* Escala tipográfica */
   --fs-12: 12px;
@@ -296,9 +298,13 @@ body {
 /* =========================================================
    UTILITÁRIOS DE TIPOGRAFIA
    ========================================================= */
-.font-sans    { font-family: var(--font-sans); }
-.font-display { font-family: var(--font-display); }
+.font-sans     { font-family: var(--font-sans); }
+.font-headline { font-family: var(--font-headline); }
+.font-display  { font-family: var(--font-display); }
 .font-carla   { font-family: var(--font-carla); }
+/* Nome próprio em vez de sobrescrever a `.font-serif` do Tailwind, e já com o
+   itálico embutido: é o único corte da Playfair carregado em layout.tsx. */
+.font-serif-italic { font-family: var(--font-serif); font-style: italic; }
 
 .fs-12 { font-size: var(--fs-12); }
 .fs-13 { font-size: var(--fs-13); }
@@ -406,56 +412,395 @@ body {
 /* =========================================================
    HERO
    ========================================================= */
-/* Painel atrás do bloco de texto + botões da hero: desfoca a foto e some para
-   a direita. A máscara é o que apaga o próprio blur — um gradiente no
-   background só apagaria a tinta, o desfoque continuaria até a borda. */
-.hero-panel {
-  position: absolute;
-  top: -28px;
-  bottom: -28px;
-  left: -32px;
-  width: min(920px, 100%);
-  pointer-events: none;
-  /* Só a esquerda arredonda; a direita dissolve na máscara. */
-  border-radius: 0.5rem 0 0 0.5rem;
-  backdrop-filter: blur(14px) saturate(115%);
-  -webkit-backdrop-filter: blur(14px) saturate(115%);
-  /* Tinta leve: sobre céu claro o blur sozinho não dá contraste ao texto creme. */
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.54) 0%,
-    rgba(0, 0, 0, 0.32) 60%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 48%, transparent 100%);
-  mask-image: linear-gradient(90deg, #000 0%, #000 48%, transparent 100%);
-}
-
-/* Mobile: a sombra cobre a seção inteira em vez de acompanhar o bloco. */
+/* Sombra da hero: tinta preta uniforme sobre a seção inteira, em todos os
+   tamanhos de tela. Sem gradiente e sem blur. */
 .hero-scrim {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.34) 0%,
-    rgba(0, 0, 0, 0.52) 45%,
-    rgba(0, 0, 0, 0.52) 100%
-  );
+  /* Preto puro, não o navy da marca: escurece o vídeo sem puxar a cor.
+     0.62 é o mesmo valor do scrim das rotas internas (RouteHeroBg). */
+  background: rgba(0, 0, 0, 0.62);
 }
 
-@media (min-width: 1024px) {
-  .hero-scrim { display: none; }
+/* Os botões da hero eram os únicos arredondados do site, por uma regra
+   `#hero .btn { border-radius: var(--radius-lg) }` que ficava aqui. Sem ela eles
+   caem no `border-radius: 0` do .btn, como todos os outros — inclusive o CTA do
+   rodapé. Nota para quem for mexer: a regra vivia no CSS, e não como `rounded-lg`
+   no JSX, porque .btn declara o raio fora de cascade layer e CSS sem layer vence
+   as utilities do Tailwind, que ficam em @layer utilities. */
+
+/* =========================================================
+   TRAMA DE DOTS — sobre superfícies com o degradê azul
+   ========================================================= */
+/* Trama branca por cima do --navy-grad da section. A máscara vertical dissolve
+   a trama nas duas pontas, para a textura não terminar em linha reta contra as
+   sections vizinhas. z-index 0 + conteúdo posicionado em z-10 mantêm os dots
+   atrás do texto e das imagens. */
+.navy-dots {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.2) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 74%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 74%, transparent 100%);
+}
+
+/* =========================================================
+   INDICADORES — seção #lider
+   ========================================================= */
+/* Dois cards sobre o --navy-grad da section, na mesma superfície dos cards de
+   etapa que agora dividem a section com eles: creme a 5% com contorno a 14%.
+   Eram vazados, com contorno branco puro — ao lado da esteira eles liam como
+   outro componente. max-width menor que a headline de propósito: são o rodapé
+   do bloco, não uma segunda dobra. */
+.lider-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-6);
+  width: 100%;
+  max-width: 760px;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+.lider-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-8);
+  /* Mesmo raio dos cards de /ari, /portobelo e das etapas. */
+  border-radius: 2rem;
+  border: var(--line-1) solid rgba(236, 235, 231, 0.14);
+  background: rgba(236, 235, 231, 0.05);
+  color: var(--brand-cream);
+}
+
+.lider-card__num {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 4.5vw, 64px);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.lider-card__label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-14);
+  line-height: 1.5;
+  /* Mesma medida de corpo sobre navy do .etapa-card__texto: o numeral fica em
+     creme cheio e o rótulo recua, em vez de os dois disputarem o mesmo peso. */
+  opacity: 0.75;
+}
+
+/* Empilham no telefone: dois cards lado a lado a 320px deixariam o rótulo em
+   uma palavra por linha. */
+@media (max-width: 640px) {
+  .lider-cards {
+    grid-template-columns: 1fr;
+    gap: var(--s-4);
+  }
+  .lider-card { padding: var(--s-6); }
+}
+
+/* Granulado compartilhado pela section de artigos e pelo rodapé. Não é uma retícula como a .navy-dots: é
+   ruído, no espírito de grão de película. O desenho sai de um feTurbulence em
+   SVG embutido como data URI — nada de arquivo externo, e como é procedural não
+   tem resolução para estourar em tela retina.
+
+   feColorMatrix saturate 0 tira a cor do turbulence, que nasce colorido, e
+   deixa o grão neutro; sobre o branco da section ele lê como cinza claro.
+   stitchTiles + background-size igual ao viewport do SVG fazem o ladrilho
+   fechar sem emenda visível.
+
+   A opacidade é a única manopla real aqui. Começou em 0.45 e subiu para 0.65:
+   textura claramente perceptível sem sujar a leitura. Passando de ~0.8 vira
+   chuvisco de TV. */
+.grao {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.65;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  background-repeat: repeat;
+}
+
+/* Contraparte da .navy-dots para superfície clara: mesma malha, mesmo passo e
+   mesma máscara vertical, só que em tinta navy. A .navy-dots desenha em branco
+   e some sobre fundo claro. */
+.claro-dots {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(0, 16, 49, 0.08) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 74%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 74%, transparent 100%);
+}
+
+/* =========================================================
+   ETAPAS DO PROCESSO — cards em carrossel infinito
+   ========================================================= */
+/* Substituiu o acordeão. As cinco etapas correm lado a lado numa esteira sem
+   começo nem fim: a lista é renderizada duas vezes e a animação anda até -50%,
+   que é exatamente o fim da primeira volta — o salto de volta ao zero cai sobre
+   um quadro idêntico e não se percebe. Reaproveita @keyframes marquee. */
+.etapas-carrossel {
+  overflow: hidden;
+  /* Respiro em volta da esteira. Era var(--s-12) para caber a sombra funda dos
+     cards; sem ela, o dobro do respiro só afastava a esteira do título. */
+  padding-block: var(--s-8);
+  margin-top: var(--s-8);
+  /* Dissolve nas duas bordas em vez de cortar reto — sem isso os cards nascem e
+     morrem com um corte seco na beirada da tela. Era 7%, o que a 1440px dava
+     ~100px de esmaecido de cada lado e lia como uma névoa branca comendo os
+     cards. Em 2.5% o corte continua suave sem virar mancha. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 2.5%, #000 97.5%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 2.5%, #000 97.5%, transparent 100%);
+}
+
+.etapas-track {
+  display: flex;
+  align-items: stretch;
+  width: max-content;
+  /* 30s, e não os 64s da primeira versão: uma volta percorre 1920px, então
+     64s davam 30px/s — devagar a ponto de a esteira parecer parada em qualquer
+     olhada curta. Aqui são ~64px/s, movimento evidente sem ficar frenético; a
+     leitura fica por conta da pausa no hover, logo abaixo. */
+  animation: marquee 30s linear infinite;
+}
+
+/* Para conseguir ler: a esteira congela enquanto o ponteiro está sobre ela. */
+.etapas-carrossel:hover .etapas-track {
+  animation-play-state: paused;
+}
+
+/* O respiro entre os cards é margin, e não gap na track: com gap, a metade da
+   largura total não coincide com o fim da primeira volta (sobra meio vão) e o
+   laço daria um pulo a cada ciclo. Com margem em cada card, cada volta mede
+   exatamente 5 × (card + margem). */
+/* O cartão é o mesmo dos blocos sobre navy do site — as três camadas de proteção
+   de /ari e o "Por que o ARI ganha" das comparações: creme a 5% com contorno a
+   14%, raio de 2rem e um padding só. Saíram a faixa navy de topo, o título em
+   Manrope 700 e o texto em preto puro: nenhum outro card do projeto tinha isso,
+   e era o que fazia a esteira parecer de outro site. */
+.etapa-card {
+  flex: none;
+  width: 360px;
+  margin-right: var(--s-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-8);
+  border-radius: 2rem;
+  background: rgba(236, 235, 231, 0.05);
+  border: var(--line-1) solid rgba(236, 235, 231, 0.14);
+  /* Sem box-shadow: sobre o --navy-grad ela não aparece, só engrossa a borda. */
+}
+
+/* A etapa em que o investidor entra: contorno dourado e um fundo levemente
+   dourado, para se achar na esteira sem depender de ler o selo. Continua no
+   hairline de 1px dos demais cards do site — na versão clara isto era uma borda
+   de 2px, que sobre o navy leria como moldura. */
+.etapa-card--destaque {
+  border-color: color-mix(in oklab, var(--brand-gold), transparent 25%);
+  background: rgba(194, 143, 80, 0.08);
+}
+
+/* Mesmo numeral dourado dos cards de /ari e das comparações: Poppins 600 a 32px,
+   e não o rótulo de 12px em maiúsculas que ficava dentro da faixa. */
+.etapa-card__num {
+  font-family: var(--font-display);
+  font-size: var(--fs-32);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--brand-gold);
+}
+
+.etapa-card__titulo {
+  font-family: var(--font-display);
+  font-size: var(--fs-20);
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--brand-cream);
+  /* Títulos de uma e de duas linhas convivem na esteira. Sem o piso de duas
+     linhas, o texto de cada card começaria numa altura diferente e a fileira
+     ficaria desalinhada — era o papel do min-height da antiga faixa navy. */
+  min-height: 2.6em;
+  text-wrap: balance;
+}
+
+/* Continua sendo a pílula dourada, agora com a tipografia de eyebrow do resto do
+   site (Poppins, não a sans do corpo). O align-self impede que ela se estique na
+   largura do card, já que a coluna é um flex. */
+.etapa-card__selo {
+  align-self: flex-start;
+  padding: 5px 11px;
+  border-radius: var(--r-pill);
+  background: var(--gold-grad-h);
+  color: var(--brand-navy);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.etapa-card__texto {
+  font-family: var(--font-sans);
+  font-size: var(--fs-14);
+  line-height: 1.7;
+  margin: 0;
+  /* Creme a 75%, a mesma medida de corpo de texto sobre navy usada nas
+     comparações. O preto puro daqui era herança do card de fundo branco. */
+  color: var(--brand-cream);
+  opacity: 0.75;
+}
+
+/* Sem movimento a esteira vira uma régua rolável: o track continua mais largo
+   que a tela, então o conteúdo segue alcançável no dedo ou no trackpad. */
+@media (prefers-reduced-motion: reduce) and (min-width: 768px) {
+  .etapas-track { animation: none; }
+  .etapas-carrossel {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 @media (max-width: 1023.98px) {
-  .hero-panel { display: none; }
+  .etapa-card {
+    width: 300px;
+    margin-right: var(--s-4);
+    padding: var(--s-6);
+  }
+  .etapa-card__titulo { font-size: var(--fs-18); }
+  .etapa-card__texto { font-size: var(--fs-14); }
+  .etapas-carrossel {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 2%, #000 98%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 2%, #000 98%, transparent 100%);
+  }
+}
+
+/* Mobile: a esteira horizontal não cabe num telefone — a 300px de card, sobra
+   meio card na tela e o texto passa rápido demais para ser lido. Aqui os cinco
+   viram uma pilha: cada card gruda um degrau abaixo do anterior e o seguinte
+   sobe por cima, deixando à mostra a faixa de quem já passou. É o empilhamento
+   que a section tinha antes de virar esteira, agora sem depender de JS: o que
+   antes era sticky + framer-motion hoje é só position:sticky com um top
+   diferente por card.
+
+   O rodízio por opacidade que ficou aqui no meio do caminho (cada card visível
+   por 10s numa volta de 50s) saiu junto: ele escondia quatro das cinco etapas a
+   qualquer momento e não dava ao leitor nenhum controle sobre o ritmo. */
+@media (max-width: 767.98px) {
+  /* A segunda volta existe só para fechar o laço do movimento horizontal. Sem
+     esteira, ela viraria cinco cards fantasmas no meio da pilha. */
+  .etapas-clone { display: none; }
+
+  .etapas-carrossel {
+    /* overflow visible é condição para o sticky funcionar: com hidden, o card
+       passa a grudar dentro desta caixa em vez de grudar na tela. */
+    overflow: visible;
+    padding-block: var(--s-6) var(--s-16);
+    padding-inline: var(--s-5);
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .etapas-track {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+    width: auto;
+    animation: none;
+  }
+
+  .etapa-card {
+    position: sticky;
+    /* Altura do header sticky + respiro, mais o degrau da própria etapa, que
+       vem do CardEtapa em --degrau. */
+    top: calc(var(--header-h) + var(--s-4) + var(--degrau, 0px));
+    width: auto;
+    margin-right: 0;
+    padding: var(--s-6);
+    /* Opaco, ao contrário do card do desktop. Numa pilha, o creme a 5% deixaria
+       o texto do card de baixo transparecer no da frente. A receita é a mesma —
+       o mesmo véu de creme —, só que aplicada sobre o próprio navy da section em
+       vez de sobre o que houver atrás. */
+    background-image:
+      linear-gradient(rgba(236, 235, 231, 0.05), rgba(236, 235, 231, 0.05)),
+      var(--navy-grad);
+  }
+
+  .etapa-card--destaque {
+    background-image:
+      linear-gradient(rgba(194, 143, 80, 0.1), rgba(194, 143, 80, 0.1)),
+      var(--navy-grad);
+  }
+
+  /* O piso de duas linhas alinhava os corpos de texto na fileira da esteira.
+     Numa pilha não há fileira, e ele só abriria um vão sob títulos de uma linha. */
+  .etapa-card__titulo { min-height: 0; }
+}
+
+/* Malha de dots no canto superior direito, dissolvendo em direção ao meio.
+   A máscara é ancorada no próprio canto, então a densidade cai conforme se
+   afasta dele. z-index 0 + wrappers de conteúdo posicionados mantêm os dots
+   atrás do texto. */
+.metodo-dots {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  width: min(620px, 52%);
+  height: 480px;
+  pointer-events: none;
+  opacity: 0.2;
+  background-image: radial-gradient(var(--brand-cream) 2px, transparent 2px);
+  background-size: 18px 18px;
+  -webkit-mask-image: radial-gradient(circle at 100% 0%, #000 0%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(circle at 100% 0%, #000 0%, #000 30%, transparent 75%);
+}
+
+/* Texto entre o título e os cards: alinhado à esquerda, bloco centralizado na
+   tela, com uma régua dourada vertical na borda esquerda. Régua feita em
+   ::before porque border-left não aceita gradiente. */
+.metodo-intro {
+  position: relative;
+  text-align: left;
+  padding-left: var(--s-8);
+}
+.metodo-intro::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 3px;
+  /* Não é o --gold-grad: aquela rampa começa no #fae394 e o topo da régua
+     sumiria contra o branco. Esta fica no dourado escuro e só perde corpo na
+     base, onde o desvanecer é intencional. */
+  background: linear-gradient(
+    180deg,
+    var(--brand-gold) 0%,
+    var(--brand-gold) 55%,
+    color-mix(in oklab, var(--brand-gold), transparent 55%) 100%
+  );
 }
 
 /* =========================================================
    HOVER UTILITIES (Server Component safe)
    ========================================================= */
-.nav-link:hover       { color: var(--brand-cream) !important; }
+/* Dourado: o header rolado é o degradê navy, e creme sobre creme não marcaria. */
+.nav-link:hover       { color: var(--brand-gold) !important; }
 .footer-link:hover    { color: var(--brand-cream) !important; }
 
 .contato-card {
@@ -804,28 +1149,124 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Brilho de borda que percorre cards em sequência (Porto Belo · megaprojetos) */
-.pb-glow {
+/* =========================================================
+   MEGAPROJETOS — esteira infinita, /portobelo
+   ========================================================= */
+/* Mesmo mecanismo da esteira de etapas da home: a lista é renderizada duas
+   vezes e a animação anda até -50%, que é exatamente o fim da primeira volta,
+   então o salto de volta ao zero cai sobre um quadro idêntico. Reaproveita o
+   @keyframes marquee.
+
+   Não reaproveita as classes .etapas-*: aquelas carregam a largura de 360px, o
+   cartão sobre navy e a pilha sticky do mobile, e nada disso serve aqui.
+
+   Substituiu o .pb-glow, que acendia o contorno dourado de um card por vez num
+   rodízio de 21s. A borda cinza dos cards morava naquela regra e voltou aqui. */
+.mega-carrossel {
+  overflow: hidden;
+  /* Respiro para a sombra .lift dos cards, que o overflow cortaria rente. */
+  padding-block: var(--s-5);
+  /* Dissolve nas bordas em vez de cortar reto, como a esteira da home. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 2.5%, #000 97.5%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 2.5%, #000 97.5%, transparent 100%);
+}
+
+.mega-track {
+  display: flex;
+  align-items: stretch;
+  width: max-content;
+  /* Uma volta mede 7 × (320 + 16) = 2352px. Em 40s dá ~59px/s, o mesmo passo da
+     esteira de etapas. */
+  animation: marquee 40s linear infinite;
+}
+
+/* Para conseguir ler: congela enquanto o ponteiro está sobre ela. */
+.mega-carrossel:hover .mega-track {
+  animation-play-state: paused;
+}
+
+/* O respiro entre os cards é margin, e não gap na track: com gap, a metade da
+   largura total não coincide com o fim da primeira volta e o laço pula. */
+.mega-card {
+  flex: none;
+  width: 320px;
+  margin-right: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-8) var(--s-6);
   border: var(--line-1) solid rgba(0, 16, 49, 0.1);
-  animation: pbCardGlow var(--pb-glow-cycle, 21s) ease-in-out infinite;
-  animation-delay: var(--pb-glow-delay, 0s);
 }
-@keyframes pbCardGlow {
-  0% {
-    border-color: var(--brand-gold);
-    box-shadow: 0 0 26px rgba(194, 143, 80, 0.55), inset 0 0 0 1px var(--brand-gold);
-  }
-  11% {
-    border-color: var(--brand-gold);
-    box-shadow: 0 0 26px rgba(194, 143, 80, 0.55), inset 0 0 0 1px var(--brand-gold);
-  }
-  18%, 100% {
-    border-color: rgba(0, 16, 49, 0.1);
-    box-shadow: 0 0 0 rgba(194, 143, 80, 0), inset 0 0 0 0 rgba(194, 143, 80, 0);
-  }
-}
+
+/* Sem movimento a esteira vira uma régua rolável: o track continua mais largo
+   que a tela, então os sete seguem alcançáveis no dedo ou no trackpad. */
 @media (prefers-reduced-motion: reduce) {
-  .pb-glow { animation: none; }
+  .mega-track { animation: none; }
+  .mega-carrossel {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 640px) {
+  .mega-card {
+    width: 260px;
+    padding: var(--s-6) var(--s-5);
+  }
+}
+
+/* Slider do simulador do /ari.
+   O accent-color sozinho pinta o preenchimento mas deixa trilha e polegar no
+   desenho do sistema operacional, que muda de browser para browser e não se
+   parece com nada do resto do site. Aqui a trilha é um degradê de duas paradas
+   cortado em --pos, a posição atual que o componente escreve inline. */
+.ari-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(
+    90deg,
+    var(--brand-gold) 0 var(--pos, 0%),
+    rgba(0, 16, 49, 0.12) var(--pos, 0%) 100%
+  );
+  cursor: pointer;
+}
+
+/* O polegar repete a rampa dos botões dourados, com anel branco para se destacar
+   sobre a própria trilha. */
+.ari-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--r-pill);
+  background: var(--gold-grad-h);
+  border: var(--line-2) solid #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 16, 49, 0.25);
+  cursor: pointer;
+}
+
+.ari-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--r-pill);
+  background: var(--gold-grad-h);
+  border: var(--line-2) solid #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 16, 49, 0.25);
+  cursor: pointer;
+}
+
+/* O Firefox desenha a trilha por cima do fundo do input; transparente aqui deixa
+   o degradê do .ari-range aparecer. */
+.ari-range::-moz-range-track {
+  height: 4px;
+  background: transparent;
+}
+
+.ari-range:focus-visible {
+  outline: var(--line-2) solid var(--brand-gold);
+  outline-offset: 6px;
 }
 
 /* Simulador ARI — no mobile, entrada e resultado num único card branco, em no máximo uma tela */
@@ -834,7 +1275,7 @@ body {
     gap: var(--s-5) !important;
     background: #ffffff;
     border: var(--line-1) solid rgba(0, 16, 49, 0.1);
-    border-radius: 32px;
+    border-radius: var(--r-3);
     box-shadow: 0 1px 2px rgba(0, 16, 49, 0.05), 0 18px 40px -20px rgba(0, 16, 49, 0.22);
     padding: var(--s-6) !important;
     /* textos antes cinza claro passam a azul (navy) no mobile */
@@ -871,23 +1312,224 @@ body {
   }
 }
 
-/* Destaque Tourmaline (/empreendimentos): no mobile esconde o conteúdo sobre a foto;
-   o texto/botão são renderizados num bloco separado abaixo da imagem (.tm-hero__below) */
-@media (max-width: 1023px) {
-  .tm-hero {
-    aspect-ratio: auto !important;
-    overflow: visible !important;
-    background: transparent !important;
+/* =========================================================
+   PILLS DE NÚMEROS — seção #lider
+   ========================================================= */
+/* Pill vazada sobre o --navy-grad da section: ícone + número + rótulo numa
+   única linha, sem preenchimento — só contorno branco. O texto branco vem do
+   container e o ícone acompanha sozinho, porque o SVG do lucide desenha em
+   currentColor. border-radius alto + overflow:hidden fecham as pontas e
+   recortam o brilho do canto. */
+.stat-pill {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-6);
+  border-radius: 999px;
+  background: transparent;
+  border: var(--line-1) solid #ffffff;
+  color: #ffffff;
+}
+
+/* O ::after é posicionado e pintaria por cima do conteúdo em fluxo.
+   z-index devolve ícone e texto para a frente. */
+.stat-pill > * {
+  position: relative;
+  z-index: 1;
+}
+
+.stat-pill__icone {
+  display: inline-flex;
+  flex: none;
+}
+
+.stat-pill__num {
+  font-weight: 700;
+  font-size: var(--fs-24);
+  line-height: 1;
+  flex: none;
+}
+
+.stat-pill__label {
+  font-size: var(--fs-14);
+  line-height: 1.2;
+}
+
+/* Brilho na ponta superior direita. 120px, e não os 190px do card antigo: numa
+   pill baixa um raio maior cobriria a peça inteira em vez de marcar o canto.
+   Com a pill vazada, esse branco agora incide direto sobre o navy da section —
+   é o único pixel pintado dentro dela. */
+.stat-pill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+  transform-origin: 100% 0;
+  background: radial-gradient(
+    circle at 100% 0,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.34) 34%,
+    rgba(255, 255, 255, 0) 68%
+  );
+  animation: stat-shine 4.5s ease-in-out infinite;
+}
+
+/* Só opacity e transform: as duas propriedades que o compositor anima sem
+   recalcular layout nem repintar a pill a cada frame. */
+@keyframes stat-shine {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.18); }
+}
+
+/* Sem movimento, o brilho vira um realce parado. */
+@media (prefers-reduced-motion: reduce) {
+  .stat-pill::after { animation: none; opacity: 0.5; }
+}
+
+/* No mobile a pill quebra em duas linhas em vez de espremer o rótulo. */
+@media (max-width: 480px) {
+  .stat-pill {
+    align-items: flex-start;
+    border-radius: var(--s-6);
+    padding: var(--s-3) var(--s-5);
   }
-  .tm-hero__img {
-    height: auto !important;
-    aspect-ratio: 16 / 9;
-    border-radius: 24px;
+  .stat-pill__label { font-size: var(--fs-13); }
+}
+
+/* =========================================================
+   TABELA COMPARATIVA, rotas /cdb, /poupanca etc.
+   ========================================================= */
+/* <table> de verdade, com <th scope> nas duas direcoes: leitor de tela anuncia
+   "Retorno, ARI, 1,5% a 3% ao mes" em vez de ler celulas soltas.
+   O wrapper rola sozinho no mobile, porque tabela de 3 colunas com texto corrido
+   nao cabe em 375px e espremer viraria uma palavra por linha. */
+.cmp-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: var(--line-1) solid rgba(0, 16, 49, 0.1);
+  /* 8px, o mesmo raio do resto das rotas internas. */
+  border-radius: var(--r-3);
+  background: #ffffff;
+  /* Mesma sombra dos cards da home. */
+  box-shadow: 0 1px 2px rgba(0, 16, 49, 0.05), 0 18px 40px -20px rgba(0, 16, 49, 0.22);
+}
+
+.cmp {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+}
+
+.cmp th,
+.cmp td {
+  padding: var(--s-6);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: var(--line-1) solid rgba(0, 16, 49, 0.08);
+}
+
+.cmp tbody tr:last-child th,
+.cmp tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Titulo de coluna, nao eyebrow: sem uppercase e sem letter-spacing. */
+.cmp thead th {
+  font-family: var(--font-display);
+  font-size: var(--fs-15);
+  font-weight: 500;
+  color: var(--brand-navy);
+  background: rgba(0, 16, 49, 0.03);
+  border-bottom: var(--line-1) solid rgba(0, 16, 49, 0.14);
+}
+
+/* Coluna 1: o criterio da linha. */
+.cmp tbody th {
+  font-family: var(--font-display);
+  font-size: var(--fs-14);
+  font-weight: 500;
+  color: var(--brand-navy);
+  white-space: nowrap;
+  width: 1%;
+}
+
+.cmp td {
+  font-size: var(--fs-14);
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* Coluna do ARI destacada de ponta a ponta, cabecalho incluso. */
+.cmp .cmp-ari {
+  background: rgba(194, 143, 80, 0.06);
+  border-left: var(--line-1) solid rgba(194, 143, 80, 0.3);
+  color: var(--brand-navy);
+  font-weight: 500;
+}
+.cmp thead .cmp-ari {
+  background: rgba(194, 143, 80, 0.16);
+  color: var(--brand-navy);
+}
+
+/* Linha inteira reage ao ponteiro, como os cards .lift da home. */
+.cmp tbody tr {
+  transition: background var(--dur-2, 200ms) var(--ease-out, ease);
+}
+.cmp tbody tr:hover {
+  background: rgba(0, 16, 49, 0.02);
+}
+
+@media (max-width: 640px) {
+  .cmp th,
+  .cmp td { padding: var(--s-4); }
+  .cmp td { font-size: var(--fs-13); }
+}
+
+/* =========================================================
+   REVEAL, fade-in das dobras ao entrar na tela
+   ========================================================= */
+/* O estado inicial vive aqui, e nao no JS: .reveal ja sai no HTML renderizado
+   no servidor, entao a dobra nunca chega a piscar visivel antes de o observer
+   rodar. .is-in e a unica coisa que o RevealObserver acrescenta. */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  /* Mesma duracao e curva do credFadeUp, que ja era o fade-up do site. */
+  transition:
+    opacity var(--dur-3) var(--ease-out),
+    transform var(--dur-3) var(--ease-out);
+}
+
+/* Heros: fade sem deslocamento. Elas ocupam a dobra inteira e nascem coladas no
+   header por margin-top negativo, entao 16px de subida abririam uma faixa do
+   fundo do body no topo durante a animacao. */
+.reveal--fade {
+  transform: none;
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Sem JS o observer nunca roda, e opacity 0 esconderia a pagina inteira. */
+@media (scripting: none) {
+  .reveal {
+    opacity: 1;
+    transform: none;
   }
-  .tm-hero__overlay {
-    display: none !important;
-  }
-  .tm-hero__content {
-    display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

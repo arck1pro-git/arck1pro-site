@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { ArrowUpRight } from "lucide-react";
 
 const investOptions = [
   'R$ 50 mil',
@@ -11,7 +12,7 @@ const investOptions = [
 ]
 
 type Variant = 'light' | 'dark'
-type Role = '' | 'corretor' | 'investidor'
+type Role = '' | 'investidor'
 
 export default function ContatoForm({
   variant = 'light',
@@ -36,12 +37,7 @@ export default function ContatoForm({
 
   const isInvestidor = form.role === 'investidor'
 
-  const submitLabel =
-    form.role === 'corretor'
-      ? 'Quero vender o Tourmaline'
-      : form.role === 'investidor'
-        ? 'Quero me qualificar'
-        : 'Enviar'
+  const submitLabel = form.role === 'investidor' ? 'Quero me qualificar' : 'Enviar'
 
   const dark = variant === 'dark'
 
@@ -137,9 +133,6 @@ export default function ContatoForm({
           <option value="" disabled>
             Sou…
           </option>
-          <option value="corretor" style={{ color: 'var(--brand-navy)' }}>
-            Sou corretor e quero representar o Tourmaline
-          </option>
           <option value="investidor" style={{ color: 'var(--brand-navy)' }}>
             Sou investidor
           </option>
@@ -166,7 +159,7 @@ export default function ContatoForm({
       <input
         type="tel"
         required
-        placeholder={form.role === 'corretor' ? 'WhatsApp' : 'Telefone'}
+        placeholder="Telefone"
         value={form.phone}
         onChange={(e) => setForm({ ...form, phone: e.target.value })}
         className="font-sans"
@@ -237,7 +230,7 @@ export default function ContatoForm({
         className="btn btn--gold"
         style={{ width: 'fit-content', margin: 'var(--s-4) auto 0' }}
       >
-        {submitLabel} <span className="arrow">→</span>
+        {submitLabel} <ArrowUpRight className="arrow" size={16} strokeWidth={2} aria-hidden />
       </button>
     </form>
   )

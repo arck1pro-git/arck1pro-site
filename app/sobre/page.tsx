@@ -1,6 +1,8 @@
 ﻿import type { Metadata } from 'next'
 import Link from 'next/link'
-import RouteHeroBg from '../components/RouteHeroBg'
+import RouteHero from '../components/RouteHero'
+import { ArrowUpRight } from "lucide-react";
+import { WHATSAPP_URL } from "@/lib/contato";
 
 export const metadata: Metadata = {
   title: 'Sobre · ARCK1PRO',
@@ -94,7 +96,7 @@ function FounderPhoto({
 }) {
   return (
     <div
-      className="rounded-4xl overflow-clip lift"
+      className="rounded-lg overflow-clip lift"
       style={{
         position: 'relative',
         aspectRatio: '4 / 5',
@@ -104,11 +106,24 @@ function FounderPhoto({
     >
       {src ? (
         <>
+          {/* Posicionada em absoluto, e não em fluxo. Com a imagem no fluxo, o
+              height:100% não resolvia contra o aspect-ratio do card e cada foto
+              impunha a própria proporção: a do Fabrício (1024x1535) deixava o
+              card dele mais alto que o da Patrícia. Fora do fluxo, quem manda na
+              altura é o aspect-ratio 4/5 do card, igual para os dois, e o
+              object-fit corta o que sobra. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
             alt={name}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+            }}
           />
           <div
             style={{
@@ -169,47 +184,19 @@ export default function SobrePage() {
         background: 'var(--brand-navy)',
       }}
     >
-      <RouteHeroBg />
       {/* DOBRA 1 — Abertura */}
-      <div
-        className="container"
-        style={{
-          position: 'relative',
-          zIndex: 1,
-          minHeight: '75svh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          padding: 'calc(var(--header-h) + var(--s-12)) var(--s-6) var(--s-16)',
-          textAlign: 'center',
-        }}
-      >
-        <p
-          className="font-display text-gold-soft text-base"
-          style={{ letterSpacing: '0.15em', marginBottom: 'var(--s-3)' }}
-        >
-          Nossa História
-        </p>
-        <h1
-          className="font-display text-cream lg:text-5xl text-4xl"
-          style={{ fontWeight: 700, lineHeight: 1.15, margin: 0, maxWidth: 880, marginInline: 'auto' }}
-        >
-          De escritório de projetos a <span className="text-gold-hero">ecossistema imobiliário</span>
-        </h1>
-        <p
-          className="font-sans"
-          style={{
-            fontSize: 'var(--fs-16)',
-            lineHeight: 1.7,
-            color: 'rgba(236,235,231,0.7)',
-            maxWidth: 600,
-            margin: 'var(--s-5) auto 0',
-          }}
-        >
-          A história de dois arquitetos que passaram anos estruturando o mercado imobiliário para
-          terceiros e decidiram aplicar o mesmo método em projetos próprios.
-        </p>
-      </div>
+      <RouteHero
+        eyebrow="Nossa História"
+        titulo={
+          <>
+            De escritório de projetos a{' '}
+            <span className="text-gold-hero font-serif-italic font-normal">
+              ecossistema imobiliário
+            </span>
+          </>
+        }
+        texto="A história de dois arquitetos que passaram anos estruturando o mercado imobiliário para terceiros e decidiram aplicar o mesmo método em projetos próprios."
+      />
 
       <section
         className="section overflow-clip relative z-10"
@@ -219,9 +206,10 @@ export default function SobrePage() {
           paddingTop: 'var(--s-20)',
         }}
       >
-        <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-24)' }}>
+        <div aria-hidden className="claro-dots" />
+        <div className="container relative" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-24)' }}>
           {/* DOBRA 2 — Os fundadores */}
-          <div>
+          <div className="reveal">
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-12)' }}>
               <p
                 className="font-display text-gold text-base"
@@ -267,7 +255,7 @@ export default function SobrePage() {
 
               {/* Patrícia */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-6)' }}>
-                <FounderPhoto name="Patrícia" role="Cofundadora · Arquiteta" />
+                <FounderPhoto src="/patricia-card.jpeg" name="Patrícia" role="Cofundadora · Arquiteta" />
                 <div
                   className="font-sans"
                   style={{ fontSize: 'var(--fs-15)', lineHeight: 1.8, color: 'var(--text)' }}
@@ -292,7 +280,7 @@ export default function SobrePage() {
           </div>
 
           {/* DOBRA 2 — Linha do tempo */}
-          <div>
+          <div className="reveal">
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-12)' }}>
               <p
                 className="font-display text-gold text-base"
@@ -351,7 +339,7 @@ export default function SobrePage() {
           </div>
 
           {/* DOBRA 3 — O que é a ARCK1PRO */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="reveal grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-4">
               <p
                 className="font-display text-gold text-base"
@@ -385,35 +373,20 @@ export default function SobrePage() {
             </div>
           </div>
 
-          {/* Propósito — destaque navy */}
-          <div
-            className="rounded-4xl lift"
-            style={{
-              background: 'var(--brand-navy)',
-              color: 'var(--brand-cream)',
-              padding: 'var(--s-16) var(--s-10)',
-              textAlign: 'center',
-            }}
-          >
-            <p
-              className="font-display"
-              style={{
-                fontSize: 'var(--fs-24)',
-                fontWeight: 300,
-                fontStyle: 'italic',
-                lineHeight: 1.5,
-                margin: '0 auto',
-                maxWidth: 760,
-              }}
-            >
-              Estruturar o futuro de quem constrói, garantindo que capital, projeto e método trabalhem
-              juntos para transformar o litoral catarinense no maior polo de incorporação inteligente
-              do Brasil.
-            </p>
-          </div>
+        </div>
+      </section>
 
+      {/* Dobra em navy. É a alternância clara → navy → clara da home: com uma
+          superfície só do topo ao pé, uma página desta altura vira um bloco de
+          texto sem respiro, e nada nela se destaca. */}
+      <section
+        className="section overflow-clip relative z-10"
+        style={{ background: 'var(--navy-grad)' }}
+      >
+        <div aria-hidden className="navy-dots" />
+        <div className="container relative" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-24)' }}>
           {/* DOBRA 5 — Missão e Visão */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="reveal grid grid-cols-1 lg:grid-cols-2 gap-4">
             {[
               {
                 label: 'Missão',
@@ -426,11 +399,11 @@ export default function SobrePage() {
             ].map((b) => (
               <div
                 key={b.label}
-                className="rounded-4xl lift"
+                className="rounded-lg"
                 style={{
                   padding: 'var(--s-10) var(--s-8)',
-                  border: 'var(--line-1) solid rgba(0,16,49,0.1)',
-                  background: '#ffffff',
+                  border: 'var(--line-1) solid rgba(236,235,231,0.14)',
+                  background: 'rgba(236,235,231,0.05)',
                 }}
               >
                 <p
@@ -444,7 +417,7 @@ export default function SobrePage() {
                   {b.label}
                 </p>
                 <p
-                  className="font-display text-navy"
+                  className="font-display text-cream"
                   style={{ fontSize: 'var(--fs-20)', fontWeight: 300, lineHeight: 1.55, margin: 0 }}
                 >
                   {b.text}
@@ -453,8 +426,9 @@ export default function SobrePage() {
             ))}
           </div>
 
+
           {/* DOBRA 6 — Os pilares */}
-          <div>
+          <div className="reveal">
             <div style={{ textAlign: 'center', marginBottom: 'var(--s-10)' }}>
               <p
                 className="font-display text-gold text-base"
@@ -463,7 +437,7 @@ export default function SobrePage() {
                 Os quatro pilares
               </p>
               <h2
-                className="font-display text-4xl lg:text-6xl font-bold text-navy"
+                className="font-display text-4xl lg:text-6xl font-bold text-cream"
               >
                 Os princípios que guiam produto, comunicação e crescimento
               </h2>
@@ -473,11 +447,11 @@ export default function SobrePage() {
               {pilares.map((p, i) => (
                 <div
                   key={p.title}
-                  className="rounded-4xl lift"
+                  className="rounded-lg"
                   style={{
                     padding: 'var(--s-8)',
-                    border: 'var(--line-1) solid rgba(0,16,49,0.1)',
-                    background: '#ffffff',
+                    border: 'var(--line-1) solid rgba(236,235,231,0.14)',
+                    background: 'rgba(236,235,231,0.05)',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 'var(--s-3)',
@@ -487,14 +461,14 @@ export default function SobrePage() {
                     0{i + 1}
                   </span>
                   <h3
-                    className="font-display text-navy"
+                    className="font-display text-cream"
                     style={{ fontSize: 'var(--fs-20)', fontWeight: 500, margin: 0 }}
                   >
                     {p.title}
                   </h3>
                   <p
                     className="font-sans"
-                    style={{ fontSize: 'var(--fs-14)', lineHeight: 1.7, color: 'var(--text-muted)', margin: 0 }}
+                    style={{ fontSize: 'var(--fs-14)', lineHeight: 1.7, color: 'rgba(236,235,231,0.75)', margin: 0 }}
                   >
                     {p.text}
                   </p>
@@ -503,11 +477,12 @@ export default function SobrePage() {
             </div>
           </div>
 
+
           {/* DOBRA 7 — CTA */}
-          <div style={{ textAlign: 'center' }}>
+          <div className="reveal" style={{ textAlign: 'center' }}>
             <h2
               className="font-display text-4xl font-bold 
- text-navy"
+ text-cream"
             >
               Quer entender o ecossistema por dentro?
             </h2>
@@ -516,23 +491,25 @@ export default function SobrePage() {
               style={{
                 fontSize: 'var(--fs-15)',
                 lineHeight: 1.7,
-                color: 'var(--text-muted)',
+                color: 'rgba(236,235,231,0.75)',
                 maxWidth: 520,
                 margin: '0 auto var(--s-8)',
               }}
             >
-              Conheça o ARI, o Tourmaline Tower ou fale direto com a equipe.
+              Conheça o ARI ou fale direto com a equipe.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--s-3)', justifyContent: 'center' }}>
               <Link href="/ari" className="btn btn--gold">
-                Conhecer o ARI <span className="arrow">→</span>
+                Conhecer o ARI <ArrowUpRight className="arrow" size={16} strokeWidth={2} aria-hidden />
               </Link>
-              <Link href="/empreendimentos" className="btn btn--ghost">
-                Ver o Tourmaline Tower <span className="arrow">→</span>
-              </Link>
-              <Link href="/contato" className="btn btn--ghost">
-                Fale com a equipe <span className="arrow">→</span>
-              </Link>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--ghost-inv"
+              >
+                Fale com a equipe <ArrowUpRight className="arrow" size={16} strokeWidth={2} aria-hidden />
+              </a>
             </div>
           </div>
         </div>

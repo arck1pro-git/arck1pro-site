@@ -1,7 +1,9 @@
+import { WHATSAPP_URL } from "@/lib/contato";
+
 export default function WhatsappFloat() {
   return (
     <a
-      href="https://wa.me/5547991458708"
+      href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar no WhatsApp"
@@ -14,7 +16,8 @@ export default function WhatsappFloat() {
         width: 60,
         height: 60,
         borderRadius: "var(--r-pill)",
-        background: "var(--brand-gold)",
+        // Mesmo gradiente dourado dos botões (.btn--gold), no lugar do ouro chapado.
+        background: "var(--gold-grad-h)",
         color: "var(--brand-navy)",
         display: "flex",
         alignItems: "center",

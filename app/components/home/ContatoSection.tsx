@@ -1,13 +1,14 @@
+
+import { ArrowUpRight } from "lucide-react";
+import { WHATSAPP_URL } from "@/lib/contato";
 ﻿const icpOptions = [
   { label: "Candidatar-me ao ARI", sub: "Qualificação de investidor", href: "#ari" },
-  { label: "Sou corretor e quero representar o Tourmaline", sub: "Credenciamento Harpaluus", href: "#tourmaline" },
-  { label: "Quero acessar o Tourmaline Tower", sub: "LP do Tourmaline Tower", href: "#tourmaline" },
   { label: "Tenho um terreno para apresentar", sub: "Análise de terrenos", href: "#contato" },
 ];
 
 export default function ContatoSection() {
   return (
-    <section id="contato" className="bg-navy" style={{ padding: "var(--s-20) var(--s-6)" }}>
+    <section id="contato" className="reveal bg-navy" style={{ padding: "var(--s-20) var(--s-6)" }}>
       <div className="container" style={{ display: "flex", flexDirection: "column", gap: "var(--s-10)" }}>
         {/* Copy */}
         <div style={{ display: "flex", flexDirection: "column", gap: "var(--s-5)", maxWidth: 560 }}>
@@ -69,12 +70,12 @@ export default function ContatoSection() {
         >
          
           <a
-            href="https://wa.me/5547991458708"
+            href={WHATSAPP_URL}
             className="btn btn--ghost-inv btn--sm"
             target="_blank"
             rel="noopener noreferrer"
           >
-            WhatsApp <span className="arrow">→</span> (47) 9 9145-8708
+            WhatsApp <ArrowUpRight className="arrow" size={16} strokeWidth={2} aria-hidden /> (47) 9 9200-6498
           </a>
         </div>
       </div>
