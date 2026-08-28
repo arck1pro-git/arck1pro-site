@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Exportações de leads e planilhas do negócio: dados pessoais.
+# Nunca em public/ (o Next serve essa pasta) nem versionados.
+dados-privados/

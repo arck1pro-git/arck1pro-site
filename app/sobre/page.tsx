@@ -1,13 +1,25 @@
 ﻿import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import RouteHero from '../components/RouteHero'
 import { ArrowUpRight } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contato";
 
 export const metadata: Metadata = {
-  title: 'Sobre · ARCK1PRO',
+  title: 'Sobre — Método, Ecossistema e Governança',
   description:
-    'De escritório de projetos a ecossistema imobiliário: a história de dois arquitetos que estruturaram o mercado para terceiros e decidiram aplicar o método em projetos próprios.',
+    'De escritório de projetos a ecossistema imobiliário: a história, o método próprio e a governança da ARCK1PRO. Autoridade técnica construída em vinte anos no litoral catarinense.',
+  alternates: { canonical: '/sobre' },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'ARCK1PRO',
+    url: '/sobre',
+    title: 'Sobre a ARCK1PRO — Método, Ecossistema e Governança',
+    description:
+      'A história, o método próprio e a governança da ARCK1PRO. Vinte anos de prática no litoral catarinense.',
+    images: ['/hero.png'],
+  },
 }
 
 const timeline = [
@@ -227,7 +239,7 @@ export default function SobrePage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
               {/* Fabrício */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-6)' }}>
-                <FounderPhoto src="/fabhricio.png" name="Fabhrício ARI" role="Fundador · Arquiteto" />
+                <FounderPhoto src="/fabhricio.webp" name="Fabhrício ARI" role="Fundador · Arquiteto" />
                 <div
                   className="font-sans"
                   style={{ fontSize: 'var(--fs-15)', lineHeight: 1.8, color: 'var(--text)' }}

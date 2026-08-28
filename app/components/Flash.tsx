@@ -29,7 +29,7 @@ export default function Flash() {
         style={{
           position: "absolute",
           inset: "-5%",
-          backgroundImage: "url('/hero.png')",
+          backgroundImage: "url('/hero.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           filter: "blur(14px)",
@@ -87,7 +87,7 @@ export default function Flash() {
           </svg>
 
           <img
-            src="/logo.png"
+            src="/logo.webp"
             alt="ARCK1PRO"
             style={{ width: "clamp(120px, 18vw, 220px)", height: "auto", position: "relative" }}
           />

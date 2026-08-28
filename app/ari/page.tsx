@@ -7,9 +7,20 @@ import { ArrowUpRight } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contato";
 
 export const metadata: Metadata = {
-  title: 'ARI · Ativo de Renda Imobiliária — ARCK1PRO',
+  title: 'ARI — Ativo de Renda Imobiliária com Garantia Real',
   description:
-    'Um ativo de renda imobiliária com retornos de até 3% ao mês no litoral de Santa Catarina, isento de IR e com garantia real de 200% em ativos registrados em cartório. Acesso mediante qualificação.',
+    'Ativo de Renda Imobiliária estruturado como SCP. Previsibilidade contratual, garantia real de 200% em unidades registradas em cartório e isenção de Imposto de Renda. Acesso por qualificação.',
+  alternates: { canonical: '/ari' },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'ARCK1PRO',
+    url: '/ari',
+    title: 'ARI — Ativo de Renda Imobiliária com Garantia Real · ARCK1PRO',
+    description:
+      'SCP com previsibilidade contratual, garantia real de 200% em unidades registradas em cartório e isenção de Imposto de Renda.',
+    images: ['/hero.png'],
+  },
 }
 
 const metrics = [
@@ -75,6 +86,16 @@ const faqs = [
   },
 ]
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+}
+
 export default function AriPage() {
   return (
     <main
@@ -84,6 +105,13 @@ export default function AriPage() {
         background: 'var(--brand-navy)',
       }}
     >
+      {/* Rich result de FAQ no Google. O objeto veio do trabalho de SEO que
+          estava no remoto; o <script> que o renderizava vivia no JSX antigo. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+
       {/* DOBRA 1 — Hero */}
       <RouteHero
         escala="compacta"

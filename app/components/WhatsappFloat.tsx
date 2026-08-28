@@ -6,7 +6,8 @@ export default function WhatsappFloat() {
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Falar no WhatsApp"
+      aria-label="Falar com a ARCK1PRO no WhatsApp"
+      data-source="flutuante"
       className="wa-float"
       style={{
         position: "fixed",
