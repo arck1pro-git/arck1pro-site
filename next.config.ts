@@ -46,6 +46,32 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: '/(.*)', headers: securityHeaders }];
   },
+  // URLs do site antigo (HTML estático) que o Google ainda tinha indexadas,
+  // algumas na primeira página, e que respondiam 404. O 308 transfere o
+  // histórico para a página equivalente do site novo.
+  async redirects() {
+    return [
+      // Versão www: o host canônico é sem www. Se o domínio www estiver
+      // configurado na Vercel com redirect próprio, aquele roda antes deste;
+      // nesse caso o tipo do redirect (hoje 307) precisa ser trocado no painel.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.arck1pro.com.br' }],
+        destination: 'https://arck1pro.com.br/:path*',
+        permanent: true,
+      },
+      { source: '/index.html', destination: '/', permanent: true },
+      { source: '/contato', destination: '/#contato', permanent: true },
+      { source: '/contato.html', destination: '/#contato', permanent: true },
+      { source: '/empreendimentos', destination: '/portobelo', permanent: true },
+      { source: '/empreendimentos.html', destination: '/portobelo', permanent: true },
+      { source: '/portifolios/:path*', destination: '/portobelo', permanent: true },
+      { source: '/portfolios/:path*', destination: '/portobelo', permanent: true },
+      { source: '/incorporador.html', destination: '/sobre', permanent: true },
+      { source: '/negocieseuterreno.html', destination: '/sobre', permanent: true },
+      { source: '/politica_privacidade.html', destination: '/', permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

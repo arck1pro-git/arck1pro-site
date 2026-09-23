@@ -1,15 +1,17 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
+import { OG_IMAGE } from '@/lib/site'
 import Link from 'next/link'
 import AriFaq from './AriFaq'
 import AriSimulador from './AriSimulador'
 import RouteHero from '../components/RouteHero'
 import { ArrowUpRight } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contato";
+import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'ARI — Ativo de Renda Imobiliária com Garantia Real',
   description:
-    'Ativo de Renda Imobiliária estruturado como SCP. Previsibilidade contratual, garantia real de 200% em unidades registradas em cartório e isenção de Imposto de Renda. Acesso por qualificação.',
+    'ARI: ativo de renda imobiliária em SCP, com garantia real de 200% em unidades registradas em cartório e rendimento isento de Imposto de Renda.',
   alternates: { canonical: '/ari' },
   openGraph: {
     type: 'website',
@@ -19,7 +21,7 @@ export const metadata: Metadata = {
     title: 'ARI — Ativo de Renda Imobiliária com Garantia Real · ARCK1PRO',
     description:
       'SCP com previsibilidade contratual, garantia real de 200% em unidades registradas em cartório e isenção de Imposto de Renda.',
-    images: ['/hero.png'],
+    images: [OG_IMAGE],
   },
 }
 
@@ -105,6 +107,7 @@ export default function AriPage() {
         background: 'var(--brand-navy)',
       }}
     >
+      <BreadcrumbJsonLd items={[{ name: 'ARI', path: '/ari' }]} />
       {/* Rich result de FAQ no Google. O objeto veio do trabalho de SEO que
           estava no remoto; o <script> que o renderizava vivia no JSX antigo. */}
       <script

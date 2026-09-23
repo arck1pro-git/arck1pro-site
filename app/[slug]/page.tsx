@@ -10,6 +10,7 @@ import {
   ROTULO_DIMENSAO,
   getComparativo,
 } from '@/lib/comparativos'
+import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
 
 // As 10 rotas saem prerenderizadas no build a partir do próprio módulo de dados.
 // dynamicParams = false para um slug inventado cair em 404 em vez de tentar
@@ -74,6 +75,7 @@ export default async function ComparativoPage({
         background: 'var(--brand-navy)',
       }}
     >
+      <BreadcrumbJsonLd items={[{ name: `${c.nome} ou ARI`, path: `/${c.slug}` }]} />
       {/* Hero no mesmo padrão da home: vídeo em object-cover, scrim uniforme por
           cima e o conteúdo separado pelo justify-between, com título ancorado no
           topo e chamada mais botões no rodapé da dobra. O marginTop negativo que

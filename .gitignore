@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -43,3 +44,6 @@ next-env.d.ts
 # Exportações de leads e planilhas do negócio: dados pessoais.
 # Nunca em public/ (o Next serve essa pasta) nem versionados.
 dados-privados/
+
+# Anotações de integração com chave de API. Nunca versionar.
+airticles.txt

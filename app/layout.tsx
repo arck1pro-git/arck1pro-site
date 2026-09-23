@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Manrope, Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
-
-// Base absoluta das URLs de metadata (canonical, OpenGraph, JSON-LD).
-const SITE_URL = "https://arck1pro.com.br";
+import { OG_IMAGE, SITE_TELEFONE, SITE_URL } from "@/lib/site";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SmoothScroller from "./components/SmoothScroller";
@@ -57,9 +55,11 @@ export const metadata: Metadata = {
     template: "%s · ARCK1PRO",
   },
   description:
-    "Hub de estruturação de incorporações de alto padrão no litoral catarinense. Conheça o ARI, ativo imobiliário com garantia real de 200% em unidades registradas. Porto Belo, Santa Catarina.",
+    "Estruturação de incorporações de alto padrão no litoral catarinense. ARI com garantia real de 200% em unidades registradas. Porto Belo, SC.",
   applicationName: "ARCK1PRO",
-  alternates: { canonical: "/" },
+  // Sem alternates.canonical aqui de propósito: o layout é herdado por todas
+  // as rotas, e o canonical "/" que morava aqui fazia cada post do blog se
+  // declarar cópia da home. Cada página define a própria canônica.
   keywords: [
     "ARCK1PRO",
     "ARI",
@@ -78,24 +78,18 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: SITE_URL,
     siteName: "ARCK1PRO",
     title: "ARCK1PRO — Hub de Estruturação Imobiliária · Porto Belo SC",
     description:
       "Estruturação de incorporações de alto padrão no litoral catarinense. ARI com garantia real de 200% em unidades registradas em cartório.",
-    images: [
-      {
-        url: "/hero.png",
-        alt: "ARCK1PRO — hub de estruturação imobiliária no litoral catarinense",
-      },
-    ],
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: "ARCK1PRO — Hub de Estruturação Imobiliária · Porto Belo SC",
     description:
       "Estruturação de incorporações de alto padrão no litoral catarinense. ARI com garantia real de 200% em unidades registradas.",
-    images: ["/hero.png"],
+    images: [OG_IMAGE.url],
   },
   robots: {
     index: true,
@@ -133,7 +127,7 @@ const organizationJsonLd = {
       },
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "+55-47-99145-8708",
+        telephone: SITE_TELEFONE,
         contactType: "customer service",
         email: "atendimento@arck1pro.com.br",
         availableLanguage: "Portuguese",

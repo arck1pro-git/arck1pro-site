@@ -1,54 +1,67 @@
 import type { Metadata } from 'next'
-import { getPosts, postSlug, type Post } from '@/lib/airticles'
+import { notFound } from 'next/navigation'
+import { OG_IMAGE } from '@/lib/site'
+import { getAllPosts, postImage, postSlug, type Post } from '@/lib/airticles'
 import BlogList from './BlogList'
 import RouteHero from '../components/RouteHero'
+import { BLOG_PER_PAGE, blogPageHref, parsePagina } from './paginacao'
+import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
 
-export const metadata: Metadata = {
-  title: 'Blog — Inteligência Imobiliária Aplicada',
-  description:
-    'Conteúdo técnico sobre incorporação, estruturação de capital, mercado imobiliário e o método ARCK1PRO. Leitura para investidor qualificado e corretor de alto padrão.',
-  alternates: { canonical: '/blog' },
-  openGraph: {
-    type: 'website',
-    locale: 'pt_BR',
-    siteName: 'ARCK1PRO',
-    url: '/blog',
-    title: 'Blog ARCK1PRO — Inteligência Imobiliária Aplicada',
-    description:
-      'Conteúdo técnico sobre incorporação, estruturação de capital e mercado imobiliário do litoral catarinense.',
-    images: ['/hero.png'],
-  },
-}
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
-const API_BASE = 'https://api.airticles.ai'
+const TITULO = 'Blog — Inteligência Imobiliária Aplicada'
+const DESCRICAO =
+  'Conteúdo técnico sobre incorporação, estruturação de capital e mercado imobiliário do litoral catarinense, para investidor qualificado.'
 
-function extractImage(post: Post): string | null {
-  const url = post.coverImageUrl ?? null
-  if (url) return url.startsWith('http') ? url : `${API_BASE}${url}`
-  const match = post.html?.match(/<img[^>]+src=["']([^"']+)["']/i)
-  if (!match) return null
-  const src = match[1]
-  return src.startsWith('http') ? src : `${API_BASE}${src}`
-}
+// Cada página da listagem é canônica de si mesma: /blog?pagina=2 aponta para
+// ela própria, não para /blog, senão o Google descarta os links que só ela tem.
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: SearchParams
+}): Promise<Metadata> {
+  const pagina = parsePagina((await searchParams).pagina) ?? 1
+  const path = blogPageHref(pagina)
+  const sufixo = pagina > 1 ? ` (página ${pagina})` : ''
 
-export default async function BlogPage() {
-  let posts: Post[] = []
-
-  try {
-    const data = await getPosts({ limit: '200' })
-    posts = data.items
-  } catch {
-    // silently fail — empty state shown below
+  return {
+    title: `${TITULO}${sufixo}`,
+    description: DESCRICAO,
+    alternates: { canonical: path },
+    openGraph: {
+      type: 'website',
+      locale: 'pt_BR',
+      siteName: 'ARCK1PRO',
+      url: path,
+      title: `Blog ARCK1PRO — Inteligência Imobiliária Aplicada${sufixo}`,
+      description:
+        'Conteúdo técnico sobre incorporação, estruturação de capital e mercado imobiliário do litoral catarinense.',
+      images: [OG_IMAGE],
+    },
   }
+}
+
+export default async function BlogPage({ searchParams }: { searchParams: SearchParams }) {
+  const pagina = parsePagina((await searchParams).pagina)
+  if (pagina === null) notFound()
+
+  // Sem try/catch de propósito: com a API fora, a listagem responde 5xx
+  // (temporário) em vez de um 200 vazio que o Google leria como blog sem posts.
+  const posts: Post[] = await getAllPosts()
+
+  // Página além da última só existiria como duplicata vazia.
+  const totalPages = Math.max(1, Math.ceil(posts.length / BLOG_PER_PAGE))
+  if (pagina > totalPages) notFound()
 
   return (
     <main
       style={{
-        marginTop: "calc(var(--header-h) * -1)",
-        position: "relative",
-        background: "var(--brand-navy)",
+        marginTop: 'calc(var(--header-h) * -1)',
+        position: 'relative',
+        background: 'var(--brand-navy)',
       }}
     >
+      <BreadcrumbJsonLd items={[{ name: 'Blog', path: '/blog' }]} />
       {/* Hero */}
       <RouteHero
         escala="grande"
@@ -71,12 +84,13 @@ export default async function BlogPage() {
         <div aria-hidden className="claro-dots" />
         <div className="container relative">
           <BlogList
+            pagina={pagina}
             posts={posts.map((post) => ({
               id: post.id,
               slug: postSlug(post),
               title: post.title,
               mainKeyword: post.mainKeyword ?? null,
-              imageUrl: extractImage(post),
+              imageUrl: postImage(post),
             }))}
           />
         </div>

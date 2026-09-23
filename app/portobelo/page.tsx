@@ -1,9 +1,11 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
+import { OG_IMAGE } from '@/lib/site'
 import Image from 'next/image'
 import footerImg from '../../public/footer.jpg'
 import RouteHero from '../components/RouteHero'
 import { ArrowUpRight } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contato";
+import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'Porto Belo — Epicentro da Costa Esmeralda',
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
     title: 'Porto Belo — Epicentro da Costa Esmeralda · ARCK1PRO',
     description:
       'A tese, os dados e a estruturação por trás do mercado de alto padrão de Porto Belo e da Costa Esmeralda.',
-    images: ['/header.png'],
+    images: [OG_IMAGE],
   },
 }
 
@@ -216,6 +218,7 @@ export default function PortoBeloPage() {
         background: 'var(--brand-navy)',
       }}
     >
+      <BreadcrumbJsonLd items={[{ name: 'Porto Belo', path: '/portobelo' }]} />
       {/* DOBRA 1 — Abertura */}
       <RouteHero
         titulo={
