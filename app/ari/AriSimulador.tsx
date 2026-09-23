@@ -18,10 +18,21 @@ import {
   type Prazo,
 } from '@/lib/ari-taxas'
 
-export default function AriSimulador() {
-  const [capital, setCapital] = useState(50_000)
-  const [prazo, setPrazo] = useState<Prazo>(36)
-  const [forma, setForma] = useState<Forma>('final')
+// Valores iniciais configuráveis para as páginas de guia abrirem o simulador
+// no cenário que elas discutem (ex.: R$ 100 mil com retorno mensal). Sem
+// props, o comportamento é o de sempre no /ari.
+export default function AriSimulador({
+  capitalInicial = 50_000,
+  prazoInicial = 36,
+  formaInicial = 'final',
+}: {
+  capitalInicial?: number
+  prazoInicial?: Prazo
+  formaInicial?: Forma
+} = {}) {
+  const [capital, setCapital] = useState(capitalInicial)
+  const [prazo, setPrazo] = useState<Prazo>(prazoInicial)
+  const [forma, setForma] = useState<Forma>(formaInicial)
 
   const taxa = taxaPara(forma, prazo, capital)
   const retornoTotal = capital * taxa * prazo

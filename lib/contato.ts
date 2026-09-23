@@ -11,6 +11,9 @@ export const WHATSAPP_NUMERO = '5547992006498'
  *  contato antes da primeira resposta. */
 export const WHATSAPP_MENSAGEM = 'Oi, eu vim pelo site da ARCK1PRO'
 
-export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(
-  WHATSAPP_MENSAGEM,
-)}`
+export const WHATSAPP_URL = whatsappUrl(WHATSAPP_MENSAGEM)
+
+/** Link de WhatsApp com mensagem própria, para identificar a página de origem. */
+export function whatsappUrl(mensagem: string): string {
+  return `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`
+}

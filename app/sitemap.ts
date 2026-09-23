@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getAllPosts, postSlug } from '@/lib/airticles'
 import { COMPARATIVOS } from '@/lib/comparativos'
+import { GUIAS, GUIA_SLUGS } from '@/lib/guias'
 import { SITE_URL } from '@/lib/site'
 
 // Regera a cada hora. O sitemap em produção estava congelado no build de
@@ -61,6 +62,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
+  // Guias do investidor (páginas comerciais), com a data da última revisão.
+  const guias: MetadataRoute.Sitemap = GUIA_SLUGS.map((slug) => ({
+    url: `${SITE_URL}/${slug}`,
+    lastModified: new Date(GUIAS[slug].atualizadoEm),
+    changeFrequency: 'monthly',
+    priority: 0.85,
+  }))
+
   // Posts do blog: todas as páginas da API, só artigos no ar.
   let postRoutes: MetadataRoute.Sitemap = []
   try {
@@ -81,5 +90,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (process.env.NEXT_PHASE !== 'phase-production-build') throw err
   }
 
-  return [...staticRoutes, ...comparativos, ...postRoutes]
+  return [...staticRoutes, ...guias, ...comparativos, ...postRoutes]
 }

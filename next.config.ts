@@ -70,6 +70,9 @@ const nextConfig: NextConfig = {
       { source: '/incorporador.html', destination: '/sobre', permanent: true },
       { source: '/negocieseuterreno.html', destination: '/sobre', permanent: true },
       { source: '/politica_privacidade.html', destination: '/', permanent: true },
+      // Post "quanto rende R$ 100 mil no ARI" saiu do ar; o tema agora é uma
+      // página comercial própria, que herda o histórico da URL antiga.
+      { source: '/blog/20666', destination: '/quanto-rende-100-mil', permanent: true },
     ];
   },
 };

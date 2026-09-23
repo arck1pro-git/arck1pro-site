@@ -48,6 +48,8 @@ export default function ContatoForm({
 
     const url = new URL(LEADS_WEBHOOK_URL)
     url.searchParams.set('tipo', form.role)
+    // Página em que o lead converteu, para o comercial saber de onde veio.
+    url.searchParams.set('origem', window.location.pathname)
     url.searchParams.set('nome', form.name)
     url.searchParams.set('email', form.email)
     url.searchParams.set('whatsapp', form.phone)

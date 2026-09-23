@@ -4,6 +4,8 @@ import { useState } from "react";
 import ContactModal from "./ContactModal";
 import { ArrowUpRight } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contato";
+import Link from "next/link";
+import { GUIAS, GUIA_SLUGS } from "@/lib/guias";
 
 type ModalRole = "investidor";
 
@@ -191,6 +193,30 @@ export default function Footer() {
             Porto Belo — SC
           </p>
         </div>
+
+        {/* Guias do investidor: páginas comerciais linkadas de todo o site. */}
+        <nav aria-labelledby="rodape-guias" style={{ display: "flex", flexDirection: "column", gap: "var(--s-4)" }}>
+          <p
+            id="rodape-guias"
+            className="font-display text-base"
+            style={{
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+            }}
+          >
+            Guias do investidor
+          </p>
+          {GUIA_SLUGS.map((slug) => (
+            <Link
+              key={slug}
+              href={`/${slug}`}
+              className="font-display"
+              style={{ fontSize: "var(--fs-13)", color: "inherit", textDecoration: "none", width: "fit-content" }}
+            >
+              {GUIAS[slug].nome}
+            </Link>
+          ))}
+        </nav>
       </div>
 
       <ContactModal
