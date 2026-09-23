@@ -1,8 +1,11 @@
 import type { MetadataRoute } from 'next'
-import { getPosts, postSlug } from '@/lib/airticles'
+import { getAllPosts, postSlug } from '@/lib/airticles'
 import { COMPARATIVOS } from '@/lib/comparativos'
+import { SITE_URL } from '@/lib/site'
 
-const SITE_URL = 'https://arck1pro.com.br'
+// Regera a cada hora. O sitemap em produção estava congelado no build de
+// 28/08/2026, listando 48 URLs que já não existiam e só 2 dos posts no ar.
+export const revalidate = 3600
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
@@ -58,10 +61,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  // Posts do blog — falha em silêncio se a API estiver indisponível no build.
+  // Posts do blog: todas as páginas da API, só artigos no ar.
   let postRoutes: MetadataRoute.Sitemap = []
   try {
-    const { items } = await getPosts({ limit: '200' })
+    const items = await getAllPosts()
     // postSlug, e não post.id: o id só existe como atalho que redireciona para
     // o slug, e sitemap com URL que redireciona é URL desperdiçada.
     postRoutes = items.map((post) => ({
@@ -70,8 +73,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.6,
     }))
-  } catch {
-    // sem posts no sitemap quando a API não responde
+  } catch (err) {
+    console.error('[sitemap] Airticles API error:', err)
+    // Em produção, relança: a regeração falha e o Next segue servindo o
+    // sitemap anterior, em vez de publicar por uma hora um sitemap sem posts.
+    // No build, segue sem posts para uma instabilidade da API não travar o deploy.
+    if (process.env.NEXT_PHASE !== 'phase-production-build') throw err
   }
 
   return [...staticRoutes, ...comparativos, ...postRoutes]

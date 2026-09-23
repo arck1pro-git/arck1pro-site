@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import RouteHero from '../components/RouteHero'
 import SimuladorTabela from './SimuladorTabela'
+import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'Simulador do ARI · ARCK1PRO',
@@ -27,6 +28,7 @@ export default function SimuladorPage() {
         background: 'var(--brand-navy)',
       }}
     >
+      <BreadcrumbJsonLd items={[{ name: 'Simulador', path: '/simulador' }]} />
       <RouteHero
         escala="grande"
         titulo={

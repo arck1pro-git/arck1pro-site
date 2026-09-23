@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "@/lib/site";
 import HeroSection from "./components/home/HeroSection";
 import BlogSection from "./components/home/BlogSection";
 import PilaresSection from './components/home/PilaresSection'
@@ -13,8 +14,18 @@ import PeopleSection from "./components/home/PeopleSection";
 export const metadata: Metadata = {
   title: { absolute: "ARCK1PRO — Hub de Estruturação Imobiliária · Porto Belo SC" },
   description:
-    "Hub de estruturação de incorporações de alto padrão no litoral catarinense. Conheça o ARI, ativo imobiliário com garantia real de 200% em unidades registradas. Porto Belo, Santa Catarina.",
+    "Estruturação de incorporações de alto padrão no litoral catarinense. ARI com garantia real de 200% em unidades registradas. Porto Belo, SC.",
   alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: "ARCK1PRO",
+    url: "/",
+    title: "ARCK1PRO — Hub de Estruturação Imobiliária · Porto Belo SC",
+    description:
+      "Estruturação de incorporações de alto padrão no litoral catarinense. ARI com garantia real de 200% em unidades registradas em cartório.",
+    images: [OG_IMAGE],
+  },
 };
 
 export default function Home() {

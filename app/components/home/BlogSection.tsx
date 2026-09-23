@@ -1,25 +1,14 @@
 import Link from 'next/link'
-import { getPosts, postSlug, type Post } from '@/lib/airticles'
+import { getAllPosts, postImage as extractImage, postSlug, type Post } from '@/lib/airticles'
 import { ArrowUpRight } from "lucide-react";
-
-const API_BASE = 'https://api.airticles.ai'
-
-function extractImage(post: Post): string | null {
-  const url = post.coverImageUrl ?? null
-  if (url) return url.startsWith('http') ? url : `${API_BASE}${url}`
-  const match = post.html?.match(/<img[^>]+src=["']([^"']+)["']/i)
-  if (!match) return null
-  const src = match[1]
-  return src.startsWith('http') ? src : `${API_BASE}${src}`
-}
 
 export default async function BlogSection() {
   let posts: Post[] = []
   let error = false
 
   try {
-    const data = await getPosts({ limit: '3' })
-    posts = data.items
+    // Mesma fonte filtrada da listagem: só artigos no ar entram na home.
+    posts = (await getAllPosts()).slice(0, 3)
   } catch (err) {
     console.error('[BlogSection] Airticles API error:', err)
     error = true
