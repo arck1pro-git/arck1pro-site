@@ -12,6 +12,9 @@ import {
   getComparativo,
 } from '@/lib/comparativos'
 import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
+import AriFaq from '@/app/ari/AriFaq'
+import { comparativoFaqs } from '@/lib/comparativos-faq'
+import { SITE_URL, absoluteUrl, jsonLdString } from '@/lib/site'
 
 // As 10 rotas saem prerenderizadas no build a partir do próprio módulo de dados.
 // dynamicParams = false para um slug inventado cair em 404 em vez de tentar
@@ -61,6 +64,18 @@ export default async function ComparativoPage({
   // A tabela lista apenas os critérios em que o ARI leva vantagem. O título da
   // seção diz isso com todas as letras, para o recorte ficar explícito ao leitor.
   const criterios = DIMENSOES.filter((d) => c.vantagem[d] === 'ari')
+  const faqs = comparativoFaqs(c)
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${absoluteUrl(`/${c.slug}`)}#faq`,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  }
 
   return (
     <main
@@ -71,6 +86,7 @@ export default async function ComparativoPage({
       }}
     >
       <BreadcrumbJsonLd items={[{ name: `${c.nome} ou ARI`, path: `/${c.slug}` }]} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdString(faqJsonLd) }} />
       {/* Hero no mesmo padrão da home: vídeo em object-cover, scrim uniforme por
           cima e o conteúdo separado pelo justify-between, com título ancorado no
           topo e chamada mais botões no rodapé da dobra. O marginTop negativo que
@@ -181,6 +197,15 @@ export default async function ComparativoPage({
                 </p>
               ))}
             </div>
+          </div>
+
+          {/* Perguntas frequentes com os mesmos dados da tabela: formato que
+              buscadores e assistentes de IA extraem e citam. */}
+          <div className="max-w-[820px] mx-auto" style={{ marginTop: 'var(--s-24)' }}>
+            <h2 className="font-display text-navy text-center" style={{ ...H2, marginBottom: 'var(--s-8)' }}>
+              Perguntas frequentes
+            </h2>
+            <AriFaq items={faqs} />
           </div>
         </div>
       </section>

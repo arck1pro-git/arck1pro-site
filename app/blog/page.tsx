@@ -24,7 +24,9 @@ export async function generateMetadata({
   const sufixo = pagina > 1 ? ` (página ${pagina})` : ''
   return pageMetadata({
     title: `${TITULO}${sufixo}`,
-    description: DESCRICAO,
+    // Página N com description própria: sem isso as 5 páginas da listagem
+    // compartilhavam o mesmo texto.
+    description: pagina > 1 ? `${DESCRICAO} Página ${pagina}.` : DESCRICAO,
     ogDescription:
       'Conteúdo técnico sobre incorporação, estruturação de capital e mercado imobiliário do litoral catarinense.',
     path: blogPageHref(pagina),

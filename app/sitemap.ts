@@ -9,45 +9,41 @@ import { SITE_URL } from '@/lib/site'
 export const revalidate = 3600
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
+  // Páginas fixas e comparativos vão sem lastmod: a data do build mudava a cada
+  // regeração sem o conteúdo mudar, e o Google aprende a ignorar lastmod que
+  // não é confiável. Posts e guias levam a data real da última alteração.
 
   // /empreendimentos e /contato saíram daqui junto com as páginas: estavam
   // listadas e respondiam 404, o que derruba a confiança do sitemap inteiro.
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: `${SITE_URL}/`,
-      lastModified: now,
       changeFrequency: 'weekly',
       priority: 1.0,
       images: [`${SITE_URL}/hero.png`],
     },
     {
       url: `${SITE_URL}/ari`,
-      lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.95,
     },
     {
       url: `${SITE_URL}/simulador`,
-      lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.85,
     },
     {
       url: `${SITE_URL}/portobelo`,
-      lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${SITE_URL}/sobre`,
-      lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.75,
     },
     {
       url: `${SITE_URL}/blog`,
-      lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.7,
     },
@@ -57,7 +53,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // rotas, então uma comparação nova entra no sitemap sozinha.
   const comparativos: MetadataRoute.Sitemap = COMPARATIVOS.map((c) => ({
     url: `${SITE_URL}/${c.slug}`,
-    lastModified: now,
     changeFrequency: 'monthly',
     priority: 0.7,
   }))
@@ -78,7 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // o slug, e sitemap com URL que redireciona é URL desperdiçada.
     postRoutes = items.map((post) => ({
       url: `${SITE_URL}/blog/${postSlug(post)}`,
-      lastModified: post.updatedAt ? new Date(post.updatedAt) : now,
+      lastModified: post.updatedAt ? new Date(post.updatedAt) : undefined,
       changeFrequency: 'monthly',
       priority: 0.6,
     }))

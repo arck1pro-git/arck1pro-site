@@ -7,6 +7,8 @@ import RouteHero from '../components/RouteHero'
 import { ArrowUpRight } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contato";
 import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
+import { jsonLdString } from '@/lib/site'
+import { produtoAriJsonLd } from '@/lib/empresa'
 import { ARI_FAQS as faqs, ARI_METRICAS as metrics, ARI_PROTECOES as protecoes } from '@/lib/ari-conteudo'
 
 export const metadata: Metadata = pageMetadata({
@@ -49,7 +51,12 @@ export default function AriPage() {
           estava no remoto; o <script> que o renderizava vivia no JSX antigo. */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdString(faqJsonLd) }}
+      />
+      {/* O ARI como produto de investimento (taxas e aporte da tabela oficial). */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(produtoAriJsonLd()) }}
       />
 
       {/* DOBRA 1 — Hero */}

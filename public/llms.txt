@@ -99,6 +99,11 @@ Uma página por comparação, com tabela de critérios e análise:
 - https://arck1pro.com.br/criptomoedas — ARI ou criptomoedas
 - https://arck1pro.com.br/imovel-para-aluguel — ARI ou imóvel para aluguel
 
+## Versão completa
+
+- https://arck1pro.com.br/llms-full.txt — Todo o conteúdo institucional em
+  texto: empresa, ARI, guias com tabelas e os 10 comparativos com FAQ.
+
 ## Guias do investidor
 
 Respostas diretas, com números calculados pela tabela oficial de taxas do ARI:

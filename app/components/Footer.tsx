@@ -1,15 +1,12 @@
-"use client";
-
-import { useState } from "react";
-import ContactModal from "./ContactModal";
-import { ArrowUpRight } from "lucide-react";
+// Componente de servidor: o mapa do site importa guias e comparativos, e num
+// componente de cliente esse conteúdo inteiro iria para o JavaScript de toda
+// página. Só o botão de qualificação (QualificacaoCta) é interativo.
+import QualificacaoCta from "./QualificacaoCta";
 import { WHATSAPP_URL } from "@/lib/contato";
 import Link from "next/link";
 import { GUIAS, GUIA_SLUGS } from "@/lib/guias";
 import { COMPARATIVOS } from "@/lib/comparativos";
 import { EMPRESA } from "@/lib/empresa";
-
-type ModalRole = "investidor";
 
 // Mapa do site no rodapé: toda página indexável tem ao menos um link rastreável
 // saindo de todas as outras. Antes /portobelo, /sobre e os comparativos só
@@ -43,8 +40,6 @@ const CONTATOS: { texto: string; href?: string }[] = [
 ];
 
 export default function Footer() {
-  const [modalRole, setModalRole] = useState<ModalRole | null>(null);
-
   return (
     <footer
       id="contato"
@@ -108,9 +103,7 @@ export default function Footer() {
             Diga quem você é e damos sequência à sua qualificação.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--s-3)", justifyContent: "center" }}>
-            <button type="button" className="btn btn--gold" onClick={() => setModalRole("investidor")}>
-              Sou investidor <ArrowUpRight className="arrow" size={16} strokeWidth={2} aria-hidden />
-            </button>
+            <QualificacaoCta>Sou investidor</QualificacaoCta>
           </div>
         </div>
       </div>
@@ -267,11 +260,6 @@ export default function Footer() {
         {EMPRESA.razaoSocial} · CNPJ {EMPRESA.cnpj} · {EMPRESA.endereco.cidade}/{EMPRESA.endereco.uf}
       </div>
 
-      <ContactModal
-        open={modalRole !== null}
-        role={modalRole}
-        onClose={() => setModalRole(null)}
-      />
     </footer>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Manrope, Playfair_Display, Poppins } from "next/font/google";
+import { Inter, Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
 import { OG_IMAGE, SITE_URL, jsonLdString } from "@/lib/site";
 import { entidadesJsonLd } from "@/lib/empresa";
@@ -18,12 +18,8 @@ const inter = Inter({
   display: "swap",
 });
 
-// Headline da seção "Método". Variável, como a Inter — sem lista de weight.
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-headline",
-  display: "swap",
-});
+// Manrope (--font-headline) saiu: a classe .font-headline não é usada em
+// nenhum componente, e a família era baixada e pré-carregada em toda página.
 
 // Serif do destaque "rentabilidade" na hero. Variável, então sem lista de weight;
 // só o itálico é carregado, que é o único corte usado.
@@ -40,7 +36,9 @@ const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-display",
   weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  // Só normal: nenhum texto em Poppins usa itálico (o único itálico do site é
+  // o da Playfair). O corte itálico dobrava os arquivos baixados.
+  style: ["normal"],
   display: "swap",
 });
 
@@ -116,7 +114,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       data-theme="light"
-      className={`${inter.variable} ${manrope.variable} ${playfair.variable} ${poppins.variable}`}
+      className={`${inter.variable} ${playfair.variable} ${poppins.variable}`}
     >
       {/* O vídeo da hero vem do Storage do Supabase; abrir DNS + TLS junto com o
           HTML tira o handshake do caminho crítico do autoplay. */}

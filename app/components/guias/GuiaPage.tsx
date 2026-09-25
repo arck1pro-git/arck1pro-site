@@ -12,7 +12,7 @@ import { whatsappUrl } from '@/lib/contato'
 import { SITE_NAME, SITE_URL, absoluteUrl, jsonLdString } from '@/lib/site'
 import { pageMetadata } from '@/lib/seo'
 import AutorBox from '@/app/components/AutorBox'
-import { AUTOR_ORGANIZACAO } from '@/lib/empresa'
+import { AUTOR_ORGANIZACAO, PRODUTO_ID } from '@/lib/empresa'
 
 // Página de guia do investidor: resposta direta no topo (o trecho que buscador
 // e IA citam), tabelas com números calculados da tabela oficial, simulador,
@@ -67,6 +67,7 @@ function jsonLd(g: Guia) {
         author: AUTOR_ORGANIZACAO,
         about: {
           '@type': 'FinancialProduct',
+          '@id': PRODUTO_ID,
           name: 'ARI (Ativo de Renda Imobiliária)',
           url: absoluteUrl('/ari'),
           provider: { '@id': `${SITE_URL}/#organization` },

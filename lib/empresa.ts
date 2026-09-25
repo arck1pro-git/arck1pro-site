@@ -1,4 +1,5 @@
 import { SITE_NAME, SITE_TELEFONE, SITE_URL, absoluteUrl } from './site'
+import { MAX, MIN, PRAZOS, taxaPara } from './ari-taxas'
 
 // Identidade da empresa em um lugar só: dados estruturados, rodapé, /sobre,
 // /ari-e-confiavel e llms.txt leem daqui. Buscadores e IAs cruzam essas
@@ -163,4 +164,43 @@ export function dataBR(iso: string) {
     month: 'long',
     year: 'numeric',
   })
+}
+
+export const PRODUTO_ID = `${SITE_URL}/ari#produto`
+
+/**
+ * O ARI como produto de investimento. Taxa mínima e máxima saem da tabela
+ * oficial (lib/ari-taxas): menor faixa com retorno mensal no prazo mais curto
+ * e maior faixa com retorno no final no prazo mais longo.
+ */
+export function produtoAriJsonLd() {
+  const prazoMin = PRAZOS[0]
+  const prazoMax = PRAZOS[PRAZOS.length - 1]
+  const taxaMin = taxaPara('mensal', prazoMin, MIN) * 100
+  const taxaMax = taxaPara('final', prazoMax, MAX) * 100
+  return {
+    '@context': 'https://schema.org',
+    '@type': ['FinancialProduct', 'InvestmentOrDeposit'],
+    '@id': PRODUTO_ID,
+    name: 'ARI (Ativo de Renda Imobiliária)',
+    alternateName: 'ARI',
+    description:
+      'Ativo de renda imobiliária estruturado como Sociedade em Conta de Participação (SCP), com garantia real de 200% em unidades registradas em cartório e rendimento isento de Imposto de Renda. Acesso por qualificação.',
+    url: absoluteUrl('/ari'),
+    category: 'Sociedade em Conta de Participação (SCP)',
+    provider: { '@id': ORG_ID },
+    brand: { '@type': 'Brand', name: 'ARI' },
+    areaServed: { '@type': 'State', name: 'Santa Catarina' },
+    interestRate: {
+      '@type': 'QuantitativeValue',
+      minValue: Math.round(taxaMin * 100) / 100,
+      maxValue: Math.round(taxaMax * 100) / 100,
+      unitText: '% ao mês (estimado)',
+    },
+    amount: {
+      '@type': 'MonetaryAmount',
+      minValue: MIN,
+      currency: 'BRL',
+    },
+  }
 }
