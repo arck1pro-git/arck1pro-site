@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { OG_IMAGE } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
 import { getAllPosts, postImage, postSlug, type Post } from '@/lib/airticles'
 import BlogList from './BlogList'
 import RouteHero from '../components/RouteHero'
@@ -9,7 +9,7 @@ import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
-const TITULO = 'Blog — Inteligência Imobiliária Aplicada'
+const TITULO = 'Blog ARCK1PRO: Inteligência Imobiliária Aplicada'
 const DESCRICAO =
   'Conteúdo técnico sobre incorporação, estruturação de capital e mercado imobiliário do litoral catarinense, para investidor qualificado.'
 
@@ -21,24 +21,14 @@ export async function generateMetadata({
   searchParams: SearchParams
 }): Promise<Metadata> {
   const pagina = parsePagina((await searchParams).pagina) ?? 1
-  const path = blogPageHref(pagina)
   const sufixo = pagina > 1 ? ` (página ${pagina})` : ''
-
-  return {
+  return pageMetadata({
     title: `${TITULO}${sufixo}`,
     description: DESCRICAO,
-    alternates: { canonical: path },
-    openGraph: {
-      type: 'website',
-      locale: 'pt_BR',
-      siteName: 'ARCK1PRO',
-      url: path,
-      title: `Blog ARCK1PRO — Inteligência Imobiliária Aplicada${sufixo}`,
-      description:
-        'Conteúdo técnico sobre incorporação, estruturação de capital e mercado imobiliário do litoral catarinense.',
-      images: [OG_IMAGE],
-    },
-  }
+    ogDescription:
+      'Conteúdo técnico sobre incorporação, estruturação de capital e mercado imobiliário do litoral catarinense.',
+    path: blogPageHref(pagina),
+  })
 }
 
 export default async function BlogPage({ searchParams }: { searchParams: SearchParams }) {

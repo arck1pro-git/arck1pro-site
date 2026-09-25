@@ -11,6 +11,7 @@
 import { ARI, COMPARATIVOS } from './comparativos'
 import { brl0, PRAZOS, resultado, taxaPct, type Forma, type Prazo } from './ari-taxas'
 import { ARI_CONDICOES, ARI_DIFERENCIAIS, ARI_FAQS } from './ari-conteudo'
+import { EMPRESA, FUNDADORES, dataBR } from './empresa'
 
 export type GuiaSlug =
   | 'quanto-rende-100-mil'
@@ -382,6 +383,7 @@ export const GUIAS: Record<GuiaSlug, Guia> = {
       'Garantia de 200% em unidades registradas em cartório.',
       'Imóvel físico da incorporadora reservado no seu nome.',
       'Capital segregado do caixa da incorporadora.',
+      `Empresa registrada: ${EMPRESA.razaoSocial}, CNPJ ${EMPRESA.cnpj}.`,
     ],
     secoes: [
       {
@@ -410,13 +412,37 @@ export const GUIAS: Record<GuiaSlug, Guia> = {
         ],
       },
       {
+        id: 'dados-cadastrais',
+        titulo: 'Dados cadastrais que você pode consultar',
+        paragrafos: [
+          `A empresa responsável é registrada na Receita Federal e pode ser consultada pelo CNPJ ${EMPRESA.cnpj}.`,
+        ],
+        lista: [
+          `Razão social: ${EMPRESA.razaoSocial}.`,
+          `CNPJ: ${EMPRESA.cnpj}, situação ${EMPRESA.situacao.toLowerCase()} desde ${dataBR(EMPRESA.inicioAtividade)}.`,
+          `Atividade principal: ${EMPRESA.atividadePrincipal.toLowerCase()}.`,
+          `Endereço: ${EMPRESA.endereco.rua}, ${EMPRESA.endereco.bairro}, ${EMPRESA.endereco.cidade}/${EMPRESA.endereco.uf}.`,
+          `Fundadores: ${FUNDADORES.map((f) => `${f.nome} (${f.formacao.toLowerCase()})`).join(' e ')}.`,
+        ],
+      },
+      {
         id: 'quem-esta-por-tras',
         titulo: 'Quem está por trás',
         paragrafos: [oQueE.a],
       },
     ],
     mostrarProtecoes: true,
-    faqs: [seguro, quemPode, oQueE, isencaoAri, aporteMinimo],
+    faqs: [
+      seguro,
+      {
+        q: 'Qual é o CNPJ da ARCK1PRO?',
+        a: `${EMPRESA.cnpj}, razão social ${EMPRESA.razaoSocial}, em ${EMPRESA.endereco.cidade}/${EMPRESA.endereco.uf}. A situação cadastral pode ser consultada na Receita Federal.`,
+      },
+      quemPode,
+      oQueE,
+      isencaoAri,
+      aporteMinimo,
+    ],
     mensagemWhatsapp: 'Oi, vim pela página O ARI é confiável e quero tirar dúvidas sobre a segurança',
     atualizadoEm: ATUALIZADO_EM,
   },

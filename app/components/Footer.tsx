@@ -6,8 +6,35 @@ import { ArrowUpRight } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contato";
 import Link from "next/link";
 import { GUIAS, GUIA_SLUGS } from "@/lib/guias";
+import { COMPARATIVOS } from "@/lib/comparativos";
+import { EMPRESA } from "@/lib/empresa";
 
 type ModalRole = "investidor";
+
+// Mapa do site no rodapé: toda página indexável tem ao menos um link rastreável
+// saindo de todas as outras. Antes /portobelo, /sobre e os comparativos só
+// eram alcançáveis pelo sitemap.
+const MAPA: { titulo: string; links: { label: string; href: string }[] }[] = [
+  {
+    titulo: "Institucional",
+    links: [
+      { label: "Início", href: "/" },
+      { label: "ARI", href: "/ari" },
+      { label: "Simulador", href: "/simulador" },
+      { label: "Porto Belo", href: "/portobelo" },
+      { label: "Nossa história", href: "/sobre" },
+      { label: "Blog", href: "/blog" },
+    ],
+  },
+  {
+    titulo: "Guias do investidor",
+    links: GUIA_SLUGS.map((slug) => ({ label: GUIAS[slug].nome, href: `/${slug}` })),
+  },
+  {
+    titulo: "ARI comparado",
+    links: COMPARATIVOS.map((c) => ({ label: `ARI ou ${c.nome}`, href: `/${c.slug}` })),
+  },
+];
 
 const CONTATOS: { texto: string; href?: string }[] = [
   { texto: "atendimento@arck1pro.com.br" },
@@ -93,7 +120,7 @@ export default function Footer() {
 
       {/* Footer Grid */}
       <div
-        className="container relative grid grid-cols-1 lg:grid-cols-4 gap-10"
+        className="container relative grid grid-cols-1 lg:grid-cols-3 gap-10"
         style={{
           padding: "var(--s-12) var(--s-6)",
         }}
@@ -194,29 +221,50 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Guias do investidor: páginas comerciais linkadas de todo o site. */}
-        <nav aria-labelledby="rodape-guias" style={{ display: "flex", flexDirection: "column", gap: "var(--s-4)" }}>
-          <p
-            id="rodape-guias"
-            className="font-display text-base"
-            style={{
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-            }}
-          >
-            Guias do investidor
-          </p>
-          {GUIA_SLUGS.map((slug) => (
-            <Link
-              key={slug}
-              href={`/${slug}`}
-              className="font-display"
-              style={{ fontSize: "var(--fs-13)", color: "inherit", textDecoration: "none", width: "fit-content" }}
+      </div>
+
+      {/* Mapa do site */}
+      <nav
+        aria-label="Mapa do site"
+        className="container relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"
+        style={{ padding: "0 var(--s-6) var(--s-12)" }}
+      >
+        {MAPA.map((grupo) => (
+          <div key={grupo.titulo} style={{ display: "flex", flexDirection: "column", gap: "var(--s-3)" }}>
+            <p
+              className="font-display text-base"
+              style={{ letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "var(--s-1)" }}
             >
-              {GUIAS[slug].nome}
-            </Link>
-          ))}
-        </nav>
+              {grupo.titulo}
+            </p>
+            {grupo.links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="font-display"
+                style={{ fontSize: "var(--fs-13)", color: "inherit", textDecoration: "none", width: "fit-content" }}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </div>
+        ))}
+      </nav>
+
+      {/* Identificação legal: razão social e CNPJ visíveis em todas as páginas
+          (sinal de confiança para o investidor e dado que buscadores cruzam
+          com o registro público). */}
+      <div
+        className="container relative font-display"
+        style={{
+          padding: "var(--s-6)",
+          borderTop: "var(--hairline) solid rgba(0,0,0,0.12)",
+          fontSize: "var(--fs-12)",
+          lineHeight: 1.6,
+          opacity: 0.75,
+        }}
+      >
+        {EMPRESA.razaoSocial} · CNPJ {EMPRESA.cnpj} · {EMPRESA.endereco.cidade}/{EMPRESA.endereco.uf}
       </div>
 
       <ContactModal

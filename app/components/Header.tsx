@@ -248,16 +248,20 @@ export default function Header() {
                   />
                 </button>
 
-                {aberto && (
+                {/* Sempre no HTML, só escondido: com o dropdown montado apenas
+                    no clique, os links não existiam para o Google e as rotas
+                    ficavam órfãs, alcançáveis só pelo sitemap. */}
+                {(
                   <div
                     className="font-sans"
+                    hidden={!aberto}
                     style={{
                       ...superficieMenu,
                       position: "absolute",
                       top: "calc(100% + var(--s-4))",
                       left: 0,
                       minWidth: 210,
-                      display: "flex",
+                      display: aberto ? "flex" : "none",
                       flexDirection: "column",
                       gap: 2,
                       padding: "var(--s-2)",
@@ -364,9 +368,11 @@ export default function Header() {
 
       {/* Menu mobile — mesmos dois grupos, em acordeão: o índice abre a lista de
           rotas no lugar, sem dropdown flutuante. */}
-      {open && (
+      {/* Painel sempre no HTML (links rastreáveis), exibido só quando aberto. */}
+      {(
         <div
-          className="flex lg:hidden font-sans"
+          className={`${open ? "flex" : "hidden"} lg:hidden font-sans`}
+          hidden={!open}
           style={{
             ...superficieMenu,
             position: "absolute",
@@ -417,8 +423,7 @@ export default function Header() {
                   />
                 </button>
 
-                {aberto &&
-                  grupo.itens.map((item) => (
+                {grupo.itens.map((item) => (
                     <a
                       key={item.href}
                       href={item.href}
@@ -426,8 +431,9 @@ export default function Header() {
                         setOpen(false);
                         setGrupoAberto(null);
                       }}
+                      hidden={!aberto}
                       style={{
-                        display: "block",
+                        display: aberto ? "block" : "none",
                         // Recuo alinha as rotas sob o rótulo do grupo.
                         padding: "var(--s-2) var(--s-4) var(--s-2) var(--s-8)",
                         borderRadius: "var(--r-pill)",

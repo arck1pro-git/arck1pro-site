@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Manrope, Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
-import { OG_IMAGE, SITE_TELEFONE, SITE_URL } from "@/lib/site";
+import { OG_IMAGE, SITE_URL, jsonLdString } from "@/lib/site";
+import { entidadesJsonLd } from "@/lib/empresa";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SmoothScroller from "./components/SmoothScroller";
@@ -51,7 +52,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ARCK1PRO — Hub de Estruturação Imobiliária · Porto Belo SC",
+    default: "ARCK1PRO: Hub de Estruturação Imobiliária em Porto Belo SC",
     template: "%s · ARCK1PRO",
   },
   description:
@@ -79,14 +80,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     siteName: "ARCK1PRO",
-    title: "ARCK1PRO — Hub de Estruturação Imobiliária · Porto Belo SC",
+    title: "ARCK1PRO: Hub de Estruturação Imobiliária em Porto Belo SC",
     description:
       "Estruturação de incorporações de alto padrão no litoral catarinense. ARI com garantia real de 200% em unidades registradas em cartório.",
     images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ARCK1PRO — Hub de Estruturação Imobiliária · Porto Belo SC",
+    title: "ARCK1PRO: Hub de Estruturação Imobiliária em Porto Belo SC",
     description:
       "Estruturação de incorporações de alto padrão no litoral catarinense. ARI com garantia real de 200% em unidades registradas.",
     images: [OG_IMAGE.url],
@@ -104,46 +105,9 @@ export const metadata: Metadata = {
   },
 };
 
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": ["Organization", "RealEstateAgent"],
-      "@id": `${SITE_URL}/#organization`,
-      name: "ARCK1PRO",
-      alternateName: "Arck1Pro",
-      url: SITE_URL,
-      logo: `${SITE_URL}/logo.png`,
-      description:
-        "Hub de estruturação de incorporações de alto padrão no litoral catarinense.",
-      foundingDate: "2004",
-      founder: { "@type": "Person", name: "Fabrício Pavesi Junior" },
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Av. João Manoel Jacques, 160, Sala 1Z",
-        addressLocality: "Porto Belo",
-        addressRegion: "SC",
-        addressCountry: "BR",
-      },
-      contactPoint: {
-        "@type": "ContactPoint",
-        telephone: SITE_TELEFONE,
-        contactType: "customer service",
-        email: "atendimento@arck1pro.com.br",
-        availableLanguage: "Portuguese",
-      },
-      sameAs: ["https://www.instagram.com/arck1pro/"],
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${SITE_URL}/#website`,
-      url: SITE_URL,
-      name: "ARCK1PRO",
-      publisher: { "@id": `${SITE_URL}/#organization` },
-      inLanguage: "pt-BR",
-    },
-  ],
-};
+// Grafo de entidades (empresa, site, fundadores) em lib/empresa: mesma fonte
+// do rodapé, de /sobre e do llms.txt.
+const organizationJsonLd = entidadesJsonLd();
 
 export default function RootLayout({
   children,
@@ -162,7 +126,7 @@ export default function RootLayout({
       <body style={{ background: "var(--brand-navy)" }}>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdString(organizationJsonLd) }}
         />
         <SmoothScroller />
         <RevealObserver />

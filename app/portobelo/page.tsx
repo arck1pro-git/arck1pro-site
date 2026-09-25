@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { OG_IMAGE } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
 import Image from 'next/image'
 import footerImg from '../../public/footer.jpg'
 import RouteHero from '../components/RouteHero'
@@ -7,22 +7,14 @@ import { ArrowUpRight } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contato";
 import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
 
-export const metadata: Metadata = {
-  title: 'Porto Belo — Epicentro da Costa Esmeralda',
+export const metadata: Metadata = pageMetadata({
+  title: 'Porto Belo: Epicentro da Costa Esmeralda · ARCK1PRO',
   description:
     'Por que Porto Belo concentra a maior assimetria entre demanda e oferta de alto padrão no litoral catarinense. Tese, dados e estruturação ARCK1PRO.',
-  alternates: { canonical: '/portobelo' },
-  openGraph: {
-    type: 'website',
-    locale: 'pt_BR',
-    siteName: 'ARCK1PRO',
-    url: '/portobelo',
-    title: 'Porto Belo — Epicentro da Costa Esmeralda · ARCK1PRO',
-    description:
-      'A tese, os dados e a estruturação por trás do mercado de alto padrão de Porto Belo e da Costa Esmeralda.',
-    images: [OG_IMAGE],
-  },
-}
+  ogDescription:
+    'A tese, os dados e a estruturação por trás do mercado de alto padrão de Porto Belo e da Costa Esmeralda.',
+  path: '/portobelo',
+})
 
 const triade = [
   {

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { OG_IMAGE } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
 import Link from 'next/link'
 import AriFaq from './AriFaq'
 import AriSimulador from './AriSimulador'
@@ -9,22 +9,14 @@ import { WHATSAPP_URL } from "@/lib/contato";
 import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
 import { ARI_FAQS as faqs, ARI_METRICAS as metrics, ARI_PROTECOES as protecoes } from '@/lib/ari-conteudo'
 
-export const metadata: Metadata = {
-  title: 'ARI — Ativo de Renda Imobiliária com Garantia Real',
+export const metadata: Metadata = pageMetadata({
+  title: 'ARI: Ativo de Renda Imobiliária com Garantia Real · ARCK1PRO',
   description:
     'ARI: ativo de renda imobiliária em SCP, com garantia real de 200% em unidades registradas em cartório e rendimento isento de Imposto de Renda.',
-  alternates: { canonical: '/ari' },
-  openGraph: {
-    type: 'website',
-    locale: 'pt_BR',
-    siteName: 'ARCK1PRO',
-    url: '/ari',
-    title: 'ARI — Ativo de Renda Imobiliária com Garantia Real · ARCK1PRO',
-    description:
-      'SCP com previsibilidade contratual, garantia real de 200% em unidades registradas em cartório e isenção de Imposto de Renda.',
-    images: [OG_IMAGE],
-  },
-}
+  ogDescription:
+    'SCP com previsibilidade contratual, garantia real de 200% em unidades registradas em cartório e isenção de Imposto de Renda.',
+  path: '/ari',
+})
 
 const mercado = [
   { value: '+132%', label: 'de valorização do m² de Porto Belo em 2 anos', fonte: 'DWV Inteligência de Mercado' },

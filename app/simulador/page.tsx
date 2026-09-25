@@ -1,14 +1,15 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import RouteHero from '../components/RouteHero'
 import SimuladorTabela from './SimuladorTabela'
 import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
 
-export const metadata: Metadata = {
-  title: 'Simulador do ARI · ARCK1PRO',
+export const metadata: Metadata = pageMetadata({
+  title: 'Simulador do ARI: Calcule seu Retorno · ARCK1PRO',
   description:
     'Simule o retorno do Ativo de Renda Imobiliária da ARCK1PRO por capital, prazo e forma de recebimento. Rendimento isento de Imposto de Renda.',
-  alternates: { canonical: '/simulador' },
-}
+  path: '/simulador',
+})
 
 // Página de uma coisa só: o simulador, sem as dobras de explicação que o /ari
 // tem em volta dele. É uma variante do componente, e não o mesmo: aqui o prazo

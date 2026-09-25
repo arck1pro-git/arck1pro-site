@@ -9,7 +9,10 @@ import AriFaq from '@/app/ari/AriFaq'
 import { GUIAS, GUIA_SLUGS, type Guia, type GuiaSlug, type Tabela } from '@/lib/guias'
 import { ARI_AVISO_REGULATORIO, ARI_CONDICOES, ARI_PROTECOES } from '@/lib/ari-conteudo'
 import { whatsappUrl } from '@/lib/contato'
-import { OG_IMAGE, SITE_NAME, SITE_URL, absoluteUrl, jsonLdString } from '@/lib/site'
+import { SITE_NAME, SITE_URL, absoluteUrl, jsonLdString } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
+import AutorBox from '@/app/components/AutorBox'
+import { AUTOR_ORGANIZACAO } from '@/lib/empresa'
 
 // Página de guia do investidor: resposta direta no topo (o trecho que buscador
 // e IA citam), tabelas com números calculados da tabela oficial, simulador,
@@ -28,28 +31,13 @@ const SUPERFICIE =
 
 export function guiaMetadata(slug: GuiaSlug): Metadata {
   const g = GUIAS[slug]
-  const path = `/${g.slug}`
-  return {
-    title: { absolute: g.tituloSeo },
+  return pageMetadata({
+    title: g.tituloSeo,
     description: g.descricao,
-    alternates: { canonical: path },
-    openGraph: {
-      type: 'article',
-      locale: 'pt_BR',
-      siteName: SITE_NAME,
-      url: path,
-      title: g.tituloSeo,
-      description: g.descricao,
-      modifiedTime: g.atualizadoEm,
-      images: [OG_IMAGE],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: g.tituloSeo,
-      description: g.descricao,
-      images: [OG_IMAGE.url],
-    },
-  }
+    path: `/${g.slug}`,
+    type: 'article',
+    modifiedTime: g.atualizadoEm,
+  })
 }
 
 function dataPorExtenso(iso: string) {
@@ -76,9 +64,10 @@ function jsonLd(g: Guia) {
         dateModified: g.atualizadoEm,
         isPartOf: { '@id': `${SITE_URL}/#website` },
         publisher: { '@id': `${SITE_URL}/#organization` },
+        author: AUTOR_ORGANIZACAO,
         about: {
           '@type': 'FinancialProduct',
-          name: 'ARI — Ativo de Renda Imobiliária',
+          name: 'ARI (Ativo de Renda Imobiliária)',
           url: absoluteUrl('/ari'),
           provider: { '@id': `${SITE_URL}/#organization` },
         },
@@ -280,6 +269,10 @@ export default function GuiaPage({ slug }: { slug: GuiaSlug }) {
               </div>
             </div>
           ))}
+
+          <div className="max-w-[820px] mx-auto w-full">
+            <AutorBox />
+          </div>
 
           {g.simulador && (
             <div id="simulador" className="reveal scroll-mt-[100px]">

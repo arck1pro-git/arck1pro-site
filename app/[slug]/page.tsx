@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowUpRight } from 'lucide-react'
@@ -30,18 +31,12 @@ export async function generateMetadata({
   const c = getComparativo(slug)
   if (!c) return {}
 
-  const title = `${c.nome} ou ARI? Comparativo · ARCK1PRO`
-  return {
-    title,
+  return pageMetadata({
+    title: `${c.nome} ou ARI? Comparativo · ARCK1PRO`,
     description: c.metaDescription,
-    alternates: { canonical: `/${c.slug}` },
-    openGraph: {
-      title,
-      description: c.metaDescription,
-      url: `/${c.slug}`,
-      type: 'article',
-    },
-  }
+    path: `/${c.slug}`,
+    type: 'article',
+  })
 }
 
 // Mesma escala das headings de section da home: peso 300 num clamp de 32 a 48px.
