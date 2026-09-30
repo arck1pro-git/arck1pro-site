@@ -9,7 +9,7 @@ type ModalRole = "investidor";
 
 const CONTATOS: { texto: string; href?: string }[] = [
   { texto: "atendimento@arck1pro.com.br" },
-  { texto: "(47) 9 9200-6498", href: WHATSAPP_URL },
+  { texto: "(47) 9 9286-4926", href: WHATSAPP_URL },
   { texto: "@arck1pro" },
 ];
 
