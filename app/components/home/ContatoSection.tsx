@@ -75,7 +75,7 @@ export default function ContatoSection() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            WhatsApp <ArrowUpRight className="arrow" size={16} strokeWidth={2} aria-hidden /> (47) 9 9200-6498
+            WhatsApp <ArrowUpRight className="arrow" size={16} strokeWidth={2} aria-hidden /> (47) 9 9286-4926
           </a>
         </div>
       </div>

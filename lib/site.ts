@@ -6,7 +6,7 @@ import { WHATSAPP_NUMERO } from './contato'
 export const SITE_URL = 'https://arck1pro.com.br'
 export const SITE_NAME = 'ARCK1PRO'
 
-/** Telefone em formato E.164 legível (+55-47-99200-6498), derivado do WhatsApp do site. */
+/** Telefone em formato E.164 legível (+55-47-99286-4926), derivado do WhatsApp do site. */
 export const SITE_TELEFONE = `+${WHATSAPP_NUMERO.slice(0, 2)}-${WHATSAPP_NUMERO.slice(2, 4)}-${WHATSAPP_NUMERO.slice(4, 9)}-${WHATSAPP_NUMERO.slice(9)}`
 
 /** Imagem de compartilhamento leve (1200x630, abaixo de 300 KB). */

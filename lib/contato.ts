@@ -5,7 +5,7 @@
 // seis componentes. Enquanto a URL estava escrita à mão em cada um, trocar o
 // número significava caçar string por string, e bastava esquecer um arquivo para
 // o site ficar com dois telefones diferentes no ar.
-export const WHATSAPP_NUMERO = '5547992006498'
+export const WHATSAPP_NUMERO = '5547992864926'
 
 /** Texto que já chega digitado na conversa, para a equipe saber de onde veio o
  *  contato antes da primeira resposta. */
