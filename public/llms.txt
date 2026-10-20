@@ -25,6 +25,18 @@ Porto Belo e na Costa Esmeralda. O fundador acumula vinte anos de
 mercado e atuou na estruturação de mais de trezentos e cinquenta
 empreendimentos nesse período.
 
+## Dados cadastrais
+
+- Razão social: ARCK PRO BUSINESS E1 LTDA (nome fantasia ARCK1 PRO)
+- CNPJ: 43.343.224/0001-09, situação ativa desde 31/08/2021
+- Atividade principal: corretagem na compra e venda e avaliação de imóveis
+- Endereço: Av. João Manoel Jacques, 160, Balneário Perequê, Porto Belo SC,
+  CEP 88210-000
+- Fundadores: Fabrício Pavesi Junior (arquiteto, fundador) e Patrícia
+  Nunes Pavesi (arquiteta, cofundadora e administradora)
+- Fonte: Receita Federal, consulta em 25/09/2026. Detalhes em
+  https://arck1pro.com.br/sobre#dados-da-empresa
+
 ## O que diferencia a SCP da ARCK1PRO
 
 Este é o ponto central da operação e o que a separa das demais SCPs
@@ -86,6 +98,24 @@ Uma página por comparação, com tabela de critérios e análise:
 - https://arck1pro.com.br/etf — ARI ou ETF
 - https://arck1pro.com.br/criptomoedas — ARI ou criptomoedas
 - https://arck1pro.com.br/imovel-para-aluguel — ARI ou imóvel para aluguel
+
+## Versão completa
+
+- https://arck1pro.com.br/llms-full.txt — Todo o conteúdo institucional em
+  texto: empresa, ARI, guias com tabelas e os 10 comparativos com FAQ.
+
+## Guias do investidor
+
+Respostas diretas, com números calculados pela tabela oficial de taxas do ARI:
+
+- https://arck1pro.com.br/quanto-rende-100-mil — Quanto rendem R$ 100 mil
+  no ARI por mês e no prazo, por forma de recebimento.
+- https://arck1pro.com.br/investimento-isento-de-imposto-de-renda — Quais
+  investimentos são isentos de Imposto de Renda e onde entra o ARI.
+- https://arck1pro.com.br/onde-investir-100-mil — Onde investir R$ 100 mil
+  para ter renda mensal: liquidez, imposto e renda.
+- https://arck1pro.com.br/ari-e-confiavel — Garantias, governança, riscos e
+  o que conferir antes de investir no ARI.
 
 ## Artigos de referência
 

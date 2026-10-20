@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { OG_IMAGE } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 import HeroSection from "./components/home/HeroSection";
 import BlogSection from "./components/home/BlogSection";
 import PilaresSection from './components/home/PilaresSection'
@@ -11,22 +11,14 @@ import PeopleSection from "./components/home/PeopleSection";
 // branco da section logo abaixo, para o encontro das duas não marcar.
 // Título absoluto: o template do layout acrescenta o sufixo da marca, e na home
 // ele duplicaria "ARCK1PRO".
-export const metadata: Metadata = {
-  title: { absolute: "ARCK1PRO — Hub de Estruturação Imobiliária · Porto Belo SC" },
+export const metadata: Metadata = pageMetadata({
+  title: "ARCK1PRO: Hub de Estruturação Imobiliária em Porto Belo SC",
   description:
     "Estruturação de incorporações de alto padrão no litoral catarinense. ARI com garantia real de 200% em unidades registradas. Porto Belo, SC.",
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    locale: "pt_BR",
-    siteName: "ARCK1PRO",
-    url: "/",
-    title: "ARCK1PRO — Hub de Estruturação Imobiliária · Porto Belo SC",
-    description:
-      "Estruturação de incorporações de alto padrão no litoral catarinense. ARI com garantia real de 200% em unidades registradas em cartório.",
-    images: [OG_IMAGE],
-  },
-};
+  ogDescription:
+    "Estruturação de incorporações de alto padrão no litoral catarinense. ARI com garantia real de 200% em unidades registradas em cartório.",
+  path: "/",
+});
 
 export default function Home() {
   return (

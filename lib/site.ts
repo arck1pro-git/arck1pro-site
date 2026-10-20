@@ -14,7 +14,7 @@ export const OG_IMAGE = {
   url: '/og-arck1pro.jpg',
   width: 1200,
   height: 630,
-  alt: 'ARCK1PRO — hub de estruturação imobiliária no litoral catarinense',
+  alt: 'ARCK1PRO, hub de estruturação imobiliária no litoral catarinense',
 }
 
 // Caracteres que não podem aparecer crus dentro de um <script>: "<" e ">"

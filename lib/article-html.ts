@@ -82,6 +82,9 @@ export function cleanArticleHtml(raw: string | null | undefined): CleanArticle {
   const html = hardenHtml(body)
     .replace(DOC_TAGS_RE, '')
     .replace(HEAD_ONLY_TAGS_RE, '')
+    // Imagens do corpo carregam sob demanda: estão abaixo da capa e da hero,
+    // e baixá-las de saída disputava banda com o que aparece primeiro.
+    .replace(/<img\b(?![^>]*\bloading=)/gi, '<img loading="lazy" decoding="async"')
     // A hero da rota já é o <h1> da página; o do artigo vira <h2>.
     .replace(/<h1(\s[^>]*)?>/gi, '<h2$1>')
     .replace(/<\/h1>/gi, '</h2>')

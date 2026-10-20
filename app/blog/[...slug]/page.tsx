@@ -17,6 +17,8 @@ import {
 import { articleText, cleanArticleHtml, leadText, truncate } from '@/lib/article-html'
 import { relatedPosts } from '@/lib/related-posts'
 import { OG_IMAGE, SITE_NAME, SITE_URL, absoluteUrl, jsonLdString } from '@/lib/site'
+import AutorBox from '@/app/components/AutorBox'
+import { AUTOR_ORGANIZACAO } from '@/lib/empresa'
 
 type Params = Promise<{ slug: string[] }>
 
@@ -104,7 +106,9 @@ function articleJsonLd(post: PostDetail, description: string, wordCount: number)
         mainEntityOfPage: { '@type': 'WebPage', '@id': url },
         datePublished: publishedAt(post),
         dateModified: post.updatedAt ?? publishedAt(post),
-        author: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+        // Autoria da organização, com o @id do grafo do layout (razão social,
+        // CNPJ e fundadores).
+        author: AUTOR_ORGANIZACAO,
         publisher: { '@id': `${SITE_URL}/#organization` },
         inLanguage: 'pt-BR',
         ...(post.category ? { articleSection: post.category } : {}),
@@ -264,6 +268,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
               fontSize: 'var(--fs-16)',
             }}
           />
+
+          <AutorBox />
 
           <div className="flex flex-wrap gap-3" style={{ marginTop: 'var(--s-12)' }}>
             <Link href="/ari" className="btn btn--gold btn--sm">

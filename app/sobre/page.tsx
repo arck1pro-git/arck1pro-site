@@ -1,28 +1,21 @@
 import type { Metadata } from 'next'
-import { OG_IMAGE } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
 import Image from 'next/image'
 import Link from 'next/link'
 import RouteHero from '../components/RouteHero'
 import { ArrowUpRight } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contato";
 import BreadcrumbJsonLd from '@/app/components/BreadcrumbJsonLd'
+import { EMPRESA, FUNDADORES, dataBR } from '@/lib/empresa'
 
-export const metadata: Metadata = {
-  title: 'Sobre — Método, Ecossistema e Governança',
+export const metadata: Metadata = pageMetadata({
+  title: 'Sobre a ARCK1PRO: Método, Ecossistema e Governança',
   description:
     'A história, o método próprio e a governança da ARCK1PRO: vinte anos estruturando incorporações de alto padrão no litoral catarinense.',
-  alternates: { canonical: '/sobre' },
-  openGraph: {
-    type: 'website',
-    locale: 'pt_BR',
-    siteName: 'ARCK1PRO',
-    url: '/sobre',
-    title: 'Sobre a ARCK1PRO — Método, Ecossistema e Governança',
-    description:
-      'A história, o método próprio e a governança da ARCK1PRO. Vinte anos de prática no litoral catarinense.',
-    images: [OG_IMAGE],
-  },
-}
+  ogDescription:
+    'A história, o método próprio e a governança da ARCK1PRO. Vinte anos de prática no litoral catarinense.',
+  path: '/sobre',
+})
 
 const timeline = [
   {
@@ -240,8 +233,8 @@ export default function SobrePage() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              {/* Fabrício */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-6)' }}>
+              {/* Fabrício. O id é o @id da Person no grafo de lib/empresa. */}
+              <div id="fabricio-pavesi-junior" className="scroll-mt-[100px]" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-6)' }}>
                 <FounderPhoto src="/fabhricio.webp" name="Fabhrício ARI" role="Fundador · Arquiteto" />
                 <div
                   className="font-sans"
@@ -268,8 +261,8 @@ export default function SobrePage() {
                 </div>
               </div>
 
-              {/* Patrícia */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-6)' }}>
+              {/* Patrícia. O id é o @id da Person no grafo de lib/empresa. */}
+              <div id="patricia-nunes-pavesi" className="scroll-mt-[100px]" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-6)' }}>
                 <FounderPhoto src="/patricia-card.jpeg" name="Patrícia" role="Cofundadora · Arquiteta" />
                 <div
                   className="font-sans"
@@ -291,6 +284,39 @@ export default function SobrePage() {
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Dados cadastrais: identificação legal verificável na Receita Federal. */}
+          <div className="reveal" id="dados-da-empresa" style={{ scrollMarginTop: 100 }}>
+            <div
+              className="rounded-lg max-w-[820px] mx-auto"
+              style={{ padding: 'var(--s-10)', background: '#ffffff', border: 'var(--line-1) solid rgba(0,16,49,0.1)' }}
+            >
+              <h2 className="font-display text-navy" style={{ fontSize: 'var(--fs-24)', fontWeight: 500, margin: 0 }}>
+                Dados da empresa
+              </h2>
+              <dl
+                className="font-sans grid grid-cols-1 sm:grid-cols-[auto_1fr]"
+                style={{ columnGap: 'var(--s-8)', rowGap: 'var(--s-3)', margin: 'var(--s-6) 0 0', fontSize: 'var(--fs-15)', lineHeight: 1.6 }}
+              >
+                {[
+                  ['Razão social', EMPRESA.razaoSocial],
+                  ['CNPJ', EMPRESA.cnpj],
+                  ['Situação', `${EMPRESA.situacao} desde ${dataBR(EMPRESA.inicioAtividade)}`],
+                  ['Atividade principal', EMPRESA.atividadePrincipal],
+                  ['Endereço', `${EMPRESA.endereco.rua}, ${EMPRESA.endereco.bairro}, ${EMPRESA.endereco.cidade}/${EMPRESA.endereco.uf}, CEP ${EMPRESA.endereco.cep}`],
+                  ['Fundadores', FUNDADORES.map((f) => f.nome).join(' e ')],
+                ].map(([rotulo, valor]) => (
+                  <div key={rotulo} className="contents">
+                    <dt className="text-navy" style={{ fontWeight: 600 }}>{rotulo}</dt>
+                    <dd style={{ margin: 0, color: 'var(--text-muted)' }}>{valor}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="font-sans" style={{ fontSize: 'var(--fs-12)', color: 'var(--text-faint)', margin: 'var(--s-6) 0 0' }}>
+                Fonte: cadastro da Receita Federal, consultado em {dataBR(EMPRESA.consultadoEm)}.
+              </p>
             </div>
           </div>
 
