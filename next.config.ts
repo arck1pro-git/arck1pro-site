@@ -73,6 +73,11 @@ const nextConfig: NextConfig = {
       // Post "quanto rende R$ 100 mil no ARI" saiu do ar; o tema agora é uma
       // página comercial própria, que herda o histórico da URL antiga.
       { source: '/blog/20666', destination: '/quanto-rende-100-mil', permanent: true },
+      {
+        source: '/blog/quanto-rende-r-100-mil-investidos-no-ari-frente-a-cdb-e-poupanca',
+        destination: '/quanto-rende-100-mil',
+        permanent: true,
+      },
       // Post antigo de crédito com garantia real saiu do ar (404) e ainda
       // aparece ranqueando; o post atual sobre o mesmo tema herda o histórico.
       {

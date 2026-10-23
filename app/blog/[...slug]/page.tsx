@@ -15,6 +15,8 @@ import {
   type PostDetail,
 } from '@/lib/airticles'
 import { articleText, cleanArticleHtml, leadText, truncate } from '@/lib/article-html'
+import { faqJsonLd } from '@/lib/article-faq'
+import { addContextualLinks, type LinkTarget } from '@/lib/internal-links'
 import { relatedPosts } from '@/lib/related-posts'
 import { OG_IMAGE, SITE_NAME, SITE_URL, absoluteUrl, jsonLdString } from '@/lib/site'
 import AutorBox from '@/app/components/AutorBox'
@@ -127,12 +129,28 @@ function articleJsonLd(post: PostDetail, description: string, wordCount: number)
   }
 }
 
-async function loadRelated(postId: number): Promise<Post[]> {
+// Lista completa para relacionados e links internos. Se a API falhar aqui, o
+// artigo sai sem eles em vez de quebrar.
+async function loadAllPosts(): Promise<Post[]> {
   try {
-    return relatedPosts(await getAllPosts(), postId, 3)
+    return await getAllPosts()
   } catch {
     return []
   }
+}
+
+function hasFaqPage(blocks: unknown[]): boolean {
+  return blocks.some((b) => {
+    const type = (b as { '@type'?: unknown } | null)?.['@type']
+    return Array.isArray(type) ? type.includes('FAQPage') : type === 'FAQPage'
+  })
+}
+
+// Links contextuais para páginas fixas e para posts no ar (pelo id da Airticles).
+function linkArticle(html: string, post: PostDetail, all: Post[]): string {
+  const hrefById = new Map(all.map((p) => [p.id, `/blog/${postSlug(p)}`]))
+  const resolve = (target: LinkTarget) => ('href' in target ? target.href : hrefById.get(target.postId) ?? null)
+  return addContextualLinks(html, { selfHref: `/blog/${postSlug(post)}`, resolve })
 }
 
 export default async function ArticlePage({ params }: { params: Params }) {
@@ -158,12 +176,15 @@ export default async function ArticlePage({ params }: { params: Params }) {
   // Segmento extra depois do slug (link torto, tracking) volta para a canônica.
   if (rest.length > 0) permanentRedirect(`/blog/${postSlug(post)}`)
 
-  const { html, jsonLd: articleOwnJsonLd } = cleanArticleHtml(post.html)
-  const bodyText = articleText(html)
-  const description = describe(post, html)
+  const { html: cleanHtml, jsonLd: articleOwnJsonLd } = cleanArticleHtml(post.html)
+  const bodyText = articleText(cleanHtml)
+  const description = describe(post, cleanHtml)
   const wordCount = bodyText ? bodyText.split(' ').length : 0
   const coverUrl = resolveImageUrl(post.coverImageUrl)
-  const related = await loadRelated(post.id)
+  const all = await loadAllPosts()
+  const related = all.length > 0 ? relatedPosts(all, post.id, 3) : []
+  const html = linkArticle(cleanHtml, post, all)
+  const faq = hasFaqPage(articleOwnJsonLd) ? null : faqJsonLd(cleanHtml, absoluteUrl(`/blog/${postSlug(post)}`))
   const dataPublicacao = formatDate(publishedAt(post))
 
   return (
@@ -186,6 +207,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
           dangerouslySetInnerHTML={{ __html: jsonLdString(block) }}
         />
       ))}
+      {/* Seção visível de perguntas frequentes como FAQPage. */}
+      {faq && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdString(faq) }} />
+      )}
 
       {/* Categoria, título e data viram a hero: é a mesma peça que /ari, /sobre,
           /portobelo e /blog usam. */}

@@ -6,6 +6,13 @@
 // Aqui o documento é separado em corpo limpo + dados estruturados próprios do
 // artigo (FAQPage, por exemplo), que são reemitidos pela página.
 
+import { rewriteAirticlesLinks } from './internal-links'
+
+// Posts que saíram do ar e têm substituto: links antigos vão direto para ele.
+const SLUG_SUBSTITUIDO: Record<string, string> = {
+  'quanto-rende-r-100-mil-investidos-no-ari-frente-a-cdb-e-poupanca': '/quanto-rende-100-mil',
+}
+
 const HEAD_RE = /<head[\s\S]*?<\/head>/gi
 const BODY_RE = /<body[^>]*>([\s\S]*?)<\/body>/i
 const JSON_LD_RE = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi
@@ -79,7 +86,7 @@ export function cleanArticleHtml(raw: string | null | undefined): CleanArticle {
   const bodyMatch = raw.match(BODY_RE)
   const body = bodyMatch ? bodyMatch[1] : raw.replace(HEAD_RE, '')
 
-  const html = hardenHtml(body)
+  const html = rewriteAirticlesLinks(hardenHtml(body), SLUG_SUBSTITUIDO)
     .replace(DOC_TAGS_RE, '')
     .replace(HEAD_ONLY_TAGS_RE, '')
     // Imagens do corpo carregam sob demanda: estão abaixo da capa e da hero,
